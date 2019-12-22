@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9A0CF459-87CC-448D-B49D-EFC3D6482AA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{12A0FDF2-523E-42C7-81FE-4FDCA5E66A69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution files", "Solution files", "{A62CB923-FBEA-4F05-A776-47F8F7569DA8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		global.json = global.json
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E4C5EA1-1B2E-4B78-9F44-6BC85E42A752}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{4764448D-A014-403F-A956-3F4CFFA00AF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{7D32EBEE-65D6-46D3-BC7E-65951C143969}"
+	ProjectSection(SolutionItems) = preProject
+		docs\images\orneholm-sr-logo-v1.png = docs\images\orneholm-sr-logo-v1.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{84E9CCEE-4BF2-4D8D-B70B-3FB317328F29}"
+	ProjectSection(SolutionItems) = preProject
+		.github\pull_request_template.md = .github\pull_request_template.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{0BF52185-1294-495F-93C0-853B87075863}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
+		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orneholm.SverigesRadio.Api", "src\Orneholm.SverigesRadio.Api\Orneholm.SverigesRadio.Api.csproj", "{5893F6A0-A0C3-4CE6-837D-B774968386E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orneholm.SverigesRadio.Api.Test", "test\Orneholm.SverigesRadio.Api.Test\Orneholm.SverigesRadio.Api.Test.csproj", "{4BE3948A-5FA1-481D-B21A-406E93A584E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orneholm.SverigesRadio.ConsoleSample", "samples\Orneholm.SverigesRadio.ConsoleSample\Orneholm.SverigesRadio.ConsoleSample.csproj", "{833E95D5-A48E-42E4-B227-0C475D7A9832}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5893F6A0-A0C3-4CE6-837D-B774968386E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5893F6A0-A0C3-4CE6-837D-B774968386E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5893F6A0-A0C3-4CE6-837D-B774968386E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5893F6A0-A0C3-4CE6-837D-B774968386E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE3948A-5FA1-481D-B21A-406E93A584E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE3948A-5FA1-481D-B21A-406E93A584E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE3948A-5FA1-481D-B21A-406E93A584E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE3948A-5FA1-481D-B21A-406E93A584E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{833E95D5-A48E-42E4-B227-0C475D7A9832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{833E95D5-A48E-42E4-B227-0C475D7A9832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{833E95D5-A48E-42E4-B227-0C475D7A9832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{833E95D5-A48E-42E4-B227-0C475D7A9832}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7D32EBEE-65D6-46D3-BC7E-65951C143969} = {4764448D-A014-403F-A956-3F4CFFA00AF2}
+		{84E9CCEE-4BF2-4D8D-B70B-3FB317328F29} = {A62CB923-FBEA-4F05-A776-47F8F7569DA8}
+		{0BF52185-1294-495F-93C0-853B87075863} = {84E9CCEE-4BF2-4D8D-B70B-3FB317328F29}
+		{5893F6A0-A0C3-4CE6-837D-B774968386E9} = {9A0CF459-87CC-448D-B49D-EFC3D6482AA6}
+		{4BE3948A-5FA1-481D-B21A-406E93A584E1} = {12A0FDF2-523E-42C7-81FE-4FDCA5E66A69}
+		{833E95D5-A48E-42E4-B227-0C475D7A9832} = {8E4C5EA1-1B2E-4B78-9F44-6BC85E42A752}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2076F58C-968B-489D-94CA-B3729F5DE10D}
+	EndGlobalSection
+EndGlobal
