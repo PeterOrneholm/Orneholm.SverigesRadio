@@ -10,7 +10,7 @@ Orneholm.SverigesRadio is an unofficial wrapper of Sveriges Radio Open API (v2) 
 
 ## Features
 
-- :radio: Typed wrppers for the Swedish Radio Open API
+- :radio: Typed wrappers for the Swedish Radio Open API
 - :penguin: Cross platform: Targets .NET Standard 2.0 and .NET Core 3.1
 - :arrow_up_down: Supports sorting, filtering etc.
 
