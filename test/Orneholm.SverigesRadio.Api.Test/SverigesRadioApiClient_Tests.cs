@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models;
+using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Xunit;
 
 namespace Orneholm.SverigesRadio.Api.Test
@@ -34,7 +36,7 @@ namespace Orneholm.SverigesRadio.Api.Test
             // Arrange
             var request = new ProgramListRequest
             {
-                Pagination = ListRequestPagination.For(1, 10)
+                Pagination = ListPagination.WithPageAndSize(1, 10)
             };
 
             // Act

@@ -1,4 +1,4 @@
-﻿namespace Orneholm.SverigesRadio.Api.Models
+namespace Orneholm.SverigesRadio.Api.Models.Response
 {
     public class Pagination
     {

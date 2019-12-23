@@ -1,8 +1,8 @@
-namespace Orneholm.SverigesRadio.Api.Models
+namespace Orneholm.SverigesRadio.Api.Models.Request
 {
-    public class ListRequestSort
+    public class ListSort
     {
-        private ListRequestSort(string field, bool sortDesc)
+        private ListSort(string field, bool sortDesc)
         {
             Field = field;
             SortDesc = sortDesc;
@@ -18,14 +18,14 @@ namespace Orneholm.SverigesRadio.Api.Models
         /// </summary>
         public bool SortDesc { get; set; }
 
-        public static ListRequestSort Asc(string field)
+        public static ListSort Asc(string field)
         {
-            return new ListRequestSort(field, false);
+            return new ListSort(field, false);
         }
 
-        public static ListRequestSort Desc(string field)
+        public static ListSort Desc(string field)
         {
-            return new ListRequestSort(field, true);
+            return new ListSort(field, true);
         }
     }
 }

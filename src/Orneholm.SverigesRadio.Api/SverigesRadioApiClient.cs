@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models;
+using Orneholm.SverigesRadio.Api.Models.Request.Programs;
+using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
 namespace Orneholm.SverigesRadio.Api
 {
@@ -11,6 +13,11 @@ namespace Orneholm.SverigesRadio.Api
     /// </summary>
     public class SverigesRadioApiClient : ISverigesRadioApiClient
     {
+        public static SverigesRadioApiClient CreateClient()
+        {
+            return CreateClient(SverigesRadioUrls.ProductionApiBaseUrl);
+        }
+
         public static SverigesRadioApiClient CreateClient(Uri apiBaseUri)
         {
             var httpClient = new HttpClient
@@ -33,16 +40,16 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<ProgramDetailsResponse> GetProgramAsync(ProgramDetailsRequest request)
         {
-            return _httpClient.GetDetailsAsync<ProgramDetailsResponse>("programs", request);
+            return _httpClient.GetDetailsAsync<ProgramDetailsResponse>(Constants.Programs.BaseUrl, request);
         }
 
         public Task<ProgramListResponse> GetProgramsAsync(ProgramListRequest request)
         {
-            return _httpClient.GetListAsync<ProgramListResponse>("programs", request, new Dictionary<string, string?>
+            return _httpClient.GetListAsync<ProgramListResponse>(Constants.Programs.BaseUrl, request, new Dictionary<string, string?>
             {
-                { "channelid", request.ChannelId?.ToString("D") },
-                { "programcategoryid ", request.ProgramCategoryId?.ToString("D") },
-                { "isarchived", request.IsArchived?.ToString().ToLower() }
+                { Constants.Programs.QueryString.ChannelId, request.ChannelId?.ToString("D") },
+                { Constants.Programs.QueryString.ProgramCategoryId, request.ProgramCategoryId?.ToString("D") },
+                { Constants.Programs.QueryString.IsArchived, request.IsArchived?.ToString().ToLower() }
             });
         }
     }

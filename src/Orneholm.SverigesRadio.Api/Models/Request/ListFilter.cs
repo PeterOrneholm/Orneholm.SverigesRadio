@@ -1,8 +1,8 @@
-﻿namespace Orneholm.SverigesRadio.Api.Models
+namespace Orneholm.SverigesRadio.Api.Models.Request
 {
-    public class ListRequestFilter
+    public class ListFilter
     {
-        public ListRequestFilter(string field, string value)
+        public ListFilter(string field, string value)
         {
             Field = field;
             Value = value;

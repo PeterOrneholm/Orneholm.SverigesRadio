@@ -1,22 +1,22 @@
 using System.Collections.Generic;
 
-namespace Orneholm.SverigesRadio.Api.Models
+namespace Orneholm.SverigesRadio.Api.Models.Request
 {
     public abstract class ListRequestBase : RequestBase
     {
         /// <summary>
         /// Pagination of the result.
         /// </summary>
-        public ListRequestPagination Pagination { get; set; } = ListRequestPagination.TakeTen();
+        public ListPagination Pagination { get; set; } = ListPagination.FirstPage();
 
         /// <summary>
         /// Sorting of the result.
         /// </summary>
-        public List<ListRequestSort> Sort { get; set; } = new List<ListRequestSort>();
+        public List<ListSort> Sort { get; set; } = new List<ListSort>();
 
         /// <summary>
         /// Filter of the result.
         /// </summary>
-        public ListRequestFilter? Filter { get; set; } = null;
+        public ListFilter? Filter { get; set; } = null;
     }
 }

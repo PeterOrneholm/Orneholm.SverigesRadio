@@ -1,6 +1,6 @@
-﻿namespace Orneholm.SverigesRadio.Api.Models
+namespace Orneholm.SverigesRadio.Api.Models.Response.Programs
 {
-    public class SocialMediaPlatform
+    public class ProgramSocialMediaPlatform
     {
         public string Platform { get; set; } = string.Empty;
         public string PlatformUrl { get; set; } = string.Empty;

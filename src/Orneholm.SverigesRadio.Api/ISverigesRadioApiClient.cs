@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models;
+using Orneholm.SverigesRadio.Api.Models.Request.Programs;
+using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
 namespace Orneholm.SverigesRadio.Api
 {

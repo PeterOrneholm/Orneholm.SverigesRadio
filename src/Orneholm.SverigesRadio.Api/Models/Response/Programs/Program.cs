@@ -1,4 +1,4 @@
-namespace Orneholm.SverigesRadio.Api.Models
+namespace Orneholm.SverigesRadio.Api.Models.Response.Programs
 {
     public class Program
     {
@@ -17,12 +17,11 @@ namespace Orneholm.SverigesRadio.Api.Models
         public string ProgramImageTemplateWide { get; set; } = string.Empty;
         public string SocialImage { get; set; } = string.Empty;
         public string SocialImageTemplate { get; set; } = string.Empty;
-        public SocialMediaPlatform[] SocialMediaPlatforms { get; set; } = new SocialMediaPlatform[] {};
+        public ProgramSocialMediaPlatform[] SocialMediaPlatforms { get; set; } = new ProgramSocialMediaPlatform[] {};
         public ProgramChannel Channel { get; set; } = new ProgramChannel();
         public bool Archived { get; set; }
         public bool HasOnDemand { get; set; }
         public bool HasPod { get; set; }
         public string ResponsibleEditor { get; set; } = string.Empty;
-
     }
 }

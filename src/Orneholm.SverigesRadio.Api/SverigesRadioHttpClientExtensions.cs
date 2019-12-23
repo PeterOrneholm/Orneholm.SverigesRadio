@@ -6,12 +6,13 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models;
+using Orneholm.SverigesRadio.Api.Models.Request;
 
 namespace Orneholm.SverigesRadio.Api
 {
     internal static class SverigesRadioHttpClientExtensions
     {
-        private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
+        private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions()
         {
             PropertyNameCaseInsensitive = true
         };
@@ -33,29 +34,29 @@ namespace Orneholm.SverigesRadio.Api
             return httpClient.GetAsync<TResult>(url, queryStringParams);
         }
 
-        private static void AddPaginationQueryStringParams(ListRequestPagination pagination, Dictionary<string, string?> queryStringParams)
+        private static void AddPaginationQueryStringParams(ListPagination pagination, Dictionary<string, string?> queryStringParams)
         {
             if (pagination.PaginationEnabled)
             {
-                queryStringParams["pagination"] = "true";
+                queryStringParams[Constants.Common.QueryString.PaginationEnabled] = Constants.Common.QueryString.True;
 
                 if (pagination.PageNumber.HasValue)
                 {
-                    queryStringParams["page"] = pagination.PageNumber.Value.ToString("D");
+                    queryStringParams[Constants.Common.QueryString.PaginationPage] = pagination.PageNumber.Value.ToString("D");
                 }
 
                 if (pagination.PageSize.HasValue)
                 {
-                    queryStringParams["size"] = pagination.PageSize.Value.ToString("D");
+                    queryStringParams[Constants.Common.QueryString.PaginationPageSize] = pagination.PageSize.Value.ToString("D");
                 }
             }
             else
             {
-                queryStringParams["pagination"] = "false";
+                queryStringParams[Constants.Common.QueryString.PaginationEnabled] = Constants.Common.QueryString.False;
             }
         }
 
-        private static void AddSortQueryStringParams(List<ListRequestSort> requestSort, Dictionary<string, string?> queryStringParams)
+        private static void AddSortQueryStringParams(List<ListSort> requestSort, Dictionary<string, string?> queryStringParams)
         {
             if (!requestSort.Any())
             {
@@ -70,21 +71,21 @@ namespace Orneholm.SverigesRadio.Api
 
                 if (sort.SortDesc)
                 {
-                    sortString.Append("+desc");
+                    sortString.Append(Constants.Common.QueryString.SortDescSuffix);
                 }
 
-                sortString.Append(",");
+                sortString.Append(Constants.Common.QueryString.SortFieldSeparator);
             }
 
-            queryStringParams["sort"] = sortString.ToString().TrimEnd(',');
+            queryStringParams[Constants.Common.QueryString.Sort] = sortString.ToString().TrimEnd(Constants.Common.QueryString.SortFieldSeparator);
         }
 
-        private static void AddFilterQueryStringParams(ListRequestFilter? requestFilter, Dictionary<string, string?> queryStringParams)
+        private static void AddFilterQueryStringParams(ListFilter? requestFilter, Dictionary<string, string?> queryStringParams)
         {
             if (requestFilter != null)
             {
-                queryStringParams["filter"] = requestFilter.Field;
-                queryStringParams["filtervalue"] = requestFilter.Value;
+                queryStringParams[Constants.Common.QueryString.FilterField] = requestFilter.Field;
+                queryStringParams[Constants.Common.QueryString.FilterValue] = requestFilter.Value;
             }
         }
 
@@ -98,7 +99,7 @@ namespace Orneholm.SverigesRadio.Api
             httpResponseMessage.EnsureSuccessStatusCode();
 
             var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            var parsedContent = await JsonSerializer.DeserializeAsync<TResult>(contentStream, _jsonSerializerOptions).ConfigureAwait(false);
+            var parsedContent = await JsonSerializer.DeserializeAsync<TResult>(contentStream, JsonSerializerOptions).ConfigureAwait(false);
 
             return parsedContent;
         }
@@ -107,8 +108,8 @@ namespace Orneholm.SverigesRadio.Api
         {
             queryStringParams ??= new Dictionary<string, string?>();
 
-            queryStringParams["format"] = "json";
-            queryStringParams["indent"] = "false";
+            queryStringParams[Constants.Common.QueryString.Format] = Constants.Common.QueryString.FormatJson;
+            queryStringParams[Constants.Common.QueryString.Indent] = Constants.Common.QueryString.False;
 
             return queryStringParams;
         }
