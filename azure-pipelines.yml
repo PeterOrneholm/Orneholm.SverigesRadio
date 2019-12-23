@@ -122,7 +122,8 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: 'dotnet publish'
       inputs:
-        command: publish
+        command: custom
+        custom: publish
         projects: '$(pathToPublishProjects)'
         arguments: '--configuration $(dotnetBuildConfiguration) --output $(build.artifactstagingdirectory)'
 
