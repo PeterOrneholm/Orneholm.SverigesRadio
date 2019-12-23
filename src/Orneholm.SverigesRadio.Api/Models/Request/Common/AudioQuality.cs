@@ -1,4 +1,4 @@
-namespace Orneholm.SverigesRadio.Api.Models.Request.Programs
+namespace Orneholm.SverigesRadio.Api.Models.Request.Common
 {
     public enum AudioQuality
     {

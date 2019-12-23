@@ -1,4 +1,6 @@
-namespace Orneholm.SverigesRadio.Api.Models.Request.Programs
+using Orneholm.SverigesRadio.Api.Models.Request.Common;
+
+namespace Orneholm.SverigesRadio.Api.Models.Request.Channels
 {
     public class ChannelListRequest : ListRequestBase, IAudioSettings
     {

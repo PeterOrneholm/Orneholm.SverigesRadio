@@ -5,7 +5,7 @@ namespace Orneholm.SverigesRadio.Api
 {
     internal class SverigesRadioApiListEndpointConfiguration<TRequest, TFilterField, TSortField>
     {
-        public SverigesRadioApiListEndpointConfiguration(string url, Action<TRequest, Dictionary<string, string?>> queryStringParamsResolver, Func<TFilterField, string>? filterFieldResolver, Func<TSortField, string>? sortFieldResolver)
+        public SverigesRadioApiListEndpointConfiguration(string url, Action<TRequest, Dictionary<string, string?>> queryStringParamsResolver, Func<TFilterField, string>? filterFieldResolver = null, Func<TSortField, string>? sortFieldResolver = null)
         {
             Url = url;
             QueryStringParamsResolver = queryStringParamsResolver;

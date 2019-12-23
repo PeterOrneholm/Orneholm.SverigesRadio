@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;

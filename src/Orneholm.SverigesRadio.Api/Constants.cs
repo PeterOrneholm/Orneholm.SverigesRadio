@@ -1,3 +1,5 @@
+using Orneholm.SverigesRadio.Api.Models.Request.Channels;
+using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 
 namespace Orneholm.SverigesRadio.Api
@@ -67,8 +69,7 @@ namespace Orneholm.SverigesRadio.Api
 
                         _ => string.Empty
                     };
-                },
-                null
+                }
             );
 
             public static class QueryString
@@ -85,11 +86,6 @@ namespace Orneholm.SverigesRadio.Api
                 public const string HasPod = "program.haspod";
                 public const string ResponsibleEditor = "program.responsibleeditor";
             }
-
-            public static class Sort
-            {
-
-            }
         }
 
         public static class Channels
@@ -98,10 +94,7 @@ namespace Orneholm.SverigesRadio.Api
 
             public static readonly SverigesRadioApiListEndpointConfiguration<ChannelListRequest, ChannelListFilterFields, ChannelListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ChannelListRequest, ChannelListFilterFields, ChannelListSortFields>(
                 BaseUrl,
-                (request, queryString) =>
-                {
-
-                },
+                (request, queryString) => { },
                 fields =>
                 {
                     return fields switch
@@ -114,19 +107,40 @@ namespace Orneholm.SverigesRadio.Api
                 null
             );
 
-            public static class QueryString
-            {
-
-            }
-
             public static class Filter
             {
                 public const string ChannelType = "channel.channeltype";
             }
+        }
 
-            public static class Sort
+
+        public static class Episodes
+        {
+            public const string BaseUrl = "episodes";
+
+            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields>(
+                BaseUrl,
+                (request, queryString) =>
+                {
+                    queryString[QueryString.ProgramId] = request.ProgramId.ToString("D");
+
+                    if (request.FromDate.HasValue)
+                    {
+                        queryString[QueryString.FromDate] = request.FromDate.Value.Date.ToString("yyyy-MM-dd");
+                    }
+
+                    if (request.ToDate.HasValue)
+                    {
+                        queryString[QueryString.ToDate] = request.ToDate.Value.Date.ToString("yyyy-MM-dd");
+                    }
+                }
+            );
+
+            public static class QueryString
             {
-
+                public const string ProgramId = "programid";
+                public const string FromDate = "fromdate";
+                public const string ToDate = "todate";
             }
         }
     }

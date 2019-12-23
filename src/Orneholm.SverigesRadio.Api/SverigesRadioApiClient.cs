@@ -3,8 +3,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
+using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
+using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
 namespace Orneholm.SverigesRadio.Api
@@ -70,6 +72,22 @@ namespace Orneholm.SverigesRadio.Api
                 request,
                 pagination,
                 request.Filter
+            );
+        }
+
+        // Episodes
+
+        public Task<EpisodeDetailsResponse> GetEpisodeAsync(EpisodeDetailsRequest request)
+        {
+            return _httpClient.GetDetailsAsync<EpisodeDetailsResponse>(Constants.Channels.BaseUrl, request);
+        }
+
+        public Task<EpisodeListResponse> GetEpisodesAsync(EpisodeListRequest request, ListPagination? pagination = null)
+        {
+            return _httpClient.GetListAsync<EpisodeListRequest, EpisodeListResponse, EpisodeListFilterFields, EpisodeListSortFields>(
+                Constants.Episodes.ListEndpointConfiguration,
+                request,
+                pagination
             );
         }
     }

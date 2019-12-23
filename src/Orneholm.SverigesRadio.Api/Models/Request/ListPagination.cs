@@ -23,6 +23,11 @@ namespace Orneholm.SverigesRadio.Api.Models.Request
             return new ListPagination(true, 1, SverigesRadioApiDefaults.PageSize);
         }
 
+        public static ListPagination TakeFirst(int pageSize)
+        {
+            return new ListPagination(true, 1, pageSize);
+        }
+
         public static ListPagination WithPageAndSize(int pageNumber, int pageSize)
         {
             return new ListPagination(true, pageNumber, pageSize);

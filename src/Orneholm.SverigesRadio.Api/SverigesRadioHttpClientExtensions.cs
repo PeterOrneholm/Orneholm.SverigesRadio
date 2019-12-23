@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.Common;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 
 namespace Orneholm.SverigesRadio.Api
@@ -14,7 +15,11 @@ namespace Orneholm.SverigesRadio.Api
     {
         private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions()
         {
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            Converters =
+            {
+                new JsDateTimeJsonConverter()
+            }
         };
 
         private static readonly ListPagination DefaultPagination = ListPagination.FirstPage();
