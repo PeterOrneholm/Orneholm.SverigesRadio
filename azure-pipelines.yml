@@ -124,7 +124,6 @@ stages:
       inputs:
         command: publish
         projects: '$(pathToPublishProjects)'
-        zipAfterPublish: True
         arguments: '--configuration $(dotnetBuildConfiguration) --output $(build.artifactstagingdirectory)'
 
     - publish: '$(Build.ArtifactStagingDirectory)'
