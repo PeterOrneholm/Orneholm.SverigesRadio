@@ -1,3 +1,5 @@
+using Orneholm.SverigesRadio.Api.Models.Request.Programs;
+
 namespace Orneholm.SverigesRadio.Api
 {
     internal static class Constants
@@ -38,16 +40,34 @@ namespace Orneholm.SverigesRadio.Api
         {
             public const string BaseUrl = "programs";
 
+            public static readonly SverigesRadioApiEndpointConfiguration<ProgramListRequest, ProgramFilterFields, ProgramListSortFields> EndpointConfiguration = new SverigesRadioApiEndpointConfiguration<ProgramListRequest, ProgramFilterFields, ProgramListSortFields>(
+                BaseUrl,
+                (request, queryString) =>
+                {
+                    queryString[QueryString.ChannelId] = request.ChannelId?.ToString("D");
+                    queryString[QueryString.ProgramCategoryId] = request.ProgramCategoryId?.ToString("D");
+                    queryString[QueryString.IsArchived] = request.IsArchived?.ToString().ToLower();
+                },
+                fields =>
+                {
+                    return fields switch
+                    {
+                        ProgramFilterFields.Archived => Filter.Archived,
+                        ProgramFilterFields.HasOnDemand => Filter.HasOnDemand,
+                        ProgramFilterFields.HasPod => Filter.HasPod,
+                        ProgramFilterFields.ResponsibleEditor => Filter.ResponsibleEditor,
+
+                        _ => string.Empty
+                    };
+                },
+                null
+            );
+
             public static class QueryString
             {
                 public const string ChannelId = "channelid";
                 public const string ProgramCategoryId = "programcategoryid";
                 public const string IsArchived = "isarchived";
-            }
-
-            public static class Sort
-            {
-
             }
 
             public static class Filter
@@ -56,6 +76,11 @@ namespace Orneholm.SverigesRadio.Api
                 public const string HasOnDemand = "program.hasondemand";
                 public const string HasPod = "program.haspod";
                 public const string ResponsibleEditor = "program.responsibleeditor";
+            }
+
+            public static class Sort
+            {
+
             }
         }
     }

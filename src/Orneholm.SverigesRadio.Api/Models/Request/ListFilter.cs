@@ -1,8 +1,10 @@
+using System;
+
 namespace Orneholm.SverigesRadio.Api.Models.Request
 {
-    public class ListFilter
+    public class ListFilter<TField> where TField : Enum
     {
-        public ListFilter(string field, string value)
+        public ListFilter(TField field, string value)
         {
             Field = field;
             Value = value;
@@ -11,7 +13,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Request
         /// <summary>
         /// Field to filter.
         /// </summary>
-        public string Field { get; set; }
+        public TField Field { get; set; }
 
         /// <summary>
         /// Value to filter by.

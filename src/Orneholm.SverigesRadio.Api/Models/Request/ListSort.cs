@@ -1,8 +1,10 @@
+using System;
+
 namespace Orneholm.SverigesRadio.Api.Models.Request
 {
-    public class ListSort
+    public class ListSort<TField> where TField : Enum
     {
-        private ListSort(string field, bool sortDesc)
+        private ListSort(TField field, bool sortDesc)
         {
             Field = field;
             SortDesc = sortDesc;
@@ -11,21 +13,21 @@ namespace Orneholm.SverigesRadio.Api.Models.Request
         /// <summary>
         /// Field to sort by.
         /// </summary>
-        public string Field { get; set; }
+        public TField Field { get; set; }
 
         /// <summary>
         /// Sort in descending order.
         /// </summary>
         public bool SortDesc { get; set; }
 
-        public static ListSort Asc(string field)
+        public static ListSort<TField> Asc(TField field)
         {
-            return new ListSort(field, false);
+            return new ListSort<TField>(field, false);
         }
 
-        public static ListSort Desc(string field)
+        public static ListSort<TField> Desc(TField field)
         {
-            return new ListSort(field, true);
+            return new ListSort<TField>(field, true);
         }
     }
 }

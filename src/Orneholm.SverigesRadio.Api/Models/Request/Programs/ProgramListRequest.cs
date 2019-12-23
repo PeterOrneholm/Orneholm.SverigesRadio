@@ -3,6 +3,11 @@ namespace Orneholm.SverigesRadio.Api.Models.Request.Programs
     public class ProgramListRequest : ListRequestBase
     {
         /// <summary>
+        /// Filter of the result.
+        /// </summary>
+        public ListFilter<ProgramFilterFields>? Filter { get; set; } = null;
+
+        /// <summary>
         /// Listar program endast för angiven kanal.
         /// </summary>
         public int? ChannelId { get; set; }

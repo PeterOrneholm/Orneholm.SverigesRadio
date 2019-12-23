@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Orneholm.SverigesRadio.Api.Models;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Xunit;
@@ -34,13 +33,11 @@ namespace Orneholm.SverigesRadio.Api.Test
         public async Task GetPrograms_Should_Return_Programs()
         {
             // Arrange
-            var request = new ProgramListRequest
-            {
-                Pagination = ListPagination.WithPageAndSize(1, 10)
-            };
+            var request = new ProgramListRequest();
+            var pagination = ListPagination.WithPageAndSize(1, 10);
 
             // Act
-            var result = await _apiClient.GetProgramsAsync(request);
+            var result = await _apiClient.GetProgramsAsync(request, pagination);
 
             // Assert
             Assert.Equal(10, result.Programs.Count);

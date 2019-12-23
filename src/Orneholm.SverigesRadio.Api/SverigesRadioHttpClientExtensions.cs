@@ -17,25 +17,38 @@ namespace Orneholm.SverigesRadio.Api
             PropertyNameCaseInsensitive = true
         };
 
+        private static readonly ListPagination DefaultPagination = ListPagination.FirstPage();
+
         public static Task<TResult> GetDetailsAsync<TResult>(this HttpClient httpClient, string url, DetailsRequestBase request, Dictionary<string, string?>? queryStringParams = null)
         {
             var fullUrl = $"{url}/{request.Id:D}";
             return httpClient.GetAsync<TResult>(fullUrl, queryStringParams);
         }
 
-        public static Task<TResult> GetListAsync<TResult>(this HttpClient httpClient, string url, ListRequestBase request, Dictionary<string, string?>? queryStringParams = null)
+        public static Task<TResult> GetListAsync<TRequest, TResult, TFilterField, TSortField>(this HttpClient httpClient, SverigesRadioApiEndpointConfiguration<TRequest, TFilterField, TSortField> endpointConfiguration, TRequest request, ListPagination? pagination = null, ListFilter<TFilterField>? filter = null, List<ListSort<TSortField>>? sort = null) where TRequest : ListRequestBase where TFilterField : Enum where TSortField : Enum
         {
-            queryStringParams ??= new Dictionary<string, string?>();
+            var queryStringParams = new Dictionary<string, string?>();
 
-            AddPaginationQueryStringParams(request.Pagination, queryStringParams);
-            AddSortQueryStringParams(request.Sort, queryStringParams);
-            AddFilterQueryStringParams(request.Filter, queryStringParams);
+            AddPaginationQueryStringParams(queryStringParams, pagination);
 
-            return httpClient.GetAsync<TResult>(url, queryStringParams);
+            AddFilterQueryStringParams(queryStringParams, endpointConfiguration.FilterFieldResolver, filter);
+            AddSortQueryStringParams(queryStringParams, endpointConfiguration.SortFieldResolver, sort);
+
+            AddQueryStringParams(queryStringParams, request, endpointConfiguration.QueryStringParamsResolver);
+
+
+            return httpClient.GetAsync<TResult>(endpointConfiguration.Url, queryStringParams);
         }
 
-        private static void AddPaginationQueryStringParams(ListPagination pagination, Dictionary<string, string?> queryStringParams)
+        private static void AddQueryStringParams<TRequest>(Dictionary<string, string?> queryStringParams, TRequest request, Action<TRequest, Dictionary<string, string?>> queryStringParamsResolver) where TRequest : ListRequestBase
         {
+            queryStringParamsResolver?.Invoke(request, queryStringParams);
+        }
+
+        private static void AddPaginationQueryStringParams(Dictionary<string, string?> queryStringParams, ListPagination? pagination)
+        {
+            pagination ??= DefaultPagination;
+
             if (pagination.PaginationEnabled)
             {
                 queryStringParams[Constants.Common.QueryString.PaginationEnabled] = Constants.Common.QueryString.True;
@@ -56,9 +69,20 @@ namespace Orneholm.SverigesRadio.Api
             }
         }
 
-        private static void AddSortQueryStringParams(List<ListSort> requestSort, Dictionary<string, string?> queryStringParams)
+        private static void AddFilterQueryStringParams<TFilterField>(Dictionary<string, string?> queryStringParams, Func<TFilterField, string>? filterFieldResolver, ListFilter<TFilterField>? requestFilter) where TFilterField : Enum
         {
-            if (!requestSort.Any())
+            if (requestFilter == null || filterFieldResolver == null)
+            {
+                return;
+            }
+
+            queryStringParams[Constants.Common.QueryString.FilterField] = filterFieldResolver.Invoke(requestFilter.Field);
+            queryStringParams[Constants.Common.QueryString.FilterValue] = requestFilter.Value;
+        }
+
+        private static void AddSortQueryStringParams<TSortField>(Dictionary<string, string?> queryStringParams, Func<TSortField, string>? sortFieldResolver, List<ListSort<TSortField>>? requestSort) where TSortField : Enum
+        {
+            if (requestSort == null || !requestSort.Any() || sortFieldResolver == null)
             {
                 return;
             }
@@ -67,7 +91,7 @@ namespace Orneholm.SverigesRadio.Api
 
             foreach (var sort in requestSort)
             {
-                sortString.Append(sort.Field);
+                sortString.Append(sortFieldResolver.Invoke(sort.Field));
 
                 if (sort.SortDesc)
                 {
@@ -78,15 +102,6 @@ namespace Orneholm.SverigesRadio.Api
             }
 
             queryStringParams[Constants.Common.QueryString.Sort] = sortString.ToString().TrimEnd(Constants.Common.QueryString.SortFieldSeparator);
-        }
-
-        private static void AddFilterQueryStringParams(ListFilter? requestFilter, Dictionary<string, string?> queryStringParams)
-        {
-            if (requestFilter != null)
-            {
-                queryStringParams[Constants.Common.QueryString.FilterField] = requestFilter.Field;
-                queryStringParams[Constants.Common.QueryString.FilterValue] = requestFilter.Value;
-            }
         }
 
         private static async Task<TResult> GetAsync<TResult>(this HttpClient httpClient, string url, Dictionary<string, string?>? queryStringParams = null)

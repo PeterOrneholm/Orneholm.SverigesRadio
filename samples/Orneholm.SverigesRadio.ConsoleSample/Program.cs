@@ -29,10 +29,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var programs = await apiClient.GetProgramsAsync(new ProgramListRequest
-            {
-                Pagination = ListPagination.FirstPage()
-            });
+            var programs = await apiClient.GetProgramsAsync(new ProgramListRequest());
 
             foreach (var program in programs.Programs)
             {
