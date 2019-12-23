@@ -5,8 +5,8 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Orneholm.SverigesRadio.Api.Models;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 
 namespace Orneholm.SverigesRadio.Api
 {
@@ -25,19 +25,24 @@ namespace Orneholm.SverigesRadio.Api
             return httpClient.GetAsync<TResult>(fullUrl, queryStringParams);
         }
 
-        public static Task<TResult> GetListAsync<TRequest, TResult, TFilterField, TSortField>(this HttpClient httpClient, SverigesRadioApiEndpointConfiguration<TRequest, TFilterField, TSortField> endpointConfiguration, TRequest request, ListPagination? pagination = null, ListFilter<TFilterField>? filter = null, List<ListSort<TSortField>>? sort = null) where TRequest : ListRequestBase where TFilterField : Enum where TSortField : Enum
+        public static Task<TResult> GetListAsync<TRequest, TResult, TFilterField, TSortField>(this HttpClient httpClient, SverigesRadioApiListEndpointConfiguration<TRequest, TFilterField, TSortField> listEndpointConfiguration, TRequest request, ListPagination? pagination = null, ListFilter<TFilterField>? filter = null, List<ListSort<TSortField>>? sort = null) where TRequest : ListRequestBase where TFilterField : Enum where TSortField : Enum
         {
             var queryStringParams = new Dictionary<string, string?>();
 
             AddPaginationQueryStringParams(queryStringParams, pagination);
 
-            AddFilterQueryStringParams(queryStringParams, endpointConfiguration.FilterFieldResolver, filter);
-            AddSortQueryStringParams(queryStringParams, endpointConfiguration.SortFieldResolver, sort);
+            AddFilterQueryStringParams(queryStringParams, listEndpointConfiguration.FilterFieldResolver, filter);
+            AddSortQueryStringParams(queryStringParams, listEndpointConfiguration.SortFieldResolver, sort);
 
-            AddQueryStringParams(queryStringParams, request, endpointConfiguration.QueryStringParamsResolver);
+            if (request is IAudioSettings audioSettings)
+            {
+                AddAudioSettingsQueryStringParams(queryStringParams, audioSettings);
+            }
+
+            AddQueryStringParams(queryStringParams, request, listEndpointConfiguration.QueryStringParamsResolver);
 
 
-            return httpClient.GetAsync<TResult>(endpointConfiguration.Url, queryStringParams);
+            return httpClient.GetAsync<TResult>(listEndpointConfiguration.Url, queryStringParams);
         }
 
         private static void AddQueryStringParams<TRequest>(Dictionary<string, string?> queryStringParams, TRequest request, Action<TRequest, Dictionary<string, string?>> queryStringParamsResolver) where TRequest : ListRequestBase
@@ -102,6 +107,32 @@ namespace Orneholm.SverigesRadio.Api
             }
 
             queryStringParams[Constants.Common.QueryString.Sort] = sortString.ToString().TrimEnd(Constants.Common.QueryString.SortFieldSeparator);
+        }
+
+        private static void AddAudioSettingsQueryStringParams(Dictionary<string, string?> queryStringParams, IAudioSettings audioSettings)
+        {
+            queryStringParams[Constants.Common.QueryString.AudioQuality] = GetAudioQuality(audioSettings.AudioQuality);
+
+            if (audioSettings.LiveAudioTemplateId.HasValue)
+            {
+                queryStringParams[Constants.Common.QueryString.LiveAudioTemplateId] = audioSettings.LiveAudioTemplateId.Value.ToString("D");
+            }
+            if (audioSettings.OnDemandAudioTemplateId.HasValue)
+            {
+                queryStringParams[Constants.Common.QueryString.OnDemandAudioTemplateId] = audioSettings.OnDemandAudioTemplateId.Value.ToString("D");
+            }
+        }
+
+        private static string GetAudioQuality(AudioQuality audioQuality)
+        {
+            return audioQuality switch
+            {
+                AudioQuality.Normal => Constants.Common.QueryString.AudioQualityNormal,
+                AudioQuality.Low => Constants.Common.QueryString.AudioQualityLow,
+                AudioQuality.High => Constants.Common.QueryString.AudioQualityHigh,
+
+                _ => string.Empty
+            };
         }
 
         private static async Task<TResult> GetAsync<TResult>(this HttpClient httpClient, string url, Dictionary<string, string?>? queryStringParams = null)

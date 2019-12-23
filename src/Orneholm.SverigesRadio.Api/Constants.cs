@@ -33,6 +33,14 @@ namespace Orneholm.SverigesRadio.Api
                 public const string FilterField = "filter";
                 public const string FilterValue = "filtervalue";
 
+                // Audio
+                public const string AudioQuality = "audioquality";
+                public const string AudioQualityLow = "lo";
+                public const string AudioQualityNormal = "normal";
+                public const string AudioQualityHigh = "hi";
+
+                public const string LiveAudioTemplateId = "liveaudiotemplateid";
+                public const string OnDemandAudioTemplateId = "ondemandaudiotemplateid";
             }
         }
 
@@ -40,7 +48,7 @@ namespace Orneholm.SverigesRadio.Api
         {
             public const string BaseUrl = "programs";
 
-            public static readonly SverigesRadioApiEndpointConfiguration<ProgramListRequest, ProgramFilterFields, ProgramListSortFields> EndpointConfiguration = new SverigesRadioApiEndpointConfiguration<ProgramListRequest, ProgramFilterFields, ProgramListSortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<ProgramListRequest, ProgramListFilterFields, ProgramListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ProgramListRequest, ProgramListFilterFields, ProgramListSortFields>(
                 BaseUrl,
                 (request, queryString) =>
                 {
@@ -52,10 +60,10 @@ namespace Orneholm.SverigesRadio.Api
                 {
                     return fields switch
                     {
-                        ProgramFilterFields.Archived => Filter.Archived,
-                        ProgramFilterFields.HasOnDemand => Filter.HasOnDemand,
-                        ProgramFilterFields.HasPod => Filter.HasPod,
-                        ProgramFilterFields.ResponsibleEditor => Filter.ResponsibleEditor,
+                        ProgramListFilterFields.Archived => Filter.Archived,
+                        ProgramListFilterFields.HasOnDemand => Filter.HasOnDemand,
+                        ProgramListFilterFields.HasPod => Filter.HasPod,
+                        ProgramListFilterFields.ResponsibleEditor => Filter.ResponsibleEditor,
 
                         _ => string.Empty
                     };
@@ -76,6 +84,44 @@ namespace Orneholm.SverigesRadio.Api
                 public const string HasOnDemand = "program.hasondemand";
                 public const string HasPod = "program.haspod";
                 public const string ResponsibleEditor = "program.responsibleeditor";
+            }
+
+            public static class Sort
+            {
+
+            }
+        }
+
+        public static class Channels
+        {
+            public const string BaseUrl = "channels";
+
+            public static readonly SverigesRadioApiListEndpointConfiguration<ChannelListRequest, ChannelListFilterFields, ChannelListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ChannelListRequest, ChannelListFilterFields, ChannelListSortFields>(
+                BaseUrl,
+                (request, queryString) =>
+                {
+
+                },
+                fields =>
+                {
+                    return fields switch
+                    {
+                        ChannelListFilterFields.ChannelType => Filter.ChannelType,
+
+                        _ => string.Empty
+                    };
+                },
+                null
+            );
+
+            public static class QueryString
+            {
+
+            }
+
+            public static class Filter
+            {
+                public const string ChannelType = "channel.channeltype";
             }
 
             public static class Sort

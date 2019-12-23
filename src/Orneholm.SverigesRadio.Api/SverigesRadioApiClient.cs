@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Orneholm.SverigesRadio.Api.Models;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
+using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
 namespace Orneholm.SverigesRadio.Api
@@ -39,6 +39,8 @@ namespace Orneholm.SverigesRadio.Api
             _httpClient = httpClient;
         }
 
+        // Programs
+
         public Task<ProgramDetailsResponse> GetProgramAsync(ProgramDetailsRequest request)
         {
             return _httpClient.GetDetailsAsync<ProgramDetailsResponse>(Constants.Programs.BaseUrl, request);
@@ -46,8 +48,25 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<ProgramListResponse> GetProgramsAsync(ProgramListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<ProgramListRequest, ProgramListResponse, ProgramFilterFields, ProgramListSortFields>(
-                Constants.Programs.EndpointConfiguration,
+            return _httpClient.GetListAsync<ProgramListRequest, ProgramListResponse, ProgramListFilterFields, ProgramListSortFields>(
+                Constants.Programs.ListEndpointConfiguration,
+                request,
+                pagination,
+                request.Filter
+            );
+        }
+
+        // Channels
+
+        public Task<ChannelDetailsResponse> GetChannelAsync(ChannelDetailsRequest request)
+        {
+            return _httpClient.GetDetailsAsync<ChannelDetailsResponse>(Constants.Channels.BaseUrl, request);
+        }
+
+        public Task<ChannelListResponse> GetChannelsAsync(ChannelListRequest request, ListPagination? pagination = null)
+        {
+            return _httpClient.GetListAsync<ChannelListRequest, ChannelListResponse, ChannelListFilterFields, ChannelListSortFields>(
+                Constants.Channels.ListEndpointConfiguration,
                 request,
                 pagination,
                 request.Filter

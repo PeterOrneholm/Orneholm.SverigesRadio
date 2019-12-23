@@ -1,6 +1,6 @@
 namespace Orneholm.SverigesRadio.Api.Models.Request.Programs
 {
-    public enum ProgramFilterFields
+    public enum ProgramListFilterFields
     {
         None,
 

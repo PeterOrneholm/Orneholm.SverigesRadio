@@ -18,6 +18,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             var apiClient = SverigesRadioApiClient.CreateClient();
 
             await GetProgramsSample(apiClient);
+            await GetChannelsSample(apiClient);
 
             Console.WriteLine();
             Console.ReadLine();
@@ -34,6 +35,20 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             foreach (var program in programs.Programs)
             {
                 Console.WriteLine($"{program.Name} ({program.Id}): {program.Description}");
+            }
+        }
+
+        private static async Task GetChannelsSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine("Channels");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var programs = await apiClient.GetChannelsAsync(new ChannelListRequest());
+
+            foreach (var program in programs.Channels)
+            {
+                Console.WriteLine($"{program.Name} ({program.Id}): {program.ChannelType}");
             }
         }
     }
