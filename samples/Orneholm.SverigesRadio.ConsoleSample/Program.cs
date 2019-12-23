@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api;
-using Orneholm.SverigesRadio.Api.Models;
-using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 
 namespace Orneholm.SverigesRadio.ConsoleSample
@@ -30,11 +28,11 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var programs = await apiClient.GetProgramsAsync(new ProgramListRequest());
-
-            foreach (var program in programs.Programs)
+            var result = await apiClient.GetProgramsAsync(new ProgramListRequest());
+            var row = 1;
+            foreach (var item in result.Programs)
             {
-                Console.WriteLine($"{program.Name} ({program.Id}): {program.Description}");
+                Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.Description}");
             }
         }
 
@@ -44,11 +42,11 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var programs = await apiClient.GetChannelsAsync(new ChannelListRequest());
-
-            foreach (var program in programs.Channels)
+            var items = apiClient.GetAllChannelsAsync(new ChannelListRequest());
+            var row = 1;
+            await foreach (var item in items)
             {
-                Console.WriteLine($"{program.Name} ({program.Id}): {program.ChannelType}");
+                Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.ChannelType}");
             }
         }
     }

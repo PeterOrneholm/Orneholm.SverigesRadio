@@ -17,11 +17,13 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Programs
         public string ProgramImageTemplateWide { get; set; } = string.Empty;
         public string SocialImage { get; set; } = string.Empty;
         public string SocialImageTemplate { get; set; } = string.Empty;
-        public ProgramSocialMediaPlatform[] SocialMediaPlatforms { get; set; } = new ProgramSocialMediaPlatform[] {};
+        public ProgramSocialMediaPlatform[] SocialMediaPlatforms { get; set; } = {};
         public ProgramChannel Channel { get; set; } = new ProgramChannel();
         public bool Archived { get; set; }
         public bool HasOnDemand { get; set; }
         public bool HasPod { get; set; }
         public string ResponsibleEditor { get; set; } = string.Empty;
+
+        public override string ToString() => $"Program: {Name} ({Id})";
     }
 }

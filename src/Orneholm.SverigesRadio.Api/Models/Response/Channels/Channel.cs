@@ -14,5 +14,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Channels
         public string ScheduleUrl { get; set; } = string.Empty;
         public string ChannelType { get; set; } = string.Empty;
         public string XmlTvId { get; set; } = string.Empty;
+
+        public override string ToString() => $"Channel: {Name} ({Id})";
     }
 }

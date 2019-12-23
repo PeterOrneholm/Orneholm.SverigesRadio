@@ -1,6 +1,6 @@
 namespace Orneholm.SverigesRadio.Api.Models.Response
 {
-    public class ListPagination
+    public class ListResponsePagination
     {
         public int Page { get; set; }
         public int Size { get; set; }

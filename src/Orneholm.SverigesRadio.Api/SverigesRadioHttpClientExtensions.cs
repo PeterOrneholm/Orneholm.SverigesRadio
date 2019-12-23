@@ -41,7 +41,6 @@ namespace Orneholm.SverigesRadio.Api
 
             AddQueryStringParams(queryStringParams, request, listEndpointConfiguration.QueryStringParamsResolver);
 
-
             return httpClient.GetAsync<TResult>(listEndpointConfiguration.Url, queryStringParams);
         }
 
