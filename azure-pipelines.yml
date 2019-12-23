@@ -122,8 +122,8 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: 'dotnet publish'
       inputs:
-        command: custom
-        custom: publish
+        command: publish
+        publishWebProjects: false
         zipAfterPublish: true
         projects: '$(pathToPublishProjects)'
         arguments: '--configuration $(dotnetBuildConfiguration) --output $(build.artifactstagingdirectory)'
