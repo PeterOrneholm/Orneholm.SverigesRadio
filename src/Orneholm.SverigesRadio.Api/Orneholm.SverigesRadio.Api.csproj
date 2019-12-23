@@ -11,7 +11,7 @@
         <PackageId>Orneholm.SverigesRadio.Api</PackageId>
 
         <VersionPrefix>1.0.0</VersionPrefix>
-        <VersionSuffix>alpha-3</VersionSuffix>
+        <VersionSuffix>alpha-1</VersionSuffix>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion Condition="'$(BUILD_BUILDNUMBER)' == ''">$(VersionPrefix).0</FileVersion>
         <FileVersion Condition="'$(BUILD_BUILDNUMBER)' != ''">$(VersionPrefix).$(BUILD_BUILDNUMBER)</FileVersion>
