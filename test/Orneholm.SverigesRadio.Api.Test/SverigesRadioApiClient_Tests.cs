@@ -37,7 +37,7 @@ namespace Orneholm.SverigesRadio.Api.Test
             var pagination = ListPagination.WithPageAndSize(1, 10);
 
             // Act
-            var result = await _apiClient.GetProgramsAsync(request, pagination);
+            var result = await _apiClient.ListProgramsAsync(request, pagination);
 
             // Assert
             Assert.Equal(10, result.Programs.Count);
