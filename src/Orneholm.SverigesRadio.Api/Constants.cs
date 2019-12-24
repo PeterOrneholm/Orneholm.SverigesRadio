@@ -128,6 +128,7 @@ namespace Orneholm.SverigesRadio.Api
         public static class Episodes
         {
             public const string BaseUrl = "episodes";
+            public const string SearchUrl = BaseUrl + "/search";
 
             public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields>(
                 BaseUrl,
@@ -147,9 +148,30 @@ namespace Orneholm.SverigesRadio.Api
                 }
             );
 
+            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeSearchRequest, EpisodeListFilterFields, EpisodeListSortFields> SearchEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeSearchRequest, EpisodeListFilterFields, EpisodeListSortFields>(
+                SearchUrl,
+                (request, queryString) =>
+                {
+                    queryString[QueryString.Query] = request.Query;
+
+                    if (request.ProgramId.HasValue)
+                    {
+                        queryString[QueryString.ProgramId] = request.ProgramId.Value.ToString("D");
+                    }
+
+                    if (request.KanalId.HasValue)
+                    {
+                        queryString[QueryString.KanalId] = request.KanalId.Value.ToString("D");
+                    }
+                }
+            );
+
             public static class QueryString
             {
+                public const string Query = "query";
                 public const string ProgramId = "programid";
+                public const string KanalId = "kanalid";
+
                 public const string FromDate = "fromdate";
                 public const string ToDate = "todate";
             }

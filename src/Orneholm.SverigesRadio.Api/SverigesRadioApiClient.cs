@@ -113,6 +113,15 @@ namespace Orneholm.SverigesRadio.Api
             );
         }
 
+        public Task<EpisodeListResponse> SearchEpisodesAsync(EpisodeSearchRequest request, ListPagination? pagination = null)
+        {
+            return _httpClient.GetListAsync<EpisodeSearchRequest, EpisodeListResponse, EpisodeListFilterFields, EpisodeListSortFields>(
+                Constants.Episodes.SearchEndpointConfiguration,
+                request,
+                pagination
+            );
+        }
+
         // Broadcasts
 
         public Task<BroadcastDetailsResponse> GetBroadcastAsync(BroadcastDetailsRequest request)

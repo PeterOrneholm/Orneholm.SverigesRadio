@@ -22,8 +22,10 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
             var apiClient = SverigesRadioApiClient.CreateClient();
 
-            await GetProgramsSample(apiClient);
-            await GetProgramCategoriesSample(apiClient);
+            //await GetProgramsSample(apiClient);
+            //await GetProgramCategoriesSample(apiClient);
+
+            await SearchEpisodesSample(apiClient);
 
             await GetChannelsSample(apiClient);
 
@@ -68,6 +70,21 @@ namespace Orneholm.SverigesRadio.ConsoleSample
                 {
                     Console.WriteLine($"    - {podfile.PublishDateUtc}: {podfile.Title} ({podfile.Id}): {podfile.Description}");
                 }
+            }
+        }
+
+        private static async Task SearchEpisodesSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Search Episodes");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var result = await apiClient.SearchEpisodesAsync(new EpisodeSearchRequest("Microsoft"), ListPagination.TakeFirst(5));
+            var row = 1;
+            foreach (var item in result.Episodes)
+            {
+                Console.WriteLine($"{row++}. {item.Title} ({item.Id}) - {item.Description}");
             }
         }
 
