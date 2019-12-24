@@ -104,6 +104,19 @@ namespace Orneholm.SverigesRadio.Api
             return _httpClient.GetDetailsAsync<EpisodeDetailsResponse>(Constants.Channels.BaseUrl, request);
         }
 
+        public async Task<EpisodeListResponse> GetEpisodesAsync(EpisodeDetailsMultipleRequest request, ListPagination? pagination = null)
+        {
+            var result = await _httpClient.GetListAsync<EpisodeDetailsMultipleRequest, EpisodeListResponse, EpisodeListFilterFields, EpisodeListSortFields>(
+                Constants.Episodes.DetailsMultipleUrlEndpointConfiguration,
+                request,
+                pagination
+            ).ConfigureAwait(false);
+
+            result.Pagination.TotalHits = request.Ids.Count;
+
+            return result;
+        }
+
         public Task<EpisodeListResponse> ListEpisodesAsync(EpisodeListRequest request, ListPagination? pagination = null)
         {
             return _httpClient.GetListAsync<EpisodeListRequest, EpisodeListResponse, EpisodeListFilterFields, EpisodeListSortFields>(

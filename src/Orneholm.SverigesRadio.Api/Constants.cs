@@ -1,3 +1,4 @@
+using System.Linq;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
@@ -129,6 +130,7 @@ namespace Orneholm.SverigesRadio.Api
         {
             public const string BaseUrl = "episodes";
             public const string SearchUrl = BaseUrl + "/search";
+            public const string GetMultipleUrl = BaseUrl + "/getlist";
 
             public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields>(
                 BaseUrl,
@@ -166,6 +168,14 @@ namespace Orneholm.SverigesRadio.Api
                 }
             );
 
+            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeDetailsMultipleRequest, EpisodeListFilterFields, EpisodeListSortFields> DetailsMultipleUrlEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeDetailsMultipleRequest, EpisodeListFilterFields, EpisodeListSortFields>(
+                GetMultipleUrl,
+                (request, queryString) =>
+                {
+                    queryString[QueryString.Ids] = string.Join(",", request.Ids.Select(x => x.ToString("D")));
+                }
+            );
+
             public static class QueryString
             {
                 public const string Query = "query";
@@ -174,6 +184,8 @@ namespace Orneholm.SverigesRadio.Api
 
                 public const string FromDate = "fromdate";
                 public const string ToDate = "todate";
+
+                public const string Ids = "ids";
             }
         }
 

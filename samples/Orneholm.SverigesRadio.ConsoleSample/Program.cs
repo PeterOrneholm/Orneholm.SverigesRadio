@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api;
@@ -22,9 +23,10 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
             var apiClient = SverigesRadioApiClient.CreateClient();
 
-            //await ListProgramsSample(apiClient);
-            //await ListProgramCategoriesSample(apiClient);
+            await ListProgramsSample(apiClient);
+            await ListProgramCategoriesSample(apiClient);
 
+            await GetEpisodesSample(apiClient);
             await SearchEpisodesSample(apiClient);
 
             await ListChannelsSample(apiClient);
@@ -88,6 +90,26 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             }
         }
 
+        private static async Task GetEpisodesSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine();
+            Console.WriteLine("GetEpisodes");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var result = await apiClient.GetEpisodesAsync(new EpisodeDetailsMultipleRequest(new List<int>
+            {
+                1201209,
+                1320251,
+                410158,
+            }), ListPagination.TakeFirst(5));
+            var row = 1;
+            foreach (var item in result.Episodes)
+            {
+                Console.WriteLine($"{row++}. {item.Title} ({item.Id}) - {item.Description}");
+            }
+        }
+
         private static async Task ListProgramCategoriesSample(SverigesRadioApiClient apiClient)
         {
             Console.WriteLine();
@@ -110,7 +132,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var items = apiClient.GetAllChannelsAsync(new ChannelListRequest());
+            var items = apiClient.ListAllChannelsAsync(new ChannelListRequest());
             var row = 1;
             await foreach (var item in items)
             {
