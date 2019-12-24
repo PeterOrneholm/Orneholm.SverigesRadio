@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Orneholm.SverigesRadio.Api.Models.Response.Episodes
 {
@@ -7,6 +8,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Episodes
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public string Text { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
         public DateTime PublishDateUtc { get; set; }
 
@@ -22,5 +24,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Episodes
         public EpisodePodfile? ListenPodfile { get; set; }
         public EpisodePodfile? DownloadPodfile { get; set; }
         public EpisodeBroadcast? Broadcast { get; set; }
+
+        public List<EpisodeGroup> EpisodeGroups { get; set; } = new List<EpisodeGroup>();
     }
 }
