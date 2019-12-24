@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api;
 using Orneholm.SverigesRadio.Api.Models.Request;
@@ -20,6 +21,8 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
             await GetProgramsSample(apiClient);
             await GetChannelsSample(apiClient);
+
+            await GetChannelsConstants(apiClient);
 
             Console.WriteLine();
             Console.ReadLine();
@@ -57,6 +60,22 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.ChannelType}");
             }
+        }
+
+        private static async Task GetChannelsConstants(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine("Channels");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var items = apiClient.GetAllChannelsAsync(new ChannelListRequest());
+            var sb = new StringBuilder();
+            await foreach (var item in items)
+            {
+                sb.AppendLine($"public const string {item.Name.Replace(" ", "")}_{item.ChannelType} = {item.Id};");
+            }
+
+            Console.Write(sb.ToString());
         }
     }
 }
