@@ -26,6 +26,13 @@ namespace Orneholm.SverigesRadio.Api
 
         public static Task<TResult> GetDetailsAsync<TResult>(this HttpClient httpClient, string url, DetailsRequestBase request, Dictionary<string, string?>? queryStringParams = null)
         {
+            queryStringParams ??= new Dictionary<string, string?>();
+
+            if (request is IAudioSettings audioSettings)
+            {
+                AddAudioSettingsQueryStringParams(queryStringParams, audioSettings);
+            }
+
             var fullUrl = $"{url}/{request.Id:D}";
             return httpClient.GetAsync<TResult>(fullUrl, queryStringParams);
         }
