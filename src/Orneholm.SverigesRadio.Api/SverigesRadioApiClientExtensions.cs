@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response;
+using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
@@ -52,6 +54,15 @@ namespace Orneholm.SverigesRadio.Api
             {
                 var result = await apiClient.GetChannelsAsync(request, pagination);
                 return (result.Channels, result.Pagination);
+            });
+        }
+
+        public static IAsyncEnumerable<Broadcast> GetAllBroadcastsAsync(this ISverigesRadioApiClient apiClient, BroadcastListRequest request)
+        {
+            return apiClient.GetAllAsync<Broadcast, BroadcastListRequest>(request, async (listRequest, pagination) =>
+            {
+                var result = await apiClient.GetBroadcastsAsync(request, pagination);
+                return (result.Broadcasts, result.Pagination);
             });
         }
 

@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
@@ -25,7 +26,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
             await GetChannelsSample(apiClient);
 
-            await CreateConstants(apiClient);
+            //await CreateConstants(apiClient);
 
             Console.WriteLine();
             Console.ReadLine();
@@ -33,27 +34,38 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
         private static async Task GetProgramsSample(SverigesRadioApiClient apiClient)
         {
+            Console.WriteLine();
             Console.WriteLine("Programs");
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.GetProgramsAsync(new ProgramListRequest(), ListPagination.TakeFirst(10));
+            var result = await apiClient.GetProgramsAsync(new ProgramListRequest(), ListPagination.TakeFirst(5));
             var row = 1;
             foreach (var item in result.Programs)
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.Description}");
 
-                var episodes = await apiClient.GetEpisodesAsync(new EpisodeListRequest(item.Id), ListPagination.TakeFirst(5));
+                Console.WriteLine("    Episodes (latest 5):");
+                Console.WriteLine("    -------------------------"); var episodes = await apiClient.GetEpisodesAsync(new EpisodeListRequest(item.Id), ListPagination.TakeFirst(5));
                 foreach (var episode in episodes.Episodes)
                 {
                     Console.WriteLine($"    - {episode.PublishDateUtc}: {episode.Title} ({episode.Id}): {episode.Description}");
+                }
+
+                Console.WriteLine("    Broadcasts (latest 5):");
+                Console.WriteLine("    -------------------------");
+                var broadcasts = await apiClient.GetBroadcastsAsync(new BroadcastListRequest(item.Id), ListPagination.TakeFirst(5));
+                foreach (var broadcast in broadcasts.Broadcasts)
+                {
+                    Console.WriteLine($"    - {broadcast.BroadcastDateUtc}: {broadcast.Title} ({broadcast.Id}): {broadcast.Description}");
                 }
             }
         }
 
         private static async Task GetProgramCategoriesSample(SverigesRadioApiClient apiClient)
         {
-            Console.WriteLine("Channels");
+            Console.WriteLine();
+            Console.WriteLine("ProgramCategories");
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
@@ -67,6 +79,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
         private static async Task GetChannelsSample(SverigesRadioApiClient apiClient)
         {
+            Console.WriteLine();
             Console.WriteLine("Channels");
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
@@ -78,6 +91,8 @@ namespace Orneholm.SverigesRadio.ConsoleSample
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.ChannelType}");
             }
         }
+
+
 
         private static async Task CreateConstants(SverigesRadioApiClient apiClient)
         {

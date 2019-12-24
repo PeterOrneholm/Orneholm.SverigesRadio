@@ -2,10 +2,12 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
+using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Response.ProgramCategories;
@@ -104,6 +106,22 @@ namespace Orneholm.SverigesRadio.Api
         {
             return _httpClient.GetListAsync<EpisodeListRequest, EpisodeListResponse, EpisodeListFilterFields, EpisodeListSortFields>(
                 Constants.Episodes.ListEndpointConfiguration,
+                request,
+                pagination
+            );
+        }
+
+        // Broadcasts
+
+        public Task<BroadcastDetailsResponse> GetBroadcastAsync(BroadcastDetailsRequest request)
+        {
+            return _httpClient.GetDetailsAsync<BroadcastDetailsResponse>(Constants.Broadcasts.BaseUrl, request);
+        }
+
+        public Task<BroadcastListResponse> GetBroadcastsAsync(BroadcastListRequest request, ListPagination? pagination = null)
+        {
+            return _httpClient.GetListAsync<BroadcastListRequest, BroadcastListResponse, BroadcastListFilterFields, BroadcastListSortFields>(
+                Constants.Broadcasts.ListEndpointConfiguration,
                 request,
                 pagination
             );

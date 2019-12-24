@@ -44,6 +44,10 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Channels
         /// Kanalens kanaltyp. Beskriver vilken typ det är, t.ex. Rikskanal.
         /// </summary>
         public string ChannelType { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Används av Sveriges Radios applikationer.
+        /// </summary>
         public string XmlTvId { get; set; } = string.Empty;
 
         public override string ToString() => $"Channel: {Name} - {ChannelType} ({Id})";
