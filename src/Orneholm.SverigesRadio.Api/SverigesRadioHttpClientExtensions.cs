@@ -51,7 +51,10 @@ namespace Orneholm.SverigesRadio.Api
                 AddAudioSettingsQueryStringParams(queryStringParams, audioSettings);
             }
 
-            AddQueryStringParams(queryStringParams, request, listEndpointConfiguration.QueryStringParamsResolver);
+            if (listEndpointConfiguration.QueryStringParamsResolver != null)
+            {
+                AddQueryStringParams(queryStringParams, request, listEndpointConfiguration.QueryStringParamsResolver);
+            }
 
             return httpClient.GetAsync<TResult>(listEndpointConfiguration.Url, queryStringParams);
         }

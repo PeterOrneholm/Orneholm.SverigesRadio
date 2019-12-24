@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
+using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
+using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
 namespace Orneholm.SverigesRadio.Api
@@ -22,6 +25,24 @@ namespace Orneholm.SverigesRadio.Api
             {
                 var result = await apiClient.GetProgramsAsync(request, pagination);
                 return (result.Programs, result.Pagination);
+            });
+        }
+
+        public static IAsyncEnumerable<Models.Response.ProgramCategories.ProgramCategory> GetAllProgramCategoriesAsync(this ISverigesRadioApiClient apiClient, ProgramCategoryListRequest request)
+        {
+            return apiClient.GetAllAsync<Models.Response.ProgramCategories.ProgramCategory, ProgramCategoryListRequest>(request, async (listRequest, pagination) =>
+            {
+                var result = await apiClient.GetProgramCategoriesAsync(request, pagination);
+                return (result.ProgramCategories, result.Pagination);
+            });
+        }
+
+        public static IAsyncEnumerable<Episode> GetAllProgramCategoriesAsync(this ISverigesRadioApiClient apiClient, EpisodeListRequest request)
+        {
+            return apiClient.GetAllAsync<Episode, EpisodeListRequest>(request, async (listRequest, pagination) =>
+            {
+                var result = await apiClient.GetEpisodesAsync(request, pagination);
+                return (result.Episodes, result.Pagination);
             });
         }
 

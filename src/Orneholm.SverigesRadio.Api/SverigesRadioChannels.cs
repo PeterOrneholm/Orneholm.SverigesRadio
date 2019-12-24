@@ -1,6 +1,6 @@
 namespace Orneholm.SverigesRadio.Api
 {
-    public static class SverigesRadioApiConstants
+    public static class SverigesRadioApiIds
     {
         public static class Channels
         {
@@ -45,6 +45,25 @@ namespace Orneholm.SverigesRadio.Api
             public const int P2_Musik_FlerKanaler = 2562;
             public const int Radioapansknattekanal_FlerKanaler = 2755;
             public const int P4Plus_FlerKanaler = 4951;
+        }
+
+        public static class ProgramCategories
+        {
+            public const int Barn3_8ar = 2;
+            public const int Barn9_13ar = 132;
+            public const int Dokumentar = 82;
+            public const int Drama = 134;
+            public const int Ekonomi = 135;
+            public const int Humor = 133;
+            public const int Kultur_Noje = 3;
+            public const int Livsstil = 14;
+            public const int Livsaskadning = 4;
+            public const int Musik = 5;
+            public const int NewsInOtherLanguages = 11;
+            public const int Nyheter = 68;
+            public const int Samhalle = 7;
+            public const int Sport = 10;
+            public const int Vetenskap_Miljo = 12;
         }
     }
 }

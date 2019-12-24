@@ -1,5 +1,6 @@
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 
 namespace Orneholm.SverigesRadio.Api
@@ -88,6 +89,15 @@ namespace Orneholm.SverigesRadio.Api
             }
         }
 
+        public static class ProgramCategories
+        {
+            public const string BaseUrl = "programcategories";
+
+            public static readonly SverigesRadioApiListEndpointConfiguration<ProgramCategoryListRequest, ProgramCategoryListFilterFields, ProgramCategorySortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ProgramCategoryListRequest, ProgramCategoryListFilterFields, ProgramCategorySortFields>(
+                BaseUrl
+            );
+        }
+
         public static class Channels
         {
             public const string BaseUrl = "channels";
@@ -103,8 +113,7 @@ namespace Orneholm.SverigesRadio.Api
 
                         _ => string.Empty
                     };
-                },
-                null
+                }
             );
 
             public static class Filter

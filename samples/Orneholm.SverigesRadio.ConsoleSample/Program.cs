@@ -5,6 +5,7 @@ using Orneholm.SverigesRadio.Api;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 
 namespace Orneholm.SverigesRadio.ConsoleSample
@@ -20,9 +21,11 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             var apiClient = SverigesRadioApiClient.CreateClient();
 
             await GetProgramsSample(apiClient);
+            await GetProgramCategoriesSample(apiClient);
+
             await GetChannelsSample(apiClient);
 
-            await GetChannelsConstants(apiClient);
+            await CreateConstants(apiClient);
 
             Console.WriteLine();
             Console.ReadLine();
@@ -48,6 +51,20 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             }
         }
 
+        private static async Task GetProgramCategoriesSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine("Channels");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var items = apiClient.GetAllProgramCategoriesAsync(new ProgramCategoryListRequest());
+            var row = 1;
+            await foreach (var item in items)
+            {
+                Console.WriteLine($"{row++}. {item.Name} ({item.Id})");
+            }
+        }
+
         private static async Task GetChannelsSample(SverigesRadioApiClient apiClient)
         {
             Console.WriteLine("Channels");
@@ -62,17 +79,13 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             }
         }
 
-        private static async Task GetChannelsConstants(SverigesRadioApiClient apiClient)
+        private static async Task CreateConstants(SverigesRadioApiClient apiClient)
         {
-            Console.WriteLine("Channels");
-            Console.WriteLine("---------------------------------------------------");
-            Console.WriteLine();
-
-            var items = apiClient.GetAllChannelsAsync(new ChannelListRequest());
+            var items = apiClient.GetAllProgramCategoriesAsync(new ProgramCategoryListRequest());
             var sb = new StringBuilder();
             await foreach (var item in items)
             {
-                sb.AppendLine($"public const string {item.Name.Replace(" ", "")}_{item.ChannelType} = {item.Id};");
+                sb.AppendLine($"public const int {item.Name.Replace(" ", "")} = {item.Id};");
             }
 
             Console.Write(sb.ToString());

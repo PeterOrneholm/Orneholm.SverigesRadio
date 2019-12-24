@@ -9,8 +9,10 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Programs
         public ProgramCategory ProgramCategory { get; set; } = new ProgramCategory();
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
+        public string ResponsibleEditor { get; set; } = string.Empty;
+
+
         public string ProgramUrl { get; set; } = string.Empty;
-        public string ProgramSlug { get; set; } = string.Empty;
         public string ProgramImage { get; set; } = string.Empty;
         public string ProgramImageTemplate { get; set; } = string.Empty;
         public string ProgramImageWide { get; set; } = string.Empty;
@@ -22,8 +24,9 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Programs
         public bool Archived { get; set; }
         public bool HasOnDemand { get; set; }
         public bool HasPod { get; set; }
-        public string ResponsibleEditor { get; set; } = string.Empty;
 
-        public override string ToString() => $"Program: {Name} ({Id})";
+        public string ProgramSlug { get; set; } = string.Empty;
+
+        public override string ToString() => $"Program: {Name} - {ProgramCategory.Name} ({Id})";
     }
 }

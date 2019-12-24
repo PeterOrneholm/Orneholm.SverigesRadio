@@ -2,9 +2,11 @@ using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Response.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
 namespace Orneholm.SverigesRadio.Api
@@ -17,6 +19,10 @@ namespace Orneholm.SverigesRadio.Api
         // Programs
         Task<ProgramDetailsResponse> GetProgramAsync(ProgramDetailsRequest request);
         Task<ProgramListResponse> GetProgramsAsync(ProgramListRequest request, ListPagination? pagination = null);
+
+        // ProgramCategories
+        Task<ProgramCategoryDetailsResponse> GetProgramCategoryAsync(ProgramCategoryDetailsRequest request);
+        Task<ProgramCategoryListResponse> GetProgramCategoriesAsync(ProgramCategoryListRequest request, ListPagination? pagination = null);
 
         // Channels
         Task<ChannelDetailsResponse> GetChannelAsync(ChannelDetailsRequest request);
