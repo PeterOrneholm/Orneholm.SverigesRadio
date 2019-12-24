@@ -6,6 +6,7 @@ using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 
@@ -58,6 +59,14 @@ namespace Orneholm.SverigesRadio.ConsoleSample
                 foreach (var broadcast in broadcasts.Broadcasts)
                 {
                     Console.WriteLine($"    - {broadcast.BroadcastDateUtc}: {broadcast.Title} ({broadcast.Id}): {broadcast.Description}");
+                }
+
+                Console.WriteLine("    Podfiles (latest 5):");
+                Console.WriteLine("    -------------------------");
+                var podfiles = await apiClient.GetPodfilesAsync(new PodfileListRequest(item.Id), ListPagination.TakeFirst(5));
+                foreach (var podfile in podfiles.Podfiles)
+                {
+                    Console.WriteLine($"    - {podfile.PublishDateUtc}: {podfile.Title} ({podfile.Id}): {podfile.Description}");
                 }
             }
         }

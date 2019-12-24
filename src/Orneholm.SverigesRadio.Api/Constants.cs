@@ -1,6 +1,7 @@
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 
@@ -159,6 +160,24 @@ namespace Orneholm.SverigesRadio.Api
             public const string BaseUrl = "broadcasts";
 
             public static readonly SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, BroadcastListFilterFields, BroadcastListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, BroadcastListFilterFields, BroadcastListSortFields>(
+                BaseUrl,
+                (request, queryString) =>
+                {
+                    queryString[QueryString.ProgramId] = request.ProgramId.ToString("D");
+                }
+            );
+
+            public static class QueryString
+            {
+                public const string ProgramId = "programid";
+            }
+        }
+
+        public static class Podfiles
+        {
+            public const string BaseUrl = "podfiles";
+
+            public static readonly SverigesRadioApiListEndpointConfiguration<PodfileListRequest, PodfileListFilterFields, PodfileListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<PodfileListRequest, PodfileListFilterFields, PodfileListSortFields>(
                 BaseUrl,
                 (request, queryString) =>
                 {

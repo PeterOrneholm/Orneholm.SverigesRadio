@@ -1,15 +1,15 @@
 using System;
 
-namespace Orneholm.SverigesRadio.Api.Models.Response.Episodes
+namespace Orneholm.SverigesRadio.Api.Models.Response.Podfiles
 {
-    public class EpisodePodfile
+    public class Podfile
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
 
-        public EpisodeProgram Program { get; set; } = new EpisodeProgram();
+        public PodfileProgram Program { get; set; } = new PodfileProgram();
         public DateTime AvailableFromUtc { get; set; }
         public DateTime PublishDateUtc { get; set; }
 

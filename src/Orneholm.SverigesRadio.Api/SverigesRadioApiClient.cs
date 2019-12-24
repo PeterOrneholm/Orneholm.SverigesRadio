@@ -5,11 +5,13 @@ using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Response.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Response.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
@@ -122,6 +124,22 @@ namespace Orneholm.SverigesRadio.Api
         {
             return _httpClient.GetListAsync<BroadcastListRequest, BroadcastListResponse, BroadcastListFilterFields, BroadcastListSortFields>(
                 Constants.Broadcasts.ListEndpointConfiguration,
+                request,
+                pagination
+            );
+        }
+
+        // Podfiles
+
+        public Task<PodfileDetailsResponse> GetPodfileAsync(PodfileDetailsRequest request)
+        {
+            return _httpClient.GetDetailsAsync<PodfileDetailsResponse>(Constants.Podfiles.BaseUrl, request);
+        }
+
+        public Task<PodfileListResponse> GetPodfilesAsync(PodfileListRequest request, ListPagination? pagination = null)
+        {
+            return _httpClient.GetListAsync<PodfileListRequest, PodfileListResponse, PodfileListFilterFields, PodfileListSortFields>(
+                Constants.Podfiles.ListEndpointConfiguration,
                 request,
                 pagination
             );

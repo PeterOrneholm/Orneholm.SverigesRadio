@@ -3,11 +3,13 @@ using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Response.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Response.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
@@ -38,5 +40,8 @@ namespace Orneholm.SverigesRadio.Api
         Task<BroadcastDetailsResponse> GetBroadcastAsync(BroadcastDetailsRequest request);
         Task<BroadcastListResponse> GetBroadcastsAsync(BroadcastListRequest request, ListPagination? pagination = null);
 
+        // Podfiles
+        Task<PodfileDetailsResponse> GetPodfileAsync(PodfileDetailsRequest request);
+        Task<PodfileListResponse> GetPodfilesAsync(PodfileListRequest request, ListPagination? pagination = null);
     }
 }
