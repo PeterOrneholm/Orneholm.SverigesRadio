@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Orneholm.SverigesRadio.Api.Models.Request.Common;
 
-namespace Orneholm.SverigesRadio.Api.Models.Request.Broadcasts
+namespace Orneholm.SverigesRadio.Api.Models.Request.ExtraBroadcasts
 {
     public class ExtraBroadcastListRequest : ListRequestBase, IHasAudioSettings
     {

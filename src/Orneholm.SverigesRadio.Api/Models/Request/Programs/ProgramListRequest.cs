@@ -5,7 +5,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Request.Programs
         /// <summary>
         /// Filter of the result.
         /// </summary>
-        public ListFilter<ProgramListFilterFields>? Filter { get; set; } = null;
+        public ProgramListFilter? Filter { get; set; } = null;
 
         /// <summary>
         /// Listar program endast för angiven kanal.

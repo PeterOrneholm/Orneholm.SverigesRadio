@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Common;
+using Orneholm.SverigesRadio.Api.Serialization;
 
 namespace Orneholm.SverigesRadio.Api
 {
