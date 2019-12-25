@@ -22,5 +22,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Episodes
         public EpisodePodfile? ListenPodfile { get; set; }
         public EpisodePodfile? DownloadPodfile { get; set; }
         public EpisodeBroadcast? Broadcast { get; set; }
+
+        public override string ToString() => $"Episode: {Title} ({Id})";
     }
 }

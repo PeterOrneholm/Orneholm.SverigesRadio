@@ -9,5 +9,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Channels
         /// Används av Sveriges Radios applikationer.
         /// </summary>
         public string StatKey { get; set; } = string.Empty;
+
+        public override string ToString() => $"ChannelLiveAudio: {Url} ({Id})";
     }
 }

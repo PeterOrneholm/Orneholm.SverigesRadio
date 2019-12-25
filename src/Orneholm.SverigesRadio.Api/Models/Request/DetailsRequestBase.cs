@@ -7,6 +7,9 @@ namespace Orneholm.SverigesRadio.Api.Models.Request
             Id = id;
         }
 
+        /// <summary>
+        /// Id
+        /// </summary>
         public int Id { get; }
     }
 }

@@ -7,7 +7,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response
     {
         public static bool HasMoreContent(this ListResponsePagination listResponsePagination)
         {
-            return listResponsePagination.Page < listResponsePagination.TotalPages;
+            return listResponsePagination.CurrentPage < listResponsePagination.TotalPages;
         }
 
         public static ListPagination GetNextPageListPagination(this ListResponsePagination listResponsePagination)
@@ -17,7 +17,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response
                 throw new Exception("No more content available.");
             }
 
-            return ListPagination.WithPageAndSize(listResponsePagination.Page + 1, listResponsePagination.Size);
+            return ListPagination.WithPageAndSize(listResponsePagination.CurrentPage + 1, listResponsePagination.CurrentPageSize);
         }
     }
 }

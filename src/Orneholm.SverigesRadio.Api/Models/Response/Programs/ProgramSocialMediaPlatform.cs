@@ -4,5 +4,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Programs
     {
         public string Platform { get; set; } = string.Empty;
         public string PlatformUrl { get; set; } = string.Empty;
+
+        public override string ToString() => $"ProgramSocialMediaPlatform: {Platform} ({PlatformUrl})";
     }
 }

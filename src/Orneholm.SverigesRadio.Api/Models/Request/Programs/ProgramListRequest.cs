@@ -3,7 +3,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Request.Programs
     public class ProgramListRequest : ListRequestBase
     {
         /// <summary>
-        /// Filter of the result.
+        /// Filtrera resultatet. Använd <see cref="ProgramListHasOnDemandFilter"/>, <see cref="ProgramListHasPodFilter"/>, <see cref="ProgramListArchiveFilter"/> eller <see cref="ProgramListResponsibleEditorFilter"/>.
         /// </summary>
         public ProgramListFilter? Filter { get; set; } = null;
 

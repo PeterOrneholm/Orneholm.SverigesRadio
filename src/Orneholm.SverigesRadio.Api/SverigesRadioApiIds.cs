@@ -1,7 +1,14 @@
 namespace Orneholm.SverigesRadio.Api
 {
+    /// <summary>
+    /// ID:n för ett antal objekt som används ofta och har ganska konstanta värden.
+    /// </summary>
     public static class SverigesRadioApiIds
     {
+
+        /// <summary>
+        /// Id för kanaler, de större kanalerna.
+        /// </summary>
         public static class Channels
         {
             public const int P1_Rikskanal = 132;
@@ -47,6 +54,21 @@ namespace Orneholm.SverigesRadio.Api
             public const int P4Plus_FlerKanaler = 4951;
         }
 
+        /// <summary>
+        /// Kanaltyper
+        /// </summary>
+        public static class ChannelTypes
+        {
+            public const string Extrakanaler = "Extrakanaler";
+            public const string FlerKanaler = "Fler kanaler";
+            public const string LokalKanal = "Lokal kanal";
+            public const string MinoritetOchSprak = "Minoritet och språk";
+            public const string Rikskanal = "Rikskanal";
+        }
+
+        /// <summary>
+        /// Programkategori id.
+        /// </summary>
         public static class ProgramCategories
         {
             public const int Barn3_8ar = 2;
@@ -66,6 +88,9 @@ namespace Orneholm.SverigesRadio.Api
             public const int Vetenskap_Miljo = 12;
         }
 
+        /// <summary>
+        /// ID för efterhandslyssningsljudtyper.
+        /// </summary>
         public static class OnDemandAudioTemplates
         {
             public const int M4A_ASX = 1;
@@ -81,6 +106,9 @@ namespace Orneholm.SverigesRadio.Api
             public const int Html5_Desktop = 9;
         }
 
+        /// <summary>
+        /// Id för liveljudetyper.
+        /// </summary>
         public static class LiveAudioTemplates
         {
             public const int MP3 = 2;

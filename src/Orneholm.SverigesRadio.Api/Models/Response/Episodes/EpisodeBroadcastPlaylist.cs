@@ -17,5 +17,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Episodes
         /// Används av Sveriges Radios applikationer.
         /// </summary>
         public string Statkey { get; set; } = string.Empty;
+
+        public override string ToString() => $"EpisodeBroadcastPlaylist: {Url} ({Id})";
     }
 }

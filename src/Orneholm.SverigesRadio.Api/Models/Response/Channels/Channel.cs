@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Orneholm.SverigesRadio.Api.Models.Response.Channels
 {
     public class Channel
@@ -8,18 +10,20 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Channels
         public int Id { get; set; }
 
         /// <summary>
-        /// Kanalens namn
+        /// Kanalens namn.
         /// </summary>
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// URL till kanalens bild
+        /// URL till kanalens bild.
         /// </summary>
-        public string Image { get; set; } = string.Empty;
-        public string ImageTemplate { get; set; } = string.Empty;
+        [JsonPropertyName("image")]
+        public string ImageUrl { get; set; } = string.Empty;
+        [JsonPropertyName("imagetemplate")]
+        public string ImageUrlTemplate { get; set; } = string.Empty;
 
         /// <summary>
-        /// Kanalens färgkod (HEX)
+        /// Kanalens färgkod (HEX).
         /// </summary>
         public string Color { get; set; } = string.Empty;
 

@@ -7,5 +7,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Episodes
         public DateTime AvailableStopUtc { get; set; }
         public EpisodeBroadcastPlaylist Playlist { get; set; } = new EpisodeBroadcastPlaylist();
         public EpisodeBroadcastFile[] BroadcastFiles { get; set; } = {};
+
+        public override string ToString() => "EpisodeBroadcast";
     }
 }

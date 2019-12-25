@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api;
 using Orneholm.SverigesRadio.Api.Models.Request;
@@ -49,8 +49,6 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
             await ListOnDemandAudioTypesSample(apiClient);
             await ListLiveAudioTypesSample(apiClient);
-
-            //await CreateConstants(apiClient);
 
             Console.WriteLine();
             Console.ReadLine();
@@ -216,6 +214,14 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.ChannelType}");
             }
+
+            var channels = (await apiClient.ListChannelsAsync(new ChannelListRequest(), ListPagination.Disabled())).Channels;
+            var types = channels.Select(x => x.ChannelType).Distinct().OrderBy(x => x).ToList();
+            foreach (var type in types)
+            {
+                Console.WriteLine($"public const string {type.Replace(" ", "")} = \"{type}\"");
+            }
+
         }
 
         private static async Task ListOnDemandAudioTypesSample(SverigesRadioApiClient apiClient)

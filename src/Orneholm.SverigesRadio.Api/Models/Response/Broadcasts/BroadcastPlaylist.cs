@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace Orneholm.SverigesRadio.Api.Models.Response.Broadcasts
 {
@@ -10,12 +11,15 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Broadcasts
         /// <summary>
         /// Ljudfilens längd (i sekunder)
         /// </summary>
-        public int Duration { get; set; }
+        [JsonPropertyName("duration")]
+        public int DurationInSeconds { get; set; }
         public DateTime PublishDateUtc { get; set; }
 
         /// <summary>
         /// Används av Sveriges Radios applikationer.
         /// </summary>
         public string Statkey { get; set; } = string.Empty;
+
+        public override string ToString() => $"BroadcastPlaylist: {Url} ({Id})";
     }
 }

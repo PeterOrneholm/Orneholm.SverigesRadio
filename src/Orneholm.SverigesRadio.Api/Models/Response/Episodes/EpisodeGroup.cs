@@ -7,5 +7,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.Episodes
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
+
+        public override string ToString() => $"EpisodeGroup: {Name} ({Id})";
     }
 }

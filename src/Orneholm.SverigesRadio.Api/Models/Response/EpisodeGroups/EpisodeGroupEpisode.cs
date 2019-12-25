@@ -9,6 +9,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.EpisodeGroups
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
+
         public DateTime PublishDateUtc { get; set; }
 
         public string ImageUrl { get; set; } = string.Empty;
@@ -23,5 +24,7 @@ namespace Orneholm.SverigesRadio.Api.Models.Response.EpisodeGroups
         public EpisodePodfile? ListenPodfile { get; set; }
         public EpisodePodfile? DownloadPodfile { get; set; }
         public EpisodeBroadcast? Broadcast { get; set; }
+
+        public override string ToString() => $"EpisodeGroupEpisode: {Title} ({Id})";
     }
 }
