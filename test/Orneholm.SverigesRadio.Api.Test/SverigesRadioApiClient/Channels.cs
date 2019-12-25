@@ -6,14 +6,14 @@ namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
     public class Channels : TestsBase
     {
         [Fact]
-        public async Task GetChannel_P4_Ostergötland()
+        public async Task GetChannel_P4_OstergÃ¶tland()
         {
             // Act
-            var result = await ApiClient.GetChannelAsync(SampleIds.ChannelId_P4_Ostergötland);
+            var result = await ApiClient.GetChannelAsync(SampleIds.ChannelId_P4_OstergÃ¶tland);
 
             // Assert
-            Assert.Equal(SampleIds.ChannelId_P4_Ostergötland, result.Channel.Id);
-            Assert.Equal("P4 Östergötland", result.Channel.Name);
+            Assert.Equal(SampleIds.ChannelId_P4_OstergÃ¶tland, result.Channel.Id);
+            Assert.Equal("P4 Ã–stergÃ¶tland", result.Channel.Name);
         }
 
 
@@ -25,6 +25,20 @@ namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
 
             // Assert
             Assert.Equal(3, result.Channels.Count);
+        }
+
+        [Fact]
+        public async Task ListAllChannels()
+        {
+            // Act
+            var result = ApiClient.ListAllChannelsAsync();
+
+            // Assert
+            await foreach (var channel in result)
+            {
+                Assert.True(channel.Id > 0);
+                return;
+            }
         }
     }
 }
