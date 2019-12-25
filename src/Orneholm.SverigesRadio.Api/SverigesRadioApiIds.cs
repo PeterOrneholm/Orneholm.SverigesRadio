@@ -5,6 +5,24 @@ namespace Orneholm.SverigesRadio.Api
     /// </summary>
     public static class SverigesRadioApiIds
     {
+        /// <summary>
+        /// Id för program. Urval bland populära program.
+        /// </summary>
+        public static class Programs
+        {
+            public const int Ekot = 4540;
+
+            public const int P1_Dokumentar = 909;
+            public const int Sommar_Och_Vinter_I_P1 = 2071;
+
+            public const int P3_Dokumentar = 2519;
+            public const int P3_Historia = 5067;
+            public const int P3_Dystopia = 5188;
+            public const int Morgonpasset_I_P3 = 2024;
+
+            public const int Sa_Funkar_Det = 5073;
+            public const int Melodikrysset = 2078;
+        }
 
         /// <summary>
         /// Id för kanaler, de större kanalerna.
