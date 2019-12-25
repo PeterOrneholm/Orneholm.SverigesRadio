@@ -12,6 +12,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Response.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Response.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
@@ -149,11 +150,6 @@ namespace Orneholm.SverigesRadio.Api
 
         // Broadcasts
 
-        public Task<BroadcastDetailsResponse> GetBroadcastAsync(BroadcastDetailsRequest request)
-        {
-            return _httpClient.GetDetailsAsync<BroadcastDetailsResponse>(Constants.Broadcasts.BaseUrl, request);
-        }
-
         public Task<BroadcastListResponse> ListBroadcastsAsync(BroadcastListRequest request, ListPagination? pagination = null)
         {
             return _httpClient.GetListAsync<BroadcastListRequest, BroadcastListResponse>(
@@ -163,10 +159,10 @@ namespace Orneholm.SverigesRadio.Api
             );
         }
 
-        public Task<BroadcastListResponse> ListExtraBroadcastsAsync(ExtraBroadcastListRequest request, ListPagination? pagination = null)
+        public Task<ExtraBroadcastListResponse> ListExtraBroadcastsAsync(ExtraBroadcastListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<ExtraBroadcastListRequest, BroadcastListResponse, NoneListFilterFields, ExtraBroadcastListSortFields>(
-                Constants.Broadcasts.ListExtraEndpointConfiguration,
+            return _httpClient.GetListAsync<ExtraBroadcastListRequest, ExtraBroadcastListResponse, NoneListFilterFields, ExtraBroadcastListSortFields>(
+                Constants.ExtraBroadcasts.ListEndpointConfiguration,
                 request,
                 pagination,
                 sort: request.Sort

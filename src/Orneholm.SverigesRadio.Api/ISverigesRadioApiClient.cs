@@ -9,6 +9,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Response.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Response.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
@@ -40,9 +41,11 @@ namespace Orneholm.SverigesRadio.Api
         Task<EpisodeListResponse> SearchEpisodesAsync(EpisodeSearchRequest request, ListPagination? pagination = null);
 
         // Broadcasts
-        Task<BroadcastDetailsResponse> GetBroadcastAsync(BroadcastDetailsRequest request);
         Task<BroadcastListResponse> ListBroadcastsAsync(BroadcastListRequest request, ListPagination? pagination = null);
-        Task<BroadcastListResponse> ListExtraBroadcastsAsync(ExtraBroadcastListRequest request, ListPagination? pagination = null);
+
+
+        // Extra broadcasts
+        Task<ExtraBroadcastListResponse> ListExtraBroadcastsAsync(ExtraBroadcastListRequest request, ListPagination? pagination = null);
 
         // Podfiles
         Task<PodfileDetailsResponse> GetPodfileAsync(PodfileDetailsRequest request);

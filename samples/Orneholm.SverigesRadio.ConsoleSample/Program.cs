@@ -157,7 +157,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             var row = 1;
             foreach (var item in result.Broadcasts)
             {
-                Console.WriteLine($"{row++}. {item.Title} ({item.Id})");
+                Console.WriteLine($"{row++}. {item.Name} ({item.Id})");
             }
         }
 

@@ -194,7 +194,6 @@ namespace Orneholm.SverigesRadio.Api
         public static class Broadcasts
         {
             public const string BaseUrl = "broadcasts";
-            public const string ListExtraUrl = "extra/broadcasts";
 
             public static readonly SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, NoneListFilterFields, NoneListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, NoneListFilterFields, NoneListSortFields>(
                 BaseUrl,
@@ -204,7 +203,17 @@ namespace Orneholm.SverigesRadio.Api
                 }
             );
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<ExtraBroadcastListRequest, NoneListFilterFields, ExtraBroadcastListSortFields> ListExtraEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ExtraBroadcastListRequest, NoneListFilterFields, ExtraBroadcastListSortFields>(
+            public static class QueryString
+            {
+                public const string ProgramId = "programid";
+            }
+        }
+
+        public static class ExtraBroadcasts
+        {
+            public const string ListExtraUrl = "extra/broadcasts";
+
+            public static readonly SverigesRadioApiListEndpointConfiguration<ExtraBroadcastListRequest, NoneListFilterFields, ExtraBroadcastListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ExtraBroadcastListRequest, NoneListFilterFields, ExtraBroadcastListSortFields>(
                 ListExtraUrl,
                 (request, queryString) =>
                 {
@@ -228,7 +237,6 @@ namespace Orneholm.SverigesRadio.Api
 
             public static class QueryString
             {
-                public const string ProgramId = "programid";
                 public const string Date = "date";
             }
 
