@@ -17,8 +17,10 @@ namespace Orneholm.SverigesRadio.Api
             var value = reader.GetString();
             if (value.StartsWith("/Date("))
             {
-                var epoch = value.Substring(6, value.Length - 8);
-                return Epoch.AddMilliseconds(double.Parse(epoch));
+                var dateValue = value.Substring(6, value.Length - 8);
+                var parts = dateValue.Split('+');
+                var epochMilliseconds = double.Parse(parts[0]);
+                return Epoch.AddMilliseconds(epochMilliseconds);
             }
             return DateTime.Parse(value);
         }
