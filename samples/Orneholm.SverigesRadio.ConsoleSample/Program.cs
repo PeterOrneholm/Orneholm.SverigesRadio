@@ -50,6 +50,10 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.Description}");
 
+                Console.WriteLine("    GetLatestEpisode:");
+                Console.WriteLine("    -------------------------"); var latestEpisode = await apiClient.GetLatestEpisodeAsync(new EpisodeLatestDetailsRequest(item.Id));
+                Console.WriteLine($"    - {latestEpisode.Episode.PublishDateUtc}: {latestEpisode.Episode.Title} ({latestEpisode.Episode.Id}): {latestEpisode.Episode.Description}");
+
                 Console.WriteLine("    ListEpisodes (latest 5):");
                 Console.WriteLine("    -------------------------"); var episodes = await apiClient.ListEpisodesAsync(new EpisodeListRequest(item.Id), ListPagination.TakeFirst(5));
                 foreach (var episode in episodes.Episodes)

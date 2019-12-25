@@ -35,6 +35,7 @@ namespace Orneholm.SverigesRadio.Api
         // Episodes
         Task<EpisodeDetailsResponse> GetEpisodeAsync(EpisodeDetailsRequest request);
         Task<EpisodeListResponse> GetEpisodesAsync(EpisodeDetailsMultipleRequest request, ListPagination? pagination = null);
+        Task<EpisodeDetailsResponse> GetLatestEpisodeAsync(EpisodeLatestDetailsRequest request);
         Task<EpisodeListResponse> ListEpisodesAsync(EpisodeListRequest request, ListPagination? pagination = null);
         Task<EpisodeListResponse> SearchEpisodesAsync(EpisodeSearchRequest request, ListPagination? pagination = null);
 

@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
+using Orneholm.SverigesRadio.Api.Models.Request.Common;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
@@ -115,6 +118,17 @@ namespace Orneholm.SverigesRadio.Api
             result.Pagination.TotalHits = request.Ids.Count;
 
             return result;
+        }
+
+        public Task<EpisodeDetailsResponse> GetLatestEpisodeAsync(EpisodeLatestDetailsRequest request)
+        {
+            var queryStringParams = new Dictionary<string, string?>();
+            SverigesRadioHttpClientExtensions.AddAudioSettingsQueryStringParams(queryStringParams, request);
+
+            queryStringParams[Constants.Episodes.QueryString.ProgramId] = request.ProgramId.ToString("D");
+
+            var fullUrl = $"{Constants.Episodes.GetLatestUrl}";
+            return _httpClient.GetAsync<EpisodeDetailsResponse>(fullUrl, queryStringParams);
         }
 
         public Task<EpisodeListResponse> ListEpisodesAsync(EpisodeListRequest request, ListPagination? pagination = null)

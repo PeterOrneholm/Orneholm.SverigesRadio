@@ -123,7 +123,7 @@ namespace Orneholm.SverigesRadio.Api
             queryStringParams[Constants.Common.QueryString.Sort] = sortString.ToString().TrimEnd(Constants.Common.QueryString.SortFieldSeparator);
         }
 
-        private static void AddAudioSettingsQueryStringParams(Dictionary<string, string?> queryStringParams, IAudioSettings audioSettings)
+        public static void AddAudioSettingsQueryStringParams(Dictionary<string, string?> queryStringParams, IAudioSettings audioSettings)
         {
             queryStringParams[Constants.Common.QueryString.AudioQuality] = GetAudioQuality(audioSettings.AudioQuality);
 
@@ -149,7 +149,7 @@ namespace Orneholm.SverigesRadio.Api
             };
         }
 
-        private static async Task<TResult> GetAsync<TResult>(this HttpClient httpClient, string url, Dictionary<string, string?>? queryStringParams = null)
+        internal static async Task<TResult> GetAsync<TResult>(this HttpClient httpClient, string url, Dictionary<string, string?>? queryStringParams = null)
         {
             queryStringParams = AddDefaultQueryStringParams(queryStringParams);
 

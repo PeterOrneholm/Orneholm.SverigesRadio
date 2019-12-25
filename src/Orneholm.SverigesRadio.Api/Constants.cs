@@ -131,6 +131,7 @@ namespace Orneholm.SverigesRadio.Api
             public const string BaseUrl = "episodes";
             public const string SearchUrl = BaseUrl + "/search";
             public const string GetMultipleUrl = BaseUrl + "/getlist";
+            public const string GetLatestUrl = BaseUrl + "/getlatest";
 
             public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields>(
                 BaseUrl,
