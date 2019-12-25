@@ -206,9 +206,9 @@ namespace Orneholm.SverigesRadio.Api
             }, pagination);
         }
 
-        public static Task<ProgramNewsListResponse> ListProgramNewsAsync(this ISverigesRadioApiClient apiClient, ListPagination? pagination = null)
+        public static Task<ProgramNewsListResponse> ListProgramNewsAsync(this ISverigesRadioApiClient apiClient)
         {
-            return apiClient.ListProgramNewsAsync(new ProgramNewsListRequest(), pagination);
+            return apiClient.ListProgramNewsAsync(new ProgramNewsListRequest());
         }
 
         // ProgramCategories

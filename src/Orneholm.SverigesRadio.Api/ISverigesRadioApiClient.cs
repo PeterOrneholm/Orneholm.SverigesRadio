@@ -29,7 +29,7 @@ namespace Orneholm.SverigesRadio.Api
         // Programs
         Task<ProgramDetailsResponse> GetProgramAsync(ProgramDetailsRequest request);
         Task<ProgramListResponse> ListProgramsAsync(ProgramListRequest request, ListPagination? pagination = null);
-        Task<ProgramNewsListResponse> ListProgramNewsAsync(ProgramNewsListRequest request, ListPagination? pagination = null);
+        Task<ProgramNewsListResponse> ListProgramNewsAsync(ProgramNewsListRequest request);
 
         // ProgramCategories
         Task<ProgramCategoryDetailsResponse> GetProgramCategoryAsync(ProgramCategoryDetailsRequest request);
