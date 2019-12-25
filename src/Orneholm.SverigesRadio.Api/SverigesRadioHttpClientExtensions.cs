@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Orneholm.SverigesRadio.Api.Models.Request;
-using Orneholm.SverigesRadio.Api.Models.Request.Common;
 using Orneholm.SverigesRadio.Api.Serialization;
 
 namespace Orneholm.SverigesRadio.Api
@@ -22,12 +22,18 @@ namespace Orneholm.SverigesRadio.Api
             }
         };
 
+        private static readonly ProductInfoHeaderValue DefaultUserAgent = GetActiveLoginUserAgent();
+
         internal static async Task<TResult> GetAsync<TResult>(this HttpClient httpClient, string url, Dictionary<string, string?>? queryStringParams = null)
         {
             queryStringParams = AddDefaultQueryStringParams(queryStringParams);
 
             var fullUrl = GetUrl(url, queryStringParams);
-            var httpResponseMessage = await httpClient.GetAsync(fullUrl).ConfigureAwait(false);
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, fullUrl);
+            httpRequest.Headers.UserAgent.Clear();
+            httpRequest.Headers.UserAgent.Add(DefaultUserAgent);
+
+            var httpResponseMessage = await httpClient.SendAsync(httpRequest).ConfigureAwait(false);
 
             httpResponseMessage.EnsureSuccessStatusCode();
 
@@ -57,6 +63,16 @@ namespace Orneholm.SverigesRadio.Api
             var queryStringParamsWithValues = queryStringParams.Where(x => !string.IsNullOrEmpty(x.Key));
             var queryString = string.Join("&", queryStringParamsWithValues.Select(x => $"{x.Key}={Uri.EscapeDataString(x.Value ?? string.Empty)}"));
             return $"{baseUrl}?{queryString}";
+        }
+
+        private static ProductInfoHeaderValue GetActiveLoginUserAgent()
+        {
+            var productName = Constants.Common.ProductName;
+            var productAssembly = typeof(SverigesRadioApiClient).Assembly;
+            var assemblyFileVersion = productAssembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
+            var productVersion = assemblyFileVersion?.Version ?? "Unknown";
+
+            return new ProductInfoHeaderValue(productName, productVersion);
         }
     }
 }

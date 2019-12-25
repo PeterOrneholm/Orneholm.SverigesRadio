@@ -14,6 +14,8 @@ namespace Orneholm.SverigesRadio.Api
     {
         public static class Common
         {
+            public const string ProductName = "Orneholm_SverigesRadio_Api";
+
             public static class QueryString
             {
                 // Boolean
