@@ -7,6 +7,7 @@ using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
+using Orneholm.SverigesRadio.Api.Models.Request.Common;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
@@ -23,7 +24,13 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("########################################################");
             Console.WriteLine();
 
-            var apiClient = SverigesRadioApiClient.CreateClient();
+            var apiClient = SverigesRadioApiClient.CreateClient(new AudioSettings
+            {
+                OnDemandAudioTemplateId = SverigesRadioApiIds.OnDemandAudioTemplates.Html5_Desktop,
+                LiveAudioTemplateId = SverigesRadioApiIds.LiveAudioTemplates.MP3,
+
+                AudioQuality = AudioQuality.High
+            });
 
             await ListProgramsSample(apiClient);
             await ListProgramCategoriesSample(apiClient);
@@ -198,20 +205,6 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id})");
             }
-        }
-
-
-
-        private static async Task CreateConstants(SverigesRadioApiClient apiClient)
-        {
-            var items = apiClient.GetAllProgramCategoriesAsync(new ProgramCategoryListRequest());
-            var sb = new StringBuilder();
-            await foreach (var item in items)
-            {
-                sb.AppendLine($"public const int {item.Name.Replace(" ", "")} = {item.Id};");
-            }
-
-            Console.Write(sb.ToString());
         }
     }
 }

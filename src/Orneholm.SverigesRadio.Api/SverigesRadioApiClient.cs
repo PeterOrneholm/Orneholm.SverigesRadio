@@ -42,6 +42,20 @@ namespace Orneholm.SverigesRadio.Api
             return new SverigesRadioApiClient(httpClient);
         }
 
+        public static SverigesRadioApiClient CreateClient(AudioSettings defaultAudioSettings)
+        {
+            return CreateClient(defaultAudioSettings, SverigesRadioUrls.ProductionApiBaseUrl);
+        }
+
+        public static SverigesRadioApiClient CreateClient(AudioSettings defaultAudioSettings, Uri apiBaseUri)
+        {
+            var httpClient = new HttpClient
+            {
+                BaseAddress = apiBaseUri
+            };
+            return new SverigesRadioApiClient(httpClient, defaultAudioSettings);
+        }
+
         private readonly HttpClient _httpClient;
         private readonly AudioSettings _defaultAudioSettings;
 
