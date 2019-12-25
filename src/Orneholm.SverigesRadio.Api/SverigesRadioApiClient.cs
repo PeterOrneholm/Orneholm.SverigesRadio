@@ -7,6 +7,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Common;
+using Orneholm.SverigesRadio.Api.Models.Request.EpisodeGroups;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
@@ -15,6 +16,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
+using Orneholm.SverigesRadio.Api.Models.Response.EpisodeGroups;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Response.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Podfiles;
@@ -167,7 +169,7 @@ namespace Orneholm.SverigesRadio.Api
 
             var result = await GetListAsync<EpisodeDetailsMultipleRequest, EpisodeListResponse>(
                 _httpClient,
-                Constants.Episodes.DetailsMultipleUrlEndpointConfiguration,
+                Constants.Episodes.DetailsMultipleEndpointConfiguration,
                 request,
                 pagination
             ).ConfigureAwait(false);
@@ -217,6 +219,23 @@ namespace Orneholm.SverigesRadio.Api
             return GetListAsync<EpisodeSearchRequest, EpisodeListResponse>(
                 _httpClient,
                 Constants.Episodes.SearchEndpointConfiguration,
+                request,
+                pagination
+            );
+        }
+
+        // EpisodeGroups
+
+        public Task<EpisodeGroupListResponse> ListEpisodeGroupsAsync(EpisodeGroupListRequest request, ListPagination? pagination = null)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            return GetListAsync<EpisodeGroupListRequest, EpisodeGroupListResponse>(
+                _httpClient,
+                Constants.EpisodeGroups.ListEndpointConfiguration,
                 request,
                 pagination
             );

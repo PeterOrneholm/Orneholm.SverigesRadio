@@ -2,6 +2,7 @@ using System.Linq;
 using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
+using Orneholm.SverigesRadio.Api.Models.Request.EpisodeGroups;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
@@ -163,7 +164,7 @@ namespace Orneholm.SverigesRadio.Api
                 }
             );
 
-            public static readonly ListEndpointConfiguration<EpisodeDetailsMultipleRequest> DetailsMultipleUrlEndpointConfiguration = new ListEndpointConfiguration<EpisodeDetailsMultipleRequest>(
+            public static readonly ListEndpointConfiguration<EpisodeDetailsMultipleRequest> DetailsMultipleEndpointConfiguration = new ListEndpointConfiguration<EpisodeDetailsMultipleRequest>(
                 GetMultipleUrl,
                 (request, queryString) =>
                 {
@@ -181,6 +182,24 @@ namespace Orneholm.SverigesRadio.Api
                 public const string ToDate = "todate";
 
                 public const string Ids = "ids";
+            }
+        }
+
+        public static class EpisodeGroups
+        {
+            public const string BaseUrl = "episodes/group";
+
+            public static readonly ListEndpointConfiguration<EpisodeGroupListRequest> ListEndpointConfiguration = new ListEndpointConfiguration<EpisodeGroupListRequest>(
+                BaseUrl,
+                (request, queryString) =>
+                {
+                    queryString[QueryString.Id] = request.Id.ToString("D");
+                }
+            );
+
+            public static class QueryString
+            {
+                public const string Id = "id";
             }
         }
 

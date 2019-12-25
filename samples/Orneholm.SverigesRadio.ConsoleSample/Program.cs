@@ -8,6 +8,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Common;
+using Orneholm.SverigesRadio.Api.Models.Request.EpisodeGroups;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
@@ -38,6 +39,8 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             await GetEpisodesSample(apiClient);
             await SearchEpisodesSample(apiClient);
 
+            await ListEpisodeGroupsSample(apiClient);
+
             await ListChannelsSample(apiClient);
 
             await ListExtraBroadcastsSample(apiClient);
@@ -58,7 +61,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.ListProgramsAsync(new ProgramListRequest(), ListPagination.TakeFirst(5));
+            var result = await apiClient.ListProgramsAsync(new ProgramListRequest(), ListPagination.TakeFirst(3));
             var row = 1;
             foreach (var item in result.Programs)
             {
@@ -129,6 +132,27 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             foreach (var item in result.Episodes)
             {
                 Console.WriteLine($"{row++}. {item.Title} ({item.Id}) - {item.Description}");
+            }
+        }
+
+        private static async Task ListEpisodeGroupsSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine();
+            Console.WriteLine("ListEpisodeGroups");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var result = await apiClient.ListEpisodeGroupsAsync(new EpisodeGroupListRequest(23037), ListPagination.TakeFirst(5));
+            var row = 1;
+
+            Console.WriteLine($"{result.EpisodeGroup.Title} ({result.EpisodeGroup.Id}) - {result.EpisodeGroup.Description}");
+
+            Console.WriteLine();
+            Console.WriteLine("    Episodes (latest 5):");
+            Console.WriteLine("    -------------------------");
+            foreach (var item in result.EpisodeGroup.Episodes)
+            {
+                Console.WriteLine($"{row++}. {item.Title} ({item.Id}): {item.Description}");
             }
         }
 
