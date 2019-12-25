@@ -1,6 +1,6 @@
 namespace Orneholm.SverigesRadio.Api.Models.Request
 {
-    public enum NoneListFilterFields
+    internal enum NoneListFilterFields
     {
         None
     }

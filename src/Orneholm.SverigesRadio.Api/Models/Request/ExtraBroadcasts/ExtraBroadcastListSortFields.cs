@@ -1,6 +1,6 @@
 namespace Orneholm.SverigesRadio.Api.Models.Request.Broadcasts
 {
-    public enum BroadcastListExtraSortFields
+    public enum ExtraBroadcastListSortFields
     {
         None,
 

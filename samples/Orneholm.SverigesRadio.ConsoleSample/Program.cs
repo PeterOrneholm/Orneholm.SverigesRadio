@@ -31,6 +31,8 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
             await ListChannelsSample(apiClient);
 
+            await ListExtraBroadcastsSample(apiClient);
+
             //await CreateConstants(apiClient);
 
             Console.WriteLine();
@@ -141,6 +143,21 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             await foreach (var item in items)
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.ChannelType}");
+            }
+        }
+
+        private static async Task ListExtraBroadcastsSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine();
+            Console.WriteLine("ListExtraBroadcasts");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var result = await apiClient.ListExtraBroadcastsAsync(new ExtraBroadcastListRequest());
+            var row = 1;
+            foreach (var item in result.Broadcasts)
+            {
+                Console.WriteLine($"{row++}. {item.Title} ({item.Id})");
             }
         }
 

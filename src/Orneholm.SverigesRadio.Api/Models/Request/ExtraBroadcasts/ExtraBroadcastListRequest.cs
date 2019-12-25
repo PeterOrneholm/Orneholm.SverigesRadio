@@ -4,11 +4,11 @@ using Orneholm.SverigesRadio.Api.Models.Request.Common;
 
 namespace Orneholm.SverigesRadio.Api.Models.Request.Broadcasts
 {
-    public class BroadcastListExtraRequest : ListRequestBase, IHasAudioSettings
+    public class ExtraBroadcastListRequest : ListRequestBase, IHasAudioSettings
     {
         public DateTime? Date { get; set; }
 
-        public List<ListSort<BroadcastListExtraSortFields>> Sort { get; set; } = new List<ListSort<BroadcastListExtraSortFields>>();
+        public List<ListSort<ExtraBroadcastListSortFields>> Sort { get; set; } = new List<ListSort<ExtraBroadcastListSortFields>>();
 
         public AudioSettings AudioSettings { get; set; } = new AudioSettings();
     }

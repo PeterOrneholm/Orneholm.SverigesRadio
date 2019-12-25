@@ -194,6 +194,7 @@ namespace Orneholm.SverigesRadio.Api
         public static class Broadcasts
         {
             public const string BaseUrl = "broadcasts";
+            public const string ListExtraUrl = "extra/broadcasts";
 
             public static readonly SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, NoneListFilterFields, NoneListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, NoneListFilterFields, NoneListSortFields>(
                 BaseUrl,
@@ -203,8 +204,8 @@ namespace Orneholm.SverigesRadio.Api
                 }
             );
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<BroadcastListExtraRequest, NoneListFilterFields, BroadcastListExtraSortFields> ListExtraEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<BroadcastListExtraRequest, NoneListFilterFields, BroadcastListExtraSortFields>(
-                BaseUrl,
+            public static readonly SverigesRadioApiListEndpointConfiguration<ExtraBroadcastListRequest, NoneListFilterFields, ExtraBroadcastListSortFields> ListExtraEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ExtraBroadcastListRequest, NoneListFilterFields, ExtraBroadcastListSortFields>(
+                ListExtraUrl,
                 (request, queryString) =>
                 {
                     if (request.Date.HasValue)
@@ -217,8 +218,8 @@ namespace Orneholm.SverigesRadio.Api
                 {
                     return fields switch
                     {
-                        BroadcastListExtraSortFields.LocalStartTime => Sort.LocalStartTime,
-                        BroadcastListExtraSortFields.ChannelName => Sort.ChannelName,
+                        ExtraBroadcastListSortFields.LocalStartTime => Sort.LocalStartTime,
+                        ExtraBroadcastListSortFields.ChannelName => Sort.ChannelName,
 
                         _ => string.Empty
                     };

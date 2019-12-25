@@ -42,7 +42,7 @@ namespace Orneholm.SverigesRadio.Api
         // Broadcasts
         Task<BroadcastDetailsResponse> GetBroadcastAsync(BroadcastDetailsRequest request);
         Task<BroadcastListResponse> ListBroadcastsAsync(BroadcastListRequest request, ListPagination? pagination = null);
-        Task<BroadcastListResponse> ListExtraBroadcastsAsync(BroadcastListExtraRequest request, ListPagination? pagination = null);
+        Task<BroadcastListResponse> ListExtraBroadcastsAsync(ExtraBroadcastListRequest request, ListPagination? pagination = null);
 
         // Podfiles
         Task<PodfileDetailsResponse> GetPodfileAsync(PodfileDetailsRequest request);

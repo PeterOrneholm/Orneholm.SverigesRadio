@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
-using Orneholm.SverigesRadio.Api.Models.Request.Common;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
 using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
@@ -165,9 +163,9 @@ namespace Orneholm.SverigesRadio.Api
             );
         }
 
-        public Task<BroadcastListResponse> ListExtraBroadcastsAsync(BroadcastListExtraRequest request, ListPagination? pagination = null)
+        public Task<BroadcastListResponse> ListExtraBroadcastsAsync(ExtraBroadcastListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<BroadcastListExtraRequest, BroadcastListResponse, NoneListFilterFields, BroadcastListExtraSortFields>(
+            return _httpClient.GetListAsync<ExtraBroadcastListRequest, BroadcastListResponse, NoneListFilterFields, ExtraBroadcastListSortFields>(
                 Constants.Broadcasts.ListExtraEndpointConfiguration,
                 request,
                 pagination,
