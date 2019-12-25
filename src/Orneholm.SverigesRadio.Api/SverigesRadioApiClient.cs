@@ -52,19 +52,29 @@ namespace Orneholm.SverigesRadio.Api
 
         public SverigesRadioApiClient(HttpClient httpClient, AudioSettings defaultAudioSettings)
         {
-            _httpClient = httpClient;
-            _defaultAudioSettings = defaultAudioSettings;
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _defaultAudioSettings = defaultAudioSettings ?? throw new ArgumentNullException(nameof(defaultAudioSettings));
         }
 
         // Programs
 
         public Task<ProgramDetailsResponse> GetProgramAsync(ProgramDetailsRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetDetailsAsync<ProgramDetailsResponse>(_httpClient, Constants.Programs.BaseUrl, request);
         }
 
         public Task<ProgramListResponse> ListProgramsAsync(ProgramListRequest request, ListPagination? pagination = null)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetListAsync<ProgramListRequest, ProgramListResponse>(
                 _httpClient,
                 Constants.Programs.ListEndpointConfiguration,
@@ -77,11 +87,21 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<ProgramCategoryDetailsResponse> GetProgramCategoryAsync(ProgramCategoryDetailsRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetDetailsAsync<ProgramCategoryDetailsResponse>(_httpClient, Constants.ProgramCategories.BaseUrl, request);
         }
 
         public Task<ProgramCategoryListResponse> ListProgramCategoriesAsync(ProgramCategoryListRequest request, ListPagination? pagination = null)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetListAsync<ProgramCategoryListRequest, ProgramCategoryListResponse>(
                 _httpClient,
                 Constants.ProgramCategories.ListEndpointConfiguration,
@@ -94,6 +114,11 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<ChannelDetailsResponse> GetChannelAsync(ChannelDetailsRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetDetailsAsync<ChannelDetailsResponse>(_httpClient, Constants.Channels.BaseUrl, request);
         }
 
@@ -111,11 +136,21 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<EpisodeDetailsResponse> GetEpisodeAsync(EpisodeDetailsRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetDetailsAsync<EpisodeDetailsResponse>(_httpClient, Constants.Channels.BaseUrl, request);
         }
 
         public async Task<EpisodeListResponse> GetEpisodesAsync(EpisodeDetailsMultipleRequest request, ListPagination? pagination = null)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             var result = await GetListAsync<EpisodeDetailsMultipleRequest, EpisodeListResponse>(
                 _httpClient,
                 Constants.Episodes.DetailsMultipleUrlEndpointConfiguration,
@@ -130,6 +165,11 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<EpisodeDetailsResponse> GetLatestEpisodeAsync(EpisodeLatestDetailsRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             var queryStringParams = new Dictionary<string, string?>();
             SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, request.AudioSettings, _defaultAudioSettings);
 
@@ -140,6 +180,11 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<EpisodeListResponse> ListEpisodesAsync(EpisodeListRequest request, ListPagination? pagination = null)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetListAsync<EpisodeListRequest, EpisodeListResponse>(
                 _httpClient,
                 Constants.Episodes.ListEndpointConfiguration,
@@ -150,6 +195,11 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<EpisodeListResponse> SearchEpisodesAsync(EpisodeSearchRequest request, ListPagination? pagination = null)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetListAsync<EpisodeSearchRequest, EpisodeListResponse>(
                 _httpClient,
                 Constants.Episodes.SearchEndpointConfiguration,
@@ -162,6 +212,11 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<BroadcastListResponse> ListBroadcastsAsync(BroadcastListRequest request, ListPagination? pagination = null)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetListAsync<BroadcastListRequest, BroadcastListResponse>(
                 _httpClient,
                 Constants.Broadcasts.ListEndpointConfiguration,
@@ -172,6 +227,11 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<ExtraBroadcastListResponse> ListExtraBroadcastsAsync(ExtraBroadcastListRequest request, ListPagination? pagination = null)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetListAsync<ExtraBroadcastListRequest, ExtraBroadcastListResponse>(
                 _httpClient,
                 Constants.ExtraBroadcasts.ListEndpointConfiguration,
@@ -184,11 +244,21 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<PodfileDetailsResponse> GetPodfileAsync(PodfileDetailsRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetDetailsAsync<PodfileDetailsResponse>(_httpClient, Constants.Podfiles.BaseUrl, request);
         }
 
         public Task<PodfileListResponse> ListPodfilesAsync(PodfileListRequest request, ListPagination? pagination = null)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return GetListAsync<PodfileListRequest, PodfileListResponse>(
                 _httpClient,
                 Constants.Podfiles.ListEndpointConfiguration,
@@ -201,11 +271,21 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<OnDemandAudioTypesListResponse> ListOnDemandAudioTypesAsync(OnDemandAudioTypesListRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return _httpClient.GetAsync<OnDemandAudioTypesListResponse>(Constants.AudioUrlTemplates.OnDemandTypesListUrl);
         }
 
         public Task<LivedAudioTypesListResponse> ListLiveAudioTypesAsync(LiveAudioTypesListRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             return _httpClient.GetAsync<LivedAudioTypesListResponse>(Constants.AudioUrlTemplates.LiveAudioTypesListUrl);
         }
 
