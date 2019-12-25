@@ -7,7 +7,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.Common;
 
 namespace Orneholm.SverigesRadio.Api
 {
-    internal static class SverigesRadioUrlHelpers
+    internal static class UrlHelpers
     {
         private static readonly ListPagination DefaultPagination = ListPagination.FirstPage();
 

@@ -234,7 +234,7 @@ namespace Orneholm.SverigesRadio.Api
                     {
                         queryString[QueryString.Date] = request.Date.Value.Date.ToString("yyyy-MM-dd");
 
-                        SverigesRadioUrlHelpers.AddSortQueryStringParams(queryString, fields =>
+                        UrlHelpers.AddSortQueryStringParams(queryString, fields =>
                         {
                             return fields switch
                             {

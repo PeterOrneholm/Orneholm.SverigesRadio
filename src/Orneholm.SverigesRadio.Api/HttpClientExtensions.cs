@@ -11,7 +11,7 @@ using Orneholm.SverigesRadio.Api.Serialization;
 
 namespace Orneholm.SverigesRadio.Api
 {
-    internal static class SverigesRadioHttpClientExtensions
+    internal static class HttpClientExtensions
     {
         private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions()
         {

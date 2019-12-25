@@ -197,7 +197,7 @@ namespace Orneholm.SverigesRadio.Api
             }
 
             var queryStringParams = new Dictionary<string, string?>();
-            SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, request.AudioSettings, _defaultAudioSettings);
+            UrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, request.AudioSettings, _defaultAudioSettings);
 
             queryStringParams[Constants.Episodes.QueryString.ProgramId] = request.ProgramId.ToString("D");
 
@@ -355,7 +355,7 @@ namespace Orneholm.SverigesRadio.Api
 
             if (request is IHasAudioSettings audioSettings)
             {
-                SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings, defaultAudioSettings);
+                UrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings, defaultAudioSettings);
             }
 
             var fullUrl = $"{url}/{request.Id:D}";
@@ -371,16 +371,16 @@ namespace Orneholm.SverigesRadio.Api
         {
             var queryStringParams = new Dictionary<string, string?>();
 
-            SverigesRadioUrlHelpers.AddPaginationQueryStringParams(queryStringParams, pagination);
+            UrlHelpers.AddPaginationQueryStringParams(queryStringParams, pagination);
 
             if (request is IHasAudioSettings audioSettings)
             {
-                SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings, defaultAudioSettings);
+                UrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings, defaultAudioSettings);
             }
 
             if (listEndpointConfiguration.QueryStringParamsResolver != null)
             {
-                SverigesRadioUrlHelpers.AddQueryStringParams(queryStringParams, request, listEndpointConfiguration.QueryStringParamsResolver);
+                UrlHelpers.AddQueryStringParams(queryStringParams, request, listEndpointConfiguration.QueryStringParamsResolver);
             }
 
             return httpClient.GetAsync<TResult>(listEndpointConfiguration.Url, queryStringParams);
