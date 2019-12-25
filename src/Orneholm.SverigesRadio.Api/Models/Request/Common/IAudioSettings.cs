@@ -1,9 +1,9 @@
 namespace Orneholm.SverigesRadio.Api.Models.Request.Common
 {
-    public interface IAudioSettings
+    public class AudioSettings
     {
-        AudioQuality AudioQuality { get; set; }
-        int? LiveAudioTemplateId { get; set; }
-        int? OnDemandAudioTemplateId { get; set; }
+        public AudioQuality AudioQuality { get; set; } = AudioQuality.Normal;
+        public int? LiveAudioTemplateId { get; set; }
+        public int? OnDemandAudioTemplateId { get; set; }
     }
 }

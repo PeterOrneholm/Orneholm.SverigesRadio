@@ -28,13 +28,23 @@ namespace Orneholm.SverigesRadio.Api
         {
             queryStringParams ??= new Dictionary<string, string?>();
 
-            if (request is IAudioSettings audioSettings)
+            if (request is IHasAudioSettings audioSettings)
             {
-                AddAudioSettingsQueryStringParams(queryStringParams, audioSettings);
+                AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings);
             }
 
             var fullUrl = $"{url}/{request.Id:D}";
             return httpClient.GetAsync<TResult>(fullUrl, queryStringParams);
+        }
+
+        public static Task<TResult> GetListAsync<TRequest, TResult>(this HttpClient httpClient, SverigesRadioApiListEndpointConfiguration<TRequest, NoneListFilterFields, NoneListSortFields> listEndpointConfiguration, TRequest request, ListPagination? pagination = null) where TRequest : ListRequestBase
+        {
+            return httpClient.GetListAsync<TRequest, TResult, NoneListFilterFields, NoneListSortFields>(listEndpointConfiguration, request, pagination);
+        }
+
+        public static Task<TResult> GetListAsync<TRequest, TResult, TFilterField>(this HttpClient httpClient, SverigesRadioApiListEndpointConfiguration<TRequest, TFilterField, NoneListSortFields> listEndpointConfiguration, TRequest request, ListPagination? pagination = null, ListFilter<TFilterField>? filter = null) where TRequest : ListRequestBase where TFilterField : Enum
+        {
+            return httpClient.GetListAsync<TRequest, TResult, TFilterField, NoneListSortFields>(listEndpointConfiguration, request, pagination, filter);
         }
 
         public static Task<TResult> GetListAsync<TRequest, TResult, TFilterField, TSortField>(this HttpClient httpClient, SverigesRadioApiListEndpointConfiguration<TRequest, TFilterField, TSortField> listEndpointConfiguration, TRequest request, ListPagination? pagination = null, ListFilter<TFilterField>? filter = null, List<ListSort<TSortField>>? sort = null) where TRequest : ListRequestBase where TFilterField : Enum where TSortField : Enum
@@ -46,9 +56,9 @@ namespace Orneholm.SverigesRadio.Api
             AddFilterQueryStringParams(queryStringParams, listEndpointConfiguration.FilterFieldResolver, filter);
             AddSortQueryStringParams(queryStringParams, listEndpointConfiguration.SortFieldResolver, sort);
 
-            if (request is IAudioSettings audioSettings)
+            if (request is IHasAudioSettings audioSettings)
             {
-                AddAudioSettingsQueryStringParams(queryStringParams, audioSettings);
+                AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings);
             }
 
             if (listEndpointConfiguration.QueryStringParamsResolver != null)
@@ -123,7 +133,7 @@ namespace Orneholm.SverigesRadio.Api
             queryStringParams[Constants.Common.QueryString.Sort] = sortString.ToString().TrimEnd(Constants.Common.QueryString.SortFieldSeparator);
         }
 
-        public static void AddAudioSettingsQueryStringParams(Dictionary<string, string?> queryStringParams, IAudioSettings audioSettings)
+        public static void AddAudioSettingsQueryStringParams(Dictionary<string, string?> queryStringParams, AudioSettings audioSettings)
         {
             queryStringParams[Constants.Common.QueryString.AudioQuality] = GetAudioQuality(audioSettings.AudioQuality);
 

@@ -1,4 +1,5 @@
 using System.Linq;
+using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
@@ -54,7 +55,7 @@ namespace Orneholm.SverigesRadio.Api
         {
             public const string BaseUrl = "programs";
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<ProgramListRequest, ProgramListFilterFields, ProgramListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ProgramListRequest, ProgramListFilterFields, ProgramListSortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<ProgramListRequest, ProgramListFilterFields, NoneListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ProgramListRequest, ProgramListFilterFields, NoneListSortFields>(
                 BaseUrl,
                 (request, queryString) =>
                 {
@@ -96,7 +97,7 @@ namespace Orneholm.SverigesRadio.Api
         {
             public const string BaseUrl = "programcategories";
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<ProgramCategoryListRequest, ProgramCategoryListFilterFields, ProgramCategorySortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ProgramCategoryListRequest, ProgramCategoryListFilterFields, ProgramCategorySortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<ProgramCategoryListRequest, NoneListFilterFields, NoneListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ProgramCategoryListRequest, NoneListFilterFields, NoneListSortFields>(
                 BaseUrl
             );
         }
@@ -105,7 +106,7 @@ namespace Orneholm.SverigesRadio.Api
         {
             public const string BaseUrl = "channels";
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<ChannelListRequest, ChannelListFilterFields, ChannelListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ChannelListRequest, ChannelListFilterFields, ChannelListSortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<ChannelListRequest, ChannelListFilterFields, NoneListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<ChannelListRequest, ChannelListFilterFields, NoneListSortFields>(
                 BaseUrl,
                 (request, queryString) => { },
                 fields =>
@@ -133,7 +134,7 @@ namespace Orneholm.SverigesRadio.Api
             public const string GetMultipleUrl = BaseUrl + "/getlist";
             public const string GetLatestUrl = BaseUrl + "/getlatest";
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, EpisodeListFilterFields, EpisodeListSortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, NoneListFilterFields, NoneListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeListRequest, NoneListFilterFields, NoneListSortFields>(
                 BaseUrl,
                 (request, queryString) =>
                 {
@@ -151,7 +152,7 @@ namespace Orneholm.SverigesRadio.Api
                 }
             );
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeSearchRequest, EpisodeListFilterFields, EpisodeListSortFields> SearchEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeSearchRequest, EpisodeListFilterFields, EpisodeListSortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeSearchRequest, NoneListFilterFields, NoneListSortFields> SearchEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeSearchRequest, NoneListFilterFields, NoneListSortFields>(
                 SearchUrl,
                 (request, queryString) =>
                 {
@@ -169,7 +170,7 @@ namespace Orneholm.SverigesRadio.Api
                 }
             );
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeDetailsMultipleRequest, EpisodeListFilterFields, EpisodeListSortFields> DetailsMultipleUrlEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeDetailsMultipleRequest, EpisodeListFilterFields, EpisodeListSortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<EpisodeDetailsMultipleRequest, NoneListFilterFields, NoneListSortFields> DetailsMultipleUrlEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<EpisodeDetailsMultipleRequest, NoneListFilterFields, NoneListSortFields>(
                 GetMultipleUrl,
                 (request, queryString) =>
                 {
@@ -194,7 +195,7 @@ namespace Orneholm.SverigesRadio.Api
         {
             public const string BaseUrl = "broadcasts";
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, BroadcastListFilterFields, BroadcastListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, BroadcastListFilterFields, BroadcastListSortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, NoneListFilterFields, NoneListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<BroadcastListRequest, NoneListFilterFields, NoneListSortFields>(
                 BaseUrl,
                 (request, queryString) =>
                 {
@@ -202,9 +203,38 @@ namespace Orneholm.SverigesRadio.Api
                 }
             );
 
+            public static readonly SverigesRadioApiListEndpointConfiguration<BroadcastListExtraRequest, NoneListFilterFields, BroadcastListExtraSortFields> ListExtraEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<BroadcastListExtraRequest, NoneListFilterFields, BroadcastListExtraSortFields>(
+                BaseUrl,
+                (request, queryString) =>
+                {
+                    if (request.Date.HasValue)
+                    {
+                        queryString[QueryString.Date] = request.Date.Value.Date.ToString("yyyy-MM-dd");
+                    }
+                },
+                null,
+                fields =>
+                {
+                    return fields switch
+                    {
+                        BroadcastListExtraSortFields.LocalStartTime => Sort.LocalStartTime,
+                        BroadcastListExtraSortFields.ChannelName => Sort.ChannelName,
+
+                        _ => string.Empty
+                    };
+                }
+            );
+
             public static class QueryString
             {
                 public const string ProgramId = "programid";
+                public const string Date = "date";
+            }
+
+            public static class Sort
+            {
+                public const string LocalStartTime = "localstarttime";
+                public const string ChannelName = "channelname";
             }
         }
 
@@ -212,7 +242,7 @@ namespace Orneholm.SverigesRadio.Api
         {
             public const string BaseUrl = "podfiles";
 
-            public static readonly SverigesRadioApiListEndpointConfiguration<PodfileListRequest, PodfileListFilterFields, PodfileListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<PodfileListRequest, PodfileListFilterFields, PodfileListSortFields>(
+            public static readonly SverigesRadioApiListEndpointConfiguration<PodfileListRequest, NoneListFilterFields, NoneListSortFields> ListEndpointConfiguration = new SverigesRadioApiListEndpointConfiguration<PodfileListRequest, NoneListFilterFields, NoneListSortFields>(
                 BaseUrl,
                 (request, queryString) =>
                 {

@@ -3,7 +3,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.Common;
 
 namespace Orneholm.SverigesRadio.Api.Models.Request.Episodes
 {
-    public class EpisodeDetailsMultipleRequest : ListRequestBase, IAudioSettings
+    public class EpisodeDetailsMultipleRequest : ListRequestBase, IHasAudioSettings
     {
         public EpisodeDetailsMultipleRequest(List<int> ids)
         {
@@ -12,8 +12,6 @@ namespace Orneholm.SverigesRadio.Api.Models.Request.Episodes
 
         public List<int> Ids { get; set; }
 
-        public AudioQuality AudioQuality { get; set; } = AudioQuality.Normal;
-        public int? LiveAudioTemplateId { get; set; } = null;
-        public int? OnDemandAudioTemplateId { get; set; } = null;
+        public AudioSettings AudioSettings { get; set; } = new AudioSettings();
     }
 }

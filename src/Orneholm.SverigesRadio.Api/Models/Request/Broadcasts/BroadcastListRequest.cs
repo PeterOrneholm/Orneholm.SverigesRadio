@@ -1,9 +1,8 @@
-using System;
 using Orneholm.SverigesRadio.Api.Models.Request.Common;
 
 namespace Orneholm.SverigesRadio.Api.Models.Request.Broadcasts
 {
-    public class BroadcastListRequest : ListRequestBase, IAudioSettings
+    public class BroadcastListRequest : ListRequestBase, IHasAudioSettings
     {
         public BroadcastListRequest(int programId)
         {
@@ -12,8 +11,6 @@ namespace Orneholm.SverigesRadio.Api.Models.Request.Broadcasts
 
         public int ProgramId { get; set; }
 
-        public AudioQuality AudioQuality { get; set; } = AudioQuality.Normal;
-        public int? LiveAudioTemplateId { get; set; } = null;
-        public int? OnDemandAudioTemplateId { get; set; } = null;
+        public AudioSettings AudioSettings { get; set; } = new AudioSettings();
     }
 }

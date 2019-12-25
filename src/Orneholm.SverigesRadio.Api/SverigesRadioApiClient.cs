@@ -59,7 +59,7 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<ProgramListResponse> ListProgramsAsync(ProgramListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<ProgramListRequest, ProgramListResponse, ProgramListFilterFields, ProgramListSortFields>(
+            return _httpClient.GetListAsync<ProgramListRequest, ProgramListResponse, ProgramListFilterFields>(
                 Constants.Programs.ListEndpointConfiguration,
                 request,
                 pagination,
@@ -76,7 +76,7 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<ProgramCategoryListResponse> ListProgramCategoriesAsync(ProgramCategoryListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<ProgramCategoryListRequest, ProgramCategoryListResponse, ProgramCategoryListFilterFields, ProgramCategorySortFields>(
+            return _httpClient.GetListAsync<ProgramCategoryListRequest, ProgramCategoryListResponse>(
                 Constants.ProgramCategories.ListEndpointConfiguration,
                 request,
                 pagination
@@ -92,7 +92,7 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<ChannelListResponse> ListChannelsAsync(ChannelListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<ChannelListRequest, ChannelListResponse, ChannelListFilterFields, ChannelListSortFields>(
+            return _httpClient.GetListAsync<ChannelListRequest, ChannelListResponse, ChannelListFilterFields>(
                 Constants.Channels.ListEndpointConfiguration,
                 request,
                 pagination,
@@ -109,7 +109,7 @@ namespace Orneholm.SverigesRadio.Api
 
         public async Task<EpisodeListResponse> GetEpisodesAsync(EpisodeDetailsMultipleRequest request, ListPagination? pagination = null)
         {
-            var result = await _httpClient.GetListAsync<EpisodeDetailsMultipleRequest, EpisodeListResponse, EpisodeListFilterFields, EpisodeListSortFields>(
+            var result = await _httpClient.GetListAsync<EpisodeDetailsMultipleRequest, EpisodeListResponse>(
                 Constants.Episodes.DetailsMultipleUrlEndpointConfiguration,
                 request,
                 pagination
@@ -123,7 +123,7 @@ namespace Orneholm.SverigesRadio.Api
         public Task<EpisodeDetailsResponse> GetLatestEpisodeAsync(EpisodeLatestDetailsRequest request)
         {
             var queryStringParams = new Dictionary<string, string?>();
-            SverigesRadioHttpClientExtensions.AddAudioSettingsQueryStringParams(queryStringParams, request);
+            SverigesRadioHttpClientExtensions.AddAudioSettingsQueryStringParams(queryStringParams, request.AudioSettings);
 
             queryStringParams[Constants.Episodes.QueryString.ProgramId] = request.ProgramId.ToString("D");
 
@@ -133,7 +133,7 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<EpisodeListResponse> ListEpisodesAsync(EpisodeListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<EpisodeListRequest, EpisodeListResponse, EpisodeListFilterFields, EpisodeListSortFields>(
+            return _httpClient.GetListAsync<EpisodeListRequest, EpisodeListResponse>(
                 Constants.Episodes.ListEndpointConfiguration,
                 request,
                 pagination
@@ -142,7 +142,7 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<EpisodeListResponse> SearchEpisodesAsync(EpisodeSearchRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<EpisodeSearchRequest, EpisodeListResponse, EpisodeListFilterFields, EpisodeListSortFields>(
+            return _httpClient.GetListAsync<EpisodeSearchRequest, EpisodeListResponse>(
                 Constants.Episodes.SearchEndpointConfiguration,
                 request,
                 pagination
@@ -158,10 +158,20 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<BroadcastListResponse> ListBroadcastsAsync(BroadcastListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<BroadcastListRequest, BroadcastListResponse, BroadcastListFilterFields, BroadcastListSortFields>(
+            return _httpClient.GetListAsync<BroadcastListRequest, BroadcastListResponse>(
                 Constants.Broadcasts.ListEndpointConfiguration,
                 request,
                 pagination
+            );
+        }
+
+        public Task<BroadcastListResponse> ListExtraBroadcastsAsync(BroadcastListExtraRequest request, ListPagination? pagination = null)
+        {
+            return _httpClient.GetListAsync<BroadcastListExtraRequest, BroadcastListResponse, NoneListFilterFields, BroadcastListExtraSortFields>(
+                Constants.Broadcasts.ListExtraEndpointConfiguration,
+                request,
+                pagination,
+                sort: request.Sort
             );
         }
 
@@ -174,7 +184,7 @@ namespace Orneholm.SverigesRadio.Api
 
         public Task<PodfileListResponse> ListPodfilesAsync(PodfileListRequest request, ListPagination? pagination = null)
         {
-            return _httpClient.GetListAsync<PodfileListRequest, PodfileListResponse, PodfileListFilterFields, PodfileListSortFields>(
+            return _httpClient.GetListAsync<PodfileListRequest, PodfileListResponse>(
                 Constants.Podfiles.ListEndpointConfiguration,
                 request,
                 pagination
