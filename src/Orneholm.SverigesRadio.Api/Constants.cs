@@ -1,5 +1,4 @@
 using System.Linq;
-using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.EpisodeGroups;
@@ -65,7 +64,7 @@ namespace Orneholm.SverigesRadio.Api
                     queryString[QueryString.ProgramCategoryId] = request.ProgramCategoryId?.ToString("D");
                     queryString[QueryString.IsArchived] = request.IsArchived?.ToString().ToLower();
 
-                    if(request.Filter != null)
+                    if (request.Filter != null)
                     {
                         queryString[Common.QueryString.FilterField] = request.Filter.GetFilterField();
                         queryString[Common.QueryString.FilterValue] = request.Filter.GetFilterValue();
@@ -106,7 +105,7 @@ namespace Orneholm.SverigesRadio.Api
                 BaseUrl,
                 (request, queryString) =>
                 {
-                    if(!string.IsNullOrEmpty(request.ChannelType))
+                    if (!string.IsNullOrEmpty(request.ChannelType))
                     {
                         queryString[Common.QueryString.FilterField] = Filter.ChannelType;
                         queryString[Common.QueryString.FilterValue] = request.ChannelType;
@@ -282,6 +281,12 @@ namespace Orneholm.SverigesRadio.Api
             private const string BaseUrl = "audiourltemplates";
             public const string OnDemandTypesListUrl = BaseUrl + "/ondemandaudiotypes";
             public const string LiveAudioTypesListUrl = BaseUrl + "/liveaudiotypes";
+        }
+
+        public static class News
+        {
+            public const string ProgramNewsListUrl = "news";
+            public const string EpisodeNewsListUrl = "news/episodes";
         }
     }
 }

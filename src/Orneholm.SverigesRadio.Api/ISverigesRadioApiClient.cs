@@ -29,6 +29,7 @@ namespace Orneholm.SverigesRadio.Api
         // Programs
         Task<ProgramDetailsResponse> GetProgramAsync(ProgramDetailsRequest request);
         Task<ProgramListResponse> ListProgramsAsync(ProgramListRequest request, ListPagination? pagination = null);
+        Task<ProgramNewsListResponse> ListProgramNewsAsync(ProgramNewsListRequest request, ListPagination? pagination = null);
 
         // ProgramCategories
         Task<ProgramCategoryDetailsResponse> GetProgramCategoryAsync(ProgramCategoryDetailsRequest request);
@@ -44,6 +45,7 @@ namespace Orneholm.SverigesRadio.Api
         Task<EpisodeDetailsResponse> GetLatestEpisodeAsync(EpisodeLatestDetailsRequest request);
         Task<EpisodeListResponse> ListEpisodesAsync(EpisodeListRequest request, ListPagination? pagination = null);
         Task<EpisodeListResponse> SearchEpisodesAsync(EpisodeSearchRequest request, ListPagination? pagination = null);
+        Task<EpisodeNewsListResponse> ListEpisodeNewsAsync(EpisodeNewsListRequest request, ListPagination? pagination = null);
 
         // EpisodeGroups
         Task<EpisodeGroupListResponse> ListEpisodeGroupsAsync(EpisodeGroupListRequest request, ListPagination? pagination = null);

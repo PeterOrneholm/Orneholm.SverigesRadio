@@ -99,6 +99,16 @@ namespace Orneholm.SverigesRadio.Api
             );
         }
 
+        public Task<ProgramNewsListResponse> ListProgramNewsAsync(ProgramNewsListRequest request, ListPagination? pagination = null)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            return _httpClient.GetAsync<ProgramNewsListResponse>(Constants.News.ProgramNewsListUrl);
+        }
+
         // ProgramCategories
 
         public Task<ProgramCategoryDetailsResponse> GetProgramCategoryAsync(ProgramCategoryDetailsRequest request)
@@ -222,6 +232,16 @@ namespace Orneholm.SverigesRadio.Api
                 request,
                 pagination
             );
+        }
+
+        public Task<EpisodeNewsListResponse> ListEpisodeNewsAsync(EpisodeNewsListRequest request, ListPagination? pagination = null)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            return _httpClient.GetAsync<EpisodeNewsListResponse>(Constants.News.EpisodeNewsListUrl);
         }
 
         // EpisodeGroups

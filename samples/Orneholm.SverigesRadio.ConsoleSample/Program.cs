@@ -34,11 +34,13 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             });
 
             await ListProgramsSample(apiClient);
+            await ListProgramNewsSample(apiClient);
             await ListProgramCategoriesSample(apiClient);
 
             await GetEpisodesSample(apiClient);
             await SearchEpisodesSample(apiClient);
 
+            await ListEpisodeNewsSample(apiClient);
             await ListEpisodeGroupsSample(apiClient);
 
             await ListChannelsSample(apiClient);
@@ -100,6 +102,21 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             }
         }
 
+        private static async Task ListProgramNewsSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine();
+            Console.WriteLine("ListProgramNews");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var result = await apiClient.ListProgramNewsAsync(new ProgramNewsListRequest());
+            var row = 1;
+            foreach (var item in result.Programs)
+            {
+                Console.WriteLine($"{row++}. {item.Name} ({item.Id}) - {item.Description}");
+            }
+        }
+
         private static async Task SearchEpisodesSample(SverigesRadioApiClient apiClient)
         {
             Console.WriteLine();
@@ -128,6 +145,21 @@ namespace Orneholm.SverigesRadio.ConsoleSample
                 1320251,
                 410158,
             }), ListPagination.TakeFirst(5));
+            var row = 1;
+            foreach (var item in result.Episodes)
+            {
+                Console.WriteLine($"{row++}. {item.Title} ({item.Id}) - {item.Description}");
+            }
+        }
+
+        private static async Task ListEpisodeNewsSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine();
+            Console.WriteLine("ListEpisodeNews");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var result = await apiClient.ListEpisodeNewsAsync(new EpisodeNewsListRequest());
             var row = 1;
             foreach (var item in result.Episodes)
             {
