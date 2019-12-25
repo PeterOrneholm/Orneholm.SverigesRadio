@@ -7,16 +7,16 @@ namespace Orneholm.SverigesRadio.Api.Models.Request.EpisodeGroups
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id">Gruppid</param>
-        public EpisodeGroupListRequest(int id)
+        /// <param name="groupId">Gruppid</param>
+        public EpisodeGroupListRequest(int groupId)
         {
-            Id = id;
+            GroupId = groupId;
         }
 
         /// <summary>
         /// Gruppid
         /// </summary>
-        public int Id { get; set; }
+        public int GroupId { get; set; }
 
         /// <summary>
         /// Ljudinställningar.

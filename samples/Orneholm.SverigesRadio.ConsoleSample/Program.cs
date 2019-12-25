@@ -61,7 +61,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.ListProgramsAsync(new ProgramListRequest(), ListPagination.TakeFirst(3));
+            var result = await apiClient.ListProgramsAsync(pagination: ListPagination.TakeFirst(3));
             var row = 1;
             foreach (var item in result.Programs)
             {
@@ -69,12 +69,12 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
                 Console.WriteLine();
                 Console.WriteLine("    GetLatestEpisode:");
-                Console.WriteLine("    -------------------------"); var latestEpisode = await apiClient.GetLatestEpisodeAsync(new EpisodeLatestDetailsRequest(item.Id));
+                Console.WriteLine("    -------------------------"); var latestEpisode = await apiClient.GetLatestEpisodeAsync(item.Id);
                 Console.WriteLine($"    - {latestEpisode.Episode.PublishDateUtc}: {latestEpisode.Episode.Title} ({latestEpisode.Episode.Id}): {latestEpisode.Episode.Description}");
 
                 Console.WriteLine();
                 Console.WriteLine("    ListEpisodes (latest 5):");
-                Console.WriteLine("    -------------------------"); var episodes = await apiClient.ListEpisodesAsync(new EpisodeListRequest(item.Id), ListPagination.TakeFirst(5));
+                Console.WriteLine("    -------------------------"); var episodes = await apiClient.ListEpisodesAsync(item.Id, pagination: ListPagination.TakeFirst(5));
                 foreach (var episode in episodes.Episodes)
                 {
                     Console.WriteLine($"    - {episode.PublishDateUtc}: {episode.Title} ({episode.Id}): {episode.Description}");
@@ -83,7 +83,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
                 Console.WriteLine();
                 Console.WriteLine("    ListBroadcasts (latest 5):");
                 Console.WriteLine("    -------------------------");
-                var broadcasts = await apiClient.ListBroadcastsAsync(new BroadcastListRequest(item.Id), ListPagination.TakeFirst(5));
+                var broadcasts = await apiClient.ListBroadcastsAsync(item.Id, ListPagination.TakeFirst(5));
                 foreach (var broadcast in broadcasts.Broadcasts)
                 {
                     Console.WriteLine($"    - {broadcast.BroadcastDateUtc}: {broadcast.Title} ({broadcast.Id}): {broadcast.Description}");
@@ -92,7 +92,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
                 Console.WriteLine();
                 Console.WriteLine("    ListPodfiles (latest 5):");
                 Console.WriteLine("    -------------------------");
-                var podfiles = await apiClient.ListPodfilesAsync(new PodfileListRequest(item.Id), ListPagination.TakeFirst(5));
+                var podfiles = await apiClient.ListPodfilesAsync(item.Id, ListPagination.TakeFirst(5));
                 foreach (var podfile in podfiles.Podfiles)
                 {
                     Console.WriteLine($"    - {podfile.PublishDateUtc}: {podfile.Title} ({podfile.Id}): {podfile.Description}");
@@ -107,7 +107,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.ListProgramNewsAsync(new ProgramNewsListRequest());
+            var result = await apiClient.ListProgramNewsAsync();
             var row = 1;
             foreach (var item in result.Programs)
             {
@@ -122,7 +122,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.SearchEpisodesAsync(new EpisodeSearchRequest("Microsoft"), ListPagination.TakeFirst(5));
+            var result = await apiClient.SearchEpisodesAsync("Microsoft", pagination: ListPagination.TakeFirst(5));
             var row = 1;
             foreach (var item in result.Episodes)
             {
@@ -137,12 +137,12 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.GetEpisodesAsync(new EpisodeDetailsMultipleRequest(new List<int>
+            var result = await apiClient.GetEpisodesAsync(new []
             {
                 1201209,
                 1320251,
                 410158,
-            }), ListPagination.TakeFirst(5));
+            });
             var row = 1;
             foreach (var item in result.Episodes)
             {
@@ -157,7 +157,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.ListEpisodeNewsAsync(new EpisodeNewsListRequest());
+            var result = await apiClient.ListEpisodeNewsAsync();
             var row = 1;
             foreach (var item in result.Episodes)
             {
@@ -172,7 +172,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.ListEpisodeGroupsAsync(new EpisodeGroupListRequest(23037), ListPagination.TakeFirst(5));
+            var result = await apiClient.ListEpisodeGroupsAsync(23037, ListPagination.TakeFirst(5));
             var row = 1;
 
             Console.WriteLine($"{result.EpisodeGroup.Title} ({result.EpisodeGroup.Id}) - {result.EpisodeGroup.Description}");
@@ -193,7 +193,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var items = apiClient.ListAllProgramCategoriesAsync(new ProgramCategoryListRequest());
+            var items = apiClient.ListAllProgramCategoriesAsync();
             var row = 1;
             await foreach (var item in items)
             {
@@ -208,20 +208,12 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var items = apiClient.ListAllChannelsAsync(new ChannelListRequest());
+            var items = apiClient.ListAllChannelsAsync();
             var row = 1;
             await foreach (var item in items)
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.ChannelType}");
             }
-
-            var channels = (await apiClient.ListChannelsAsync(new ChannelListRequest(), ListPagination.Disabled())).Channels;
-            var types = channels.Select(x => x.ChannelType).Distinct().OrderBy(x => x).ToList();
-            foreach (var type in types)
-            {
-                Console.WriteLine($"public const string {type.Replace(" ", "")} = \"{type}\"");
-            }
-
         }
 
         private static async Task ListOnDemandAudioTypesSample(SverigesRadioApiClient apiClient)
@@ -231,7 +223,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.ListOnDemandAudioTypesAsync(new OnDemandAudioTypesListRequest());
+            var result = await apiClient.ListOnDemandAudioTypesAsync();
             var row = 1;
             foreach (var item in result.UrlTemplates)
             {
@@ -246,7 +238,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.ListLiveAudioTypesAsync(new LiveAudioTypesListRequest());
+            var result = await apiClient.ListLiveAudioTypesAsync();
             var row = 1;
             foreach (var item in result.UrlTemplates)
             {
@@ -261,7 +253,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var result = await apiClient.ListExtraBroadcastsAsync(new ExtraBroadcastListRequest());
+            var result = await apiClient.ListExtraBroadcastsAsync();
             var row = 1;
             foreach (var item in result.Broadcasts)
             {

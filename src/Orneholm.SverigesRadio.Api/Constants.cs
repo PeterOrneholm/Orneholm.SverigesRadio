@@ -151,7 +151,7 @@ namespace Orneholm.SverigesRadio.Api
                 SearchUrl,
                 (request, queryString) =>
                 {
-                    queryString[QueryString.Query] = request.Query;
+                    queryString[QueryString.Query] = request.SearchQuery;
 
                     if (request.ProgramId.HasValue)
                     {
@@ -194,7 +194,7 @@ namespace Orneholm.SverigesRadio.Api
                 BaseUrl,
                 (request, queryString) =>
                 {
-                    queryString[QueryString.Id] = request.Id.ToString("D");
+                    queryString[QueryString.Id] = request.GroupId.ToString("D");
                 }
             );
 

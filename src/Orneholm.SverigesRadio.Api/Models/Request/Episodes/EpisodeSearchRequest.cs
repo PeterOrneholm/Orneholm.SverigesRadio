@@ -8,19 +8,18 @@ namespace Orneholm.SverigesRadio.Api.Models.Request.Episodes
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="query">Söfråga</param>
-        public EpisodeSearchRequest(string query)
+        /// <param name="searchQuery">Söfråga</param>
+        public EpisodeSearchRequest(string searchQuery)
         {
-            Query = query;
+            SearchQuery = searchQuery;
         }
 
         /// <summary>
         /// Sökfråga
         /// </summary>
-        public string Query { get; set; }
+        public string SearchQuery { get; set; }
 
         public int? ProgramId { get; set; }
-        [JsonPropertyName("kanalid")]
         public int? ChannelId { get; set; }
         public string ImageSize { get; set; } = string.Empty;
 
