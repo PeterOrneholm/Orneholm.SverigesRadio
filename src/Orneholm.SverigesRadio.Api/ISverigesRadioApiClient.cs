@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
@@ -7,6 +8,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
+using Orneholm.SverigesRadio.Api.Models.Response.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
@@ -51,5 +53,9 @@ namespace Orneholm.SverigesRadio.Api
         // Podfiles
         Task<PodfileDetailsResponse> GetPodfileAsync(PodfileDetailsRequest request);
         Task<PodfileListResponse> ListPodfilesAsync(PodfileListRequest request, ListPagination? pagination = null);
+
+        // AudioUrlTemplates
+        Task<OnDemandAudioTypesListResponse> ListOnDemandAudioTypesAsync(OnDemandAudioTypesListRequest request);
+        Task<LivedAudioTypesListResponse> ListLiveAudioTypesAsync(LiveAudioTypesListRequest request);
     }
 }

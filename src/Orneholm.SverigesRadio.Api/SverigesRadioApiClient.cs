@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Common;
@@ -11,6 +12,7 @@ using Orneholm.SverigesRadio.Api.Models.Request.ExtraBroadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
+using Orneholm.SverigesRadio.Api.Models.Response.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
@@ -133,8 +135,7 @@ namespace Orneholm.SverigesRadio.Api
 
             queryStringParams[Constants.Episodes.QueryString.ProgramId] = request.ProgramId.ToString("D");
 
-            var fullUrl = $"{Constants.Episodes.GetLatestUrl}";
-            return _httpClient.GetAsync<EpisodeDetailsResponse>(fullUrl, queryStringParams);
+            return _httpClient.GetAsync<EpisodeDetailsResponse>(Constants.Episodes.GetLatestUrl, queryStringParams);
         }
 
         public Task<EpisodeListResponse> ListEpisodesAsync(EpisodeListRequest request, ListPagination? pagination = null)
@@ -196,6 +197,17 @@ namespace Orneholm.SverigesRadio.Api
             );
         }
 
+        // AudioUrlTemplates
+
+        public Task<OnDemandAudioTypesListResponse> ListOnDemandAudioTypesAsync(OnDemandAudioTypesListRequest request)
+        {
+            return _httpClient.GetAsync<OnDemandAudioTypesListResponse>(Constants.AudioUrlTemplates.OnDemandTypesListUrl);
+        }
+
+        public Task<LivedAudioTypesListResponse> ListLiveAudioTypesAsync(LiveAudioTypesListRequest request)
+        {
+            return _httpClient.GetAsync<LivedAudioTypesListResponse>(Constants.AudioUrlTemplates.LiveAudioTypesListUrl);
+        }
 
         // Internal
 

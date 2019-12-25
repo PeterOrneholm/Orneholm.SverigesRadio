@@ -1,4 +1,5 @@
 using System.Linq;
+using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
@@ -255,6 +256,13 @@ namespace Orneholm.SverigesRadio.Api
             {
                 public const string ProgramId = "programid";
             }
+        }
+
+        public static class AudioUrlTemplates
+        {
+            private const string BaseUrl = "audiourltemplates";
+            public const string OnDemandTypesListUrl = BaseUrl + "/ondemandaudiotypes";
+            public const string LiveAudioTypesListUrl = BaseUrl + "/liveaudiotypes";
         }
     }
 }

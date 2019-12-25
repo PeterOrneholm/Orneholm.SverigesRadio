@@ -65,5 +65,34 @@ namespace Orneholm.SverigesRadio.Api
             public const int Sport = 10;
             public const int Vetenskap_Miljo = 12;
         }
+
+        public static class OnDemandAudioTemplates
+        {
+            public const int M4A_ASX = 1;
+            public const int M4A_M3U = 2;
+            public const int M4A_M3U8 = 3;
+
+            public const int Mobile_M3U = 4;
+            public const int Mobile_M3U8 = 5;
+
+            public const int Iphone_M3U = 6;
+            public const int Iphone_M3U8 = 8;
+
+            public const int Html5_Desktop = 9;
+        }
+
+        public static class LiveAudioTemplates
+        {
+            public const int MP3 = 2;
+
+            public const int AAC_HTTP_PLS = 3;
+            public const int AAC_HTTP_M3U = 4;
+            public const int AAC_HTTP = 5;
+
+            public const int HLS = 10;
+            public const int DASH = 11;
+
+            public const int IOS = 12;
+        }
     }
 }

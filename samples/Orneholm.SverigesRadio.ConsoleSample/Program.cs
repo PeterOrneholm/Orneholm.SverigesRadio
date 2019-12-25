@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api;
 using Orneholm.SverigesRadio.Api.Models.Request;
+using Orneholm.SverigesRadio.Api.Models.Request.AudioUrlTemplates;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
@@ -34,6 +35,9 @@ namespace Orneholm.SverigesRadio.ConsoleSample
 
             await ListExtraBroadcastsSample(apiClient);
 
+            await ListOnDemandAudioTypesSample(apiClient);
+            await ListLiveAudioTypesSample(apiClient);
+
             //await CreateConstants(apiClient);
 
             Console.WriteLine();
@@ -53,10 +57,12 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.Description}");
 
+                Console.WriteLine();
                 Console.WriteLine("    GetLatestEpisode:");
                 Console.WriteLine("    -------------------------"); var latestEpisode = await apiClient.GetLatestEpisodeAsync(new EpisodeLatestDetailsRequest(item.Id));
                 Console.WriteLine($"    - {latestEpisode.Episode.PublishDateUtc}: {latestEpisode.Episode.Title} ({latestEpisode.Episode.Id}): {latestEpisode.Episode.Description}");
 
+                Console.WriteLine();
                 Console.WriteLine("    ListEpisodes (latest 5):");
                 Console.WriteLine("    -------------------------"); var episodes = await apiClient.ListEpisodesAsync(new EpisodeListRequest(item.Id), ListPagination.TakeFirst(5));
                 foreach (var episode in episodes.Episodes)
@@ -64,6 +70,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
                     Console.WriteLine($"    - {episode.PublishDateUtc}: {episode.Title} ({episode.Id}): {episode.Description}");
                 }
 
+                Console.WriteLine();
                 Console.WriteLine("    ListBroadcasts (latest 5):");
                 Console.WriteLine("    -------------------------");
                 var broadcasts = await apiClient.ListBroadcastsAsync(new BroadcastListRequest(item.Id), ListPagination.TakeFirst(5));
@@ -72,6 +79,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
                     Console.WriteLine($"    - {broadcast.BroadcastDateUtc}: {broadcast.Title} ({broadcast.Id}): {broadcast.Description}");
                 }
 
+                Console.WriteLine();
                 Console.WriteLine("    ListPodfiles (latest 5):");
                 Console.WriteLine("    -------------------------");
                 var podfiles = await apiClient.ListPodfilesAsync(new PodfileListRequest(item.Id), ListPagination.TakeFirst(5));
@@ -144,6 +152,36 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             await foreach (var item in items)
             {
                 Console.WriteLine($"{row++}. {item.Name} ({item.Id}): {item.ChannelType}");
+            }
+        }
+
+        private static async Task ListOnDemandAudioTypesSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine();
+            Console.WriteLine("ListOnDemandAudioTypes");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var result = await apiClient.ListOnDemandAudioTypesAsync(new OnDemandAudioTypesListRequest());
+            var row = 1;
+            foreach (var item in result.UrlTemplates)
+            {
+                Console.WriteLine($"{row++}. {item.Url} ({item.Id})");
+            }
+        }
+
+        private static async Task ListLiveAudioTypesSample(SverigesRadioApiClient apiClient)
+        {
+            Console.WriteLine();
+            Console.WriteLine("ListLiveAudioTypes");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine();
+
+            var result = await apiClient.ListLiveAudioTypesAsync(new LiveAudioTypesListRequest());
+            var row = 1;
+            foreach (var item in result.UrlTemplates)
+            {
+                Console.WriteLine($"{row++}. {item.Url} ({item.Id})");
             }
         }
 
