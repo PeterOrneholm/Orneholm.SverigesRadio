@@ -4,13 +4,19 @@ using System.Threading.Tasks;
 using Orneholm.SverigesRadio.Api.Models.Request;
 using Orneholm.SverigesRadio.Api.Models.Request.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Request.Channels;
+using Orneholm.SverigesRadio.Api.Models.Request.EpisodeGroups;
 using Orneholm.SverigesRadio.Api.Models.Request.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Request.ExtraBroadcasts;
+using Orneholm.SverigesRadio.Api.Models.Request.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Request.ProgramCategories;
 using Orneholm.SverigesRadio.Api.Models.Request.Programs;
 using Orneholm.SverigesRadio.Api.Models.Response;
 using Orneholm.SverigesRadio.Api.Models.Response.Broadcasts;
 using Orneholm.SverigesRadio.Api.Models.Response.Channels;
+using Orneholm.SverigesRadio.Api.Models.Response.EpisodeGroups;
 using Orneholm.SverigesRadio.Api.Models.Response.Episodes;
+using Orneholm.SverigesRadio.Api.Models.Response.ExtraBroadcasts;
+using Orneholm.SverigesRadio.Api.Models.Response.Podfiles;
 using Orneholm.SverigesRadio.Api.Models.Response.Programs;
 
 namespace Orneholm.SverigesRadio.Api
@@ -30,7 +36,7 @@ namespace Orneholm.SverigesRadio.Api
             });
         }
 
-        public static IAsyncEnumerable<Models.Response.ProgramCategories.ProgramCategory> GetAllProgramCategoriesAsync(this ISverigesRadioApiClient apiClient, ProgramCategoryListRequest request)
+        public static IAsyncEnumerable<Models.Response.ProgramCategories.ProgramCategory> ListAllProgramCategoriesAsync(this ISverigesRadioApiClient apiClient, ProgramCategoryListRequest request)
         {
             return apiClient.ListAllAsync<Models.Response.ProgramCategories.ProgramCategory, ProgramCategoryListRequest>(request, async (listRequest, pagination) =>
             {
@@ -45,6 +51,24 @@ namespace Orneholm.SverigesRadio.Api
             {
                 var result = await apiClient.ListEpisodesAsync(request, pagination);
                 return (result.Episodes, result.Pagination);
+            });
+        }
+
+        public static IAsyncEnumerable<Episode> SearchAllEpisodesAsync(this ISverigesRadioApiClient apiClient, EpisodeSearchRequest request)
+        {
+            return apiClient.ListAllAsync<Episode, EpisodeSearchRequest>(request, async (listRequest, pagination) =>
+            {
+                var result = await apiClient.SearchEpisodesAsync(request, pagination);
+                return (result.Episodes, result.Pagination);
+            });
+        }
+
+        public static IAsyncEnumerable<EpisodeGroupEpisode> ListAllEpisodeGroupsAsync(this ISverigesRadioApiClient apiClient, EpisodeGroupListRequest request)
+        {
+            return apiClient.ListAllAsync<EpisodeGroupEpisode, EpisodeGroupListRequest>(request, async (listRequest, pagination) =>
+            {
+                var result = await apiClient.ListEpisodeGroupsAsync(request, pagination);
+                return (result.EpisodeGroup.Episodes, result.Pagination);
             });
         }
 
@@ -65,6 +89,27 @@ namespace Orneholm.SverigesRadio.Api
                 return (result.Broadcasts, result.Pagination);
             });
         }
+
+        public static IAsyncEnumerable<ExtraBroadcast> ListAllExtraBroadcastsAsync(this ISverigesRadioApiClient apiClient, ExtraBroadcastListRequest request)
+        {
+            return apiClient.ListAllAsync<ExtraBroadcast, ExtraBroadcastListRequest>(request, async (listRequest, pagination) =>
+            {
+                var result = await apiClient.ListExtraBroadcastsAsync(request, pagination);
+                return (result.Broadcasts, result.Pagination);
+            });
+        }
+
+        public static IAsyncEnumerable<Podfile> ListAllPodfilesAsync(this ISverigesRadioApiClient apiClient, PodfileListRequest request)
+        {
+            return apiClient.ListAllAsync<Podfile, PodfileListRequest>(request, async (listRequest, pagination) =>
+            {
+                var result = await apiClient.ListPodfilesAsync(request, pagination);
+                return (result.Podfiles, result.Pagination);
+            });
+        }
+
+
+
 
         private static async IAsyncEnumerable<TItem> ListAllAsync<TItem, TRequest>(this ISverigesRadioApiClient apiClient, TRequest request, Func<TRequest, ListPagination, Task<(IEnumerable<TItem>, ListResponsePagination)>> getItems) where TRequest : ListRequestBase
         {

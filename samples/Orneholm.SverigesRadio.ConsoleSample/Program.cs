@@ -193,7 +193,7 @@ namespace Orneholm.SverigesRadio.ConsoleSample
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine();
 
-            var items = apiClient.GetAllProgramCategoriesAsync(new ProgramCategoryListRequest());
+            var items = apiClient.ListAllProgramCategoriesAsync(new ProgramCategoryListRequest());
             var row = 1;
             await foreach (var item in items)
             {

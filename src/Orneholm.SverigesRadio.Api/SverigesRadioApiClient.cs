@@ -234,7 +234,7 @@ namespace Orneholm.SverigesRadio.Api
             );
         }
 
-        public Task<EpisodeNewsListResponse> ListEpisodeNewsAsync(EpisodeNewsListRequest request, ListPagination? pagination = null)
+        public Task<EpisodeNewsListResponse> ListEpisodeNewsAsync(EpisodeNewsListRequest request)
         {
             if (request == null)
             {
