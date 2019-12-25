@@ -158,9 +158,9 @@ namespace Orneholm.SverigesRadio.Api
                         queryString[QueryString.ProgramId] = request.ProgramId.Value.ToString("D");
                     }
 
-                    if (request.KanalId.HasValue)
+                    if (request.ChannelId.HasValue)
                     {
-                        queryString[QueryString.KanalId] = request.KanalId.Value.ToString("D");
+                        queryString[QueryString.KanalId] = request.ChannelId.Value.ToString("D");
                     }
                 }
             );

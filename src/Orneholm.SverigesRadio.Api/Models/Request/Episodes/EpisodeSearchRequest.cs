@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Orneholm.SverigesRadio.Api.Models.Request.Common;
 
 namespace Orneholm.SverigesRadio.Api.Models.Request.Episodes
@@ -19,7 +20,8 @@ namespace Orneholm.SverigesRadio.Api.Models.Request.Episodes
         public string Query { get; set; }
 
         public int? ProgramId { get; set; }
-        public int? KanalId { get; set; }
+        [JsonPropertyName("kanalid")]
+        public int? ChannelId { get; set; }
         public string ImageSize { get; set; } = string.Empty;
 
         /// <summary>
