@@ -64,17 +64,21 @@ namespace Orneholm.SverigesRadio.Api
             queryStringParams[Constants.Common.QueryString.Sort] = sortString.ToString().TrimEnd(Constants.Common.QueryString.SortFieldSeparator);
         }
 
-        public static void AddAudioSettingsQueryStringParams(Dictionary<string, string?> queryStringParams, AudioSettings audioSettings)
+        public static void AddAudioSettingsQueryStringParams(Dictionary<string, string?> queryStringParams, AudioSettings audioSettings, AudioSettings defaultAudioSettings)
         {
-            queryStringParams[Constants.Common.QueryString.AudioQuality] = GetAudioQuality(audioSettings.AudioQuality);
+            var audioQuality = audioSettings.AudioQuality ?? defaultAudioSettings.AudioQuality;
+            queryStringParams[Constants.Common.QueryString.AudioQuality] = GetAudioQuality(audioQuality ?? AudioQuality.Normal);
 
-            if (audioSettings.LiveAudioTemplateId.HasValue)
+            var liveAudioTemplateId = audioSettings.LiveAudioTemplateId ?? defaultAudioSettings.LiveAudioTemplateId;
+            if (liveAudioTemplateId.HasValue)
             {
-                queryStringParams[Constants.Common.QueryString.LiveAudioTemplateId] = audioSettings.LiveAudioTemplateId.Value.ToString("D");
+                queryStringParams[Constants.Common.QueryString.LiveAudioTemplateId] = liveAudioTemplateId.Value.ToString("D");
             }
-            if (audioSettings.OnDemandAudioTemplateId.HasValue)
+
+            var onDemandAudioTemplateId = audioSettings.OnDemandAudioTemplateId ?? defaultAudioSettings.OnDemandAudioTemplateId;
+            if (onDemandAudioTemplateId.HasValue)
             {
-                queryStringParams[Constants.Common.QueryString.OnDemandAudioTemplateId] = audioSettings.OnDemandAudioTemplateId.Value.ToString("D");
+                queryStringParams[Constants.Common.QueryString.OnDemandAudioTemplateId] = onDemandAudioTemplateId.Value.ToString("D");
             }
         }
 

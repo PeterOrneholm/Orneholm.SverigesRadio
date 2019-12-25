@@ -41,14 +41,17 @@ namespace Orneholm.SverigesRadio.Api
         }
 
         private readonly HttpClient _httpClient;
+        private readonly AudioSettings _defaultAudioSettings;
 
-        /// <summary>
-        /// Creates an instance of <see cref="SverigesRadioApiClient"/> using the supplied <see cref="HttpClient"/> to talk HTTP.
-        /// </summary>
-        /// <param name="httpClient">The HttpClient to use.</param>
         public SverigesRadioApiClient(HttpClient httpClient)
+        : this(httpClient, new AudioSettings())
+        {
+        }
+
+        public SverigesRadioApiClient(HttpClient httpClient, AudioSettings defaultAudioSettings)
         {
             _httpClient = httpClient;
+            _defaultAudioSettings = defaultAudioSettings;
         }
 
         // Programs
@@ -126,7 +129,7 @@ namespace Orneholm.SverigesRadio.Api
         public Task<EpisodeDetailsResponse> GetLatestEpisodeAsync(EpisodeLatestDetailsRequest request)
         {
             var queryStringParams = new Dictionary<string, string?>();
-            SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, request.AudioSettings);
+            SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, request.AudioSettings, _defaultAudioSettings);
 
             queryStringParams[Constants.Episodes.QueryString.ProgramId] = request.ProgramId.ToString("D");
 
@@ -196,20 +199,30 @@ namespace Orneholm.SverigesRadio.Api
 
         // Internal
 
-        private static Task<TResult> GetDetailsAsync<TResult>(HttpClient httpClient, string url, DetailsRequestBase request, Dictionary<string, string?>? queryStringParams = null)
+        private Task<TResult> GetDetailsAsync<TResult>(HttpClient httpClient, string url, DetailsRequestBase request, Dictionary<string, string?>? queryStringParams = null)
+        {
+            return GetDetailsAsync<TResult>(httpClient, url, request, queryStringParams, _defaultAudioSettings);
+        }
+
+        private static Task<TResult> GetDetailsAsync<TResult>(HttpClient httpClient, string url, DetailsRequestBase request, Dictionary<string, string?>? queryStringParams, AudioSettings defaultAudioSettings)
         {
             queryStringParams ??= new Dictionary<string, string?>();
 
             if (request is IHasAudioSettings audioSettings)
             {
-                SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings);
+                SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings, defaultAudioSettings);
             }
 
             var fullUrl = $"{url}/{request.Id:D}";
             return httpClient.GetAsync<TResult>(fullUrl, queryStringParams);
         }
 
-        private static Task<TResult> GetListAsync<TRequest, TResult>(HttpClient httpClient, ListEndpointConfiguration<TRequest> listEndpointConfiguration, TRequest request, ListPagination? pagination = null) where TRequest : ListRequestBase
+        private Task<TResult> GetListAsync<TRequest, TResult>(HttpClient httpClient, ListEndpointConfiguration<TRequest> listEndpointConfiguration, TRequest request, ListPagination? pagination = null) where TRequest : ListRequestBase
+        {
+            return GetListAsync<TRequest, TResult>(httpClient, listEndpointConfiguration, request, pagination, _defaultAudioSettings);
+        }
+
+        private static Task<TResult> GetListAsync<TRequest, TResult>(HttpClient httpClient, ListEndpointConfiguration<TRequest> listEndpointConfiguration, TRequest request, ListPagination? pagination, AudioSettings defaultAudioSettings) where TRequest : ListRequestBase
         {
             var queryStringParams = new Dictionary<string, string?>();
 
@@ -217,7 +230,7 @@ namespace Orneholm.SverigesRadio.Api
 
             if (request is IHasAudioSettings audioSettings)
             {
-                SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings);
+                SverigesRadioUrlHelpers.AddAudioSettingsQueryStringParams(queryStringParams, audioSettings.AudioSettings, defaultAudioSettings);
             }
 
             if (listEndpointConfiguration.QueryStringParamsResolver != null)
