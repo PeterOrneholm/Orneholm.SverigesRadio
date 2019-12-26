@@ -30,7 +30,7 @@
         <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/PeterOrneholm/Orneholm.SverigesRadio.Api.git</RepositoryUrl>
+        <RepositoryUrl>https://github.com/PeterOrneholm/Orneholm.SverigesRadio.git</RepositoryUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
 
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
