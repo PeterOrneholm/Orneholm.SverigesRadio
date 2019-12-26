@@ -11,6 +11,7 @@ namespace Orneholm.SverigesRadio.Api
         public static class Programs
         {
             public const int Ekot = 4540;
+            public const int RadioSweden = 2054;
 
             public const int P1_Dokumentar = 909;
             public const int Sommar_Och_Vinter_I_P1 = 2071;

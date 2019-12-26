@@ -3,7 +3,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://dev.azure.com/orneholm/Orneholm.SverigesRadio/_apis/build/status/Orneholm.SverigesRadio?branchName=master)](https://dev.azure.com/orneholm/Orneholm.SverigesRadio/_build/latest?definitionId=3&branchName=master)
 [![NuGet](https://img.shields.io/nuget/v/Orneholm.SverigesRadio.Api.svg)](https://www.nuget.org/packages/Orneholm.SverigesRadio.Api/)
-[![NuGet (Pre)](https://img.shields.io/nuget/vpre/Orneholm.SverigesRadio.Api.svg)](https://www.nuget.org/packages/Orneholm.SverigesRadio.Api/)
 [![Twitter Follow](https://img.shields.io/badge/Twitter-@PeterOrneholm-blue.svg?logo=twitter)](https://twitter.com/PeterOrneholm)
 
 Orneholm.SverigesRadio is an unofficial wrapper of Sveriges Radio Open API (v2) for .NET.
@@ -12,7 +11,7 @@ Orneholm.SverigesRadio is an unofficial wrapper of Sveriges Radio Open API (v2) 
 
 - :radio: Typed wrappers for the Swedish Radio Open API
 - :penguin: Cross platform: Targets .NET Standard 2.0 and .NET Core 3.1
-- :arrow_up_down: Supports sorting, filtering etc.
+- :arrow_up_down: Supports sorting, filtering, searching etc.
 
 ## Supported methods
 
@@ -22,28 +21,37 @@ The API-wrapper supports all these methods:
     - `GetProgramAsync(...)`
     - `ListProgramsAsync(...)`
     - `ListProgramNewsAsync(...)`
+    - `ListAllProgramsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - ProgramCategories
     - `GetProgramCategoryAsync(...)`
     - `ListProgramCategoriesAsync(...)`
+    - `ListAllProgramCategoriesAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - Channels
     - `GetChannelAsync(...)`
     - `ListChannelsAsync(...)`
+    - `ListAllChannelsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - Episodes
     - `GetEpisodeAsync(...)`
     - `GetEpisodesAsync(...)`
     - `GetLatestEpisodeAsync(...)`
     - `ListEpisodesAsync(...)`
+    - `ListAllEpisodesAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
     - `SearchEpisodesAsync(...)`
+    - `SearchAllEpisodesAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
     - `ListEpisodeNewsAsync(...)`
 - EpisodeGroups
     - `ListEpisodeGroupsAsync(...)`
+    - `ListAllEpisodeGroupsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - Broadcasts
     - `ListBroadcastsAsync(...)`
+    - `ListAllBroadcastsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - Extra broadcasts
     - `ListExtraBroadcastsAsync(...)`
+    - `ListAllExtraBroadcastsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - Podfiles
     - `GetPodfileAsync(...)`
     - `ListPodfilesAsync(...)`
+    - `ListAllPodfilesAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - AudioUrlTemplates
     - `ListOnDemandAudioTypesAsync(...)`
     - `ListLiveAudioTypesAsync(...)`
@@ -67,7 +75,16 @@ dotnet add package Orneholm.SverigesRadio.Api
 
 #### Instantiate the api client
 
-_Note_: When used in a place where .NET can handle the lifecycle of HttpClient, let .NET inject the api client to cache the http client.
+When used in a place where .NET can handle the lifecycle of HttpClient (like ASP.NET), let .NET inject the api client to cache the http client.
+
+```csharp
+services.AddHttpClient<ISverigesRadioApiClient, SverigesRadioApiClient>(httpClient =>
+{
+    httpClient.BaseAddress = SverigesRadioApiDefaults.ProductionApiBaseUrl;
+});
+```
+
+*Create api client without DI:*
 
 ```csharp
 var apiClient = SverigesRadioApiClient.CreateClient();
@@ -128,10 +145,69 @@ foreach (var episode in episodeSearchResult.Episodes)
 
 These were just brief samples. Explore the API to find the rest of the possibilities :)
 
-## Pagination with IAsyncEnumerable
+## Details
+
+### Pagination with IAsyncEnumerable
 
 If used from a runtime that supports .NET Standard 2.1, extensions are provided for the list calls to automatically do pagination using `IAsyncEnumerable`, for example: `ListAllProgramCategoriesAsync()`.
+Under the hood the method will fetch 100 items at a time but wllow you to seemlesly enumrate over it.
+
 _Note:_ This will enumerate over all items, which could be millions. Use with care.
+
+### Requests
+
+All methods take a `*Request` object with the parameters for that specific endpoint. There are overloads on all of them for common scenarios. For example:
+
+*Shorthand for search episode:*
+
+```csharp
+var episodeSearchResult = await apiClient.SearchEpisodesAsync("Microsoft");
+```
+
+*Full request object for search episode:*
+
+```csharp
+var episodeSearchResult = await apiClient.SearchEpisodesAsync(new EpisodeSearchRequest("Microsoft")
+{
+    ChannelId = SverigesRadioApiIds.Channels.P3_Rikskanal
+});
+```
+
+### Audio settings
+
+You can set the default [audio settings](https://sverigesradio.se/api/documentation/v2/generella_parametrar.html) when creating the API client, but you can also override these settings per method call whemeber audio settings are relevant, like this.
+
+```csharp
+var podfilesResult = await apiClient.ListPodfilesAsync(new PodfileListRequest(SverigesRadioApiIds.Programs.Sa_Funkar_Det)
+{
+    AudioSettings = new AudioSettings()
+    {
+        AudioQuality = AudioQuality.High,
+        OnDemandAudioTemplateId = SverigesRadioApiIds.OnDemandAudioTemplates.M4A_M3U
+    }
+});
+```
+
+### SverigesRadioApiIds constants
+
+Some identifiers in the API are quite constant and there are classes that lists the most common items.
+
+- `SverigesRadioApiIds.Programs`
+- `SverigesRadioApiIds.Channels`
+- `SverigesRadioApiIds.ChannelTypes`
+- `SverigesRadioApiIds.ProgramCategories`
+- `SverigesRadioApiIds.OnDemandAudioTemplates`
+- `SverigesRadioApiIds.LiveAudioTemplates`
+
+`*Examples:*
+
+- `SverigesRadioApiIds.Programs.Ekot` returns `4540`
+- `SverigesRadioApiIds.Channels.P4_Ostergötland_Lokalkanal` returns `222`
+- `SverigesRadioApiIds.ChannelTypes.LokalKanal` returns `Lokal kanal`
+- `SverigesRadioApiIds.ProgramCategories.Ekonomi` returns `135`
+- `SverigesRadioApiIds.OnDemandAudioTemplates.Html5_Desktop` returns `9`
+- `SverigesRadioApiIds.LiveAudioTemplates.IOS` returns `12`
+
 
 ---
 
