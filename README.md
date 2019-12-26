@@ -14,6 +14,40 @@ Orneholm.SverigesRadio is an unofficial wrapper of Sveriges Radio Open API (v2) 
 - :penguin: Cross platform: Targets .NET Standard 2.0 and .NET Core 3.1
 - :arrow_up_down: Supports sorting, filtering etc.
 
+## Supported methods
+
+The API-wrapper supports all these methods:
+
+- Programs
+    - `GetProgramAsync(...)`
+    - `ListProgramsAsync(...)`
+    - `ListProgramNewsAsync(...)`
+- ProgramCategories
+    - `GetProgramCategoryAsync(...)`
+    - `ListProgramCategoriesAsync(...)`
+- Channels
+    - `GetChannelAsync(...)`
+    - `ListChannelsAsync(...)`
+- Episodes
+    - `GetEpisodeAsync(...)`
+    - `GetEpisodesAsync(...)`
+    - `GetLatestEpisodeAsync(...)`
+    - `ListEpisodesAsync(...)`
+    - `SearchEpisodesAsync(...)`
+    - `ListEpisodeNewsAsync(...)`
+- EpisodeGroups
+    - `ListEpisodeGroupsAsync(...)`
+- Broadcasts
+    - `ListBroadcastsAsync(...)`
+- Extra broadcasts
+    - `ListExtraBroadcastsAsync(...)`
+- Podfiles
+    - `GetPodfileAsync(...)`
+    - `ListPodfilesAsync(...)`
+- AudioUrlTemplates
+    - `ListOnDemandAudioTypesAsync(...)`
+    - `ListLiveAudioTypesAsync(...)`
+
 ### 1. Read the documentation
 
 Please start by reading the official documentation to get a basic understanding of the Swedish Radio open API:
@@ -29,20 +63,93 @@ dotnet add package Orneholm.SverigesRadio.Api
 
 ### 3. Use the API
 
-TODO
+#### Instantiate the api client
+
+_Note_: When used in a place where .NET can handle the lifecycle of HttpClient, let .NET inject the api client to cache the http client.
+
+```csharp
+var apiClient = SverigesRadioApiClient.CreateClient();
+```
+
+*Override default audio settings:*
+
+```csharp
+var apiClient = SverigesRadioApiClient.CreateClient(new AudioSettings
+{
+    OnDemandAudioTemplateId = SverigesRadioApiIds.OnDemandAudioTemplates.Html5_Desktop,
+    LiveAudioTemplateId = SverigesRadioApiIds.LiveAudioTemplates.MP3,
+
+    AudioQuality = AudioQuality.High
+});
+```
+
+#### Get data
+
+##### List programs
+
+```csharp
+var programsResult = await apiClient.ListProgramsAsync();
+foreach (var program in programsResult.Programs)
+{
+    Console.WriteLine($"{program.Name} ({program.Id}): {program.Description}");
+}
+```
+
+##### Get latest episode for P3 Dokumentär
+
+```csharp
+var episodeResult = await apiClient.GetLatestEpisodeAsync(SverigesRadioApiIds.Programs.P3_Dokumentar);
+Console.WriteLine($"{episodeResult.Episode.Title} ({episodeResult.Episode.Id}): {episodeResult.Episode.Description}");
+```
+
+##### List podfiles for Så funkar det (last 3)
+
+```csharp
+var podfilesResult = await apiClient.ListPodfilesAsync(SverigesRadioApiIds.Programs.Sa_Funkar_Det, ListPagination.TakeFirst(5));
+foreach (var podfile in podfilesResult.Podfiles)
+{
+    Console.WriteLine($"{podfile.Title} ({podfile.Id}): {podfile.Url}");
+}
+```
+
+##### Search episodes
+
+```csharp
+var episodeSearchResult = await apiClient.SearchEpisodesAsync("Microsoft");
+foreach (var episode in episodeSearchResult.Episodes)
+{
+    Console.WriteLine($"{episode.Title} ({episode.Id}) - {episode.Description}");
+}
+```
+
+##### More
+
+These were just brief samples. Explore the API to find the rest of the possibilities :)
+
+## Pagination with IAsyncEnumerable
+
+If used from a runtime that supports .NET Standard 2.1, extensions are provided for the list calls to automatically do pagination using `IAsyncEnumerable`, for example: `ListAllProgramCategoriesAsync()`.
+_Note:_ This will enumerate over all items, which could be millions. Use with care.
 
 ---
 
-## Samples
+## Samples & Test
 
-For more use cases, samples and inspiration; feel free to browse our samples.
+For more use cases, samples and inspiration; feel free to browse our samples and test.
 
-TODO
+- [Orneholm.SverigesRadio.ConsoleSample](https://github.com/PeterOrneholm/Orneholm.SverigesRadio/tree/master/samples/Orneholm.SverigesRadio.ConsoleSample)
+- [Orneholm.SverigesRadio.Api.Test](https://github.com/PeterOrneholm/Orneholm.SverigesRadio/tree/master/test/Orneholm.SverigesRadio.Api.Test)
 
 ## Contribute
 
 We are very open to community contributions.
 Please see our [contribution guidelines](CONTRIBUTING.md) before getting started.
+
+These methods are missing as of today, feel free to file an issue or provide a PR if you need them:
+- Traffic/Messages
+- VMA
+- Scheduled Episodes
+- Playlists
 
 ### License & acknowledgements
 

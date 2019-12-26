@@ -17,4 +17,17 @@ dotnet add package Orneholm.SverigesRadio.Api
 
 ### 3. Use the API
 
-TODO
+Simple sample listing 10 programs.
+
+```csharp
+var apiClient = SverigesRadioApiClient.CreateClient();
+
+var programsResult = await apiClient.ListProgramsAsync();
+foreach (var program in programsResult.Programs)
+{
+    Console.WriteLine($"{program.Name} ({program.Id}): {program.Description}");
+}
+```
+
+For full documentation, go to the GitHub repository:
+https://github.com/PeterOrneholm/Orneholm.SverigesRadio
