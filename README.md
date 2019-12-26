@@ -22,7 +22,7 @@ The API-wrapper supports all these methods:
     - `ListProgramsAsync(...)`
     - `ListProgramNewsAsync(...)`
     - `ListAllProgramsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
-- ProgramCategories
+- Program Categories
     - `GetProgramCategoryAsync(...)`
     - `ListProgramCategoriesAsync(...)`
     - `ListAllProgramCategoriesAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
@@ -39,20 +39,20 @@ The API-wrapper supports all these methods:
     - `SearchEpisodesAsync(...)`
     - `SearchAllEpisodesAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
     - `ListEpisodeNewsAsync(...)`
-- EpisodeGroups
+- Episode Groups
     - `ListEpisodeGroupsAsync(...)`
     - `ListAllEpisodeGroupsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - Broadcasts
     - `ListBroadcastsAsync(...)`
     - `ListAllBroadcastsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
-- Extra broadcasts
+- Extra Broadcasts
     - `ListExtraBroadcastsAsync(...)`
     - `ListAllExtraBroadcastsAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
 - Podfiles
     - `GetPodfileAsync(...)`
     - `ListPodfilesAsync(...)`
     - `ListAllPodfilesAsync(...)` (See [Pagination with IAsyncEnumerable](#pagination-with-iasyncenumerable))
-- AudioUrlTemplates
+- Audio Url Templates
     - `ListOnDemandAudioTypesAsync(...)`
     - `ListLiveAudioTypesAsync(...)`
 
