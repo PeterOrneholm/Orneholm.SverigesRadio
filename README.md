@@ -215,8 +215,8 @@ Some identifiers in the API are quite constant and there are classes that lists 
 
 For more use cases, samples and inspiration; feel free to browse our samples and test.
 
-- [Orneholm.SverigesRadio.ConsoleSample](https://github.com/PeterOrneholm/Orneholm.SverigesRadio/tree/master/samples/Orneholm.SverigesRadio.ConsoleSample)
-- [Orneholm.SverigesRadio.Api.Test](https://github.com/PeterOrneholm/Orneholm.SverigesRadio/tree/master/test/Orneholm.SverigesRadio.Api.Test)
+- [Orneholm.SverigesRadio.ConsoleSample](samples/Orneholm.SverigesRadio.ConsoleSample)
+- [Orneholm.SverigesRadio.Api.Test](test/Orneholm.SverigesRadio.Api.Test)
 
 ## Contribute
 
