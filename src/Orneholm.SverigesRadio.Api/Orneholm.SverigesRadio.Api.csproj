@@ -19,7 +19,7 @@
         <SignAssembly>true</SignAssembly>
         <AssemblyOriginatorKeyFile>StrongNameKey.snk</AssemblyOriginatorKeyFile>
 
-        <Description>API client for Sveriges Radio Open API (v2) in .NET.</Description>
+        <Description>Unofficial wrapper of Sveriges Radio Open API (v2) for .NET.</Description>
         <PackageTags>sverigesradio;radio;api</PackageTags>
 
         <Authors>Peter Örneholm</Authors>
