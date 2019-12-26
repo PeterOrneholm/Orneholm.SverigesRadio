@@ -48,6 +48,8 @@ The API-wrapper supports all these methods:
     - `ListOnDemandAudioTypesAsync(...)`
     - `ListLiveAudioTypesAsync(...)`
 
+## Getting started
+
 ### 1. Read the documentation
 
 Please start by reading the official documentation to get a basic understanding of the Swedish Radio open API:
