@@ -50,7 +50,7 @@ namespace Orneholm.SverigesRadio.Api
             public const int P4_Sjuharad_Lokalkanal = 206;
             public const int P4_Skaraborg_Lokalkanal = 208;
             public const int P4_Stockholm_Lokalkanal = 701;
-            public const int P4_Sodertälje_Lokalkanal = 5283;
+            public const int P4_Sodertalje_Lokalkanal = 5283;
             public const int P4_Sormland_Lokalkanal = 202;
             public const int P4_Uppland_Lokalkanal = 218;
             public const int P4_Varmland_Lokalkanal = 204;
@@ -59,7 +59,7 @@ namespace Orneholm.SverigesRadio.Api
             public const int P4_Vasternorrland_Lokalkanal = 216;
             public const int P4_Vastmanland_Lokalkanal = 217;
             public const int P4_Orebro_Lokalkanal = 221;
-            public const int P4_Ostergötland_Lokalkanal = 222;
+            public const int P4_Ostergoland_Lokalkanal = 222;
 
 
             public const int SR_Sapmi_MinoritetOchSprak = 224;
