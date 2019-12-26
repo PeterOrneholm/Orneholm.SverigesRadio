@@ -223,12 +223,6 @@ For more use cases, samples and inspiration; feel free to browse our samples and
 We are very open to community contributions.
 Please see our [contribution guidelines](CONTRIBUTING.md) before getting started.
 
-These methods are missing as of today, feel free to file an issue or provide a PR if you need them:
-- Traffic/Messages
-- VMA
-- Scheduled Episodes
-- Playlists
-
 ### License & acknowledgements
 
 Orneholm.SverigesRadio is licensed under the very permissive [MIT license](https://opensource.org/licenses/MIT) for you to be able to use it in commercial or non-commercial applications without many restrictions.
