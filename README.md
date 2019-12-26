@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/v/Orneholm.SverigesRadio.Api.svg)](https://www.nuget.org/packages/Orneholm.SverigesRadio.Api/)
 [![Twitter Follow](https://img.shields.io/badge/Twitter-@PeterOrneholm-blue.svg?logo=twitter)](https://twitter.com/PeterOrneholm)
 
-Orneholm.SverigesRadio is an unofficial wrapper of Sveriges Radio Open API (v2) for .NET.
+Orneholm.SverigesRadio is an unofficial wrapper of Sveriges Radio Open API (v2) for .NET. Built in C# targeting .NET Standard 2.0. Based on the public [documentation](https://sverigesradio.se/api/documentation/v2/).
 
 ## Features
 
