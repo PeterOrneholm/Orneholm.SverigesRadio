@@ -13,7 +13,7 @@ namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
 
             // Assert
             Assert.Equal(SampleIds.PodfileId_Ekot191225, result.Podfile.Id);
-            Assert.Equal("Nyheter från Ekot 20191225 22:00", result.Podfile.Title);
+            Assert.Equal("Nyheter frÃ¥n Ekot 20191225 22:00", result.Podfile.Title);
         }
 
 
