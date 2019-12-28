@@ -1,0 +1,19 @@
+@using Program = Orneholm.SverigesRadio.Api.Models.Response.Programs.Program
+
+<div class="card h-100">
+    <a href="@Item.ProgramUrl">
+        <img src="@Item.ProgramImageUrl" alt="@Item.Name" class="card-img-top" />
+    </a>
+    <div class="card-body">
+        <h5 class="card-title">@Item.Name</h5>
+        <p class="card-text">@Item.Description</p>
+    </div>
+    <div class="card-footer text-center">
+        <a href="/programs/@Item.Id/episodes" class="card-link">Visa avsnitt</a>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Program Item { get; set; }
+}

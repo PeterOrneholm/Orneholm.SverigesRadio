@@ -1,0 +1,29 @@
+@using Orneholm.SverigesRadio.Api.Models.Response.Episodes
+
+<div class="card mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-3">
+            <a href="@Item.Url">
+                <img src="@Item.ImageUrl" alt="@Item.Title" class="card-img" />
+            </a>
+        </div>
+        <div class="col-md-9 d-flex flex-column">
+            <div class="card-body">
+                <h5 class="card-title">@Item.Title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@Item.PublishDateUtc</h6>
+                <p class="card-text">@Item.Description</p>
+            </div>
+            @if (!string.IsNullOrEmpty(Item.DownloadPodfile?.Url))
+            {
+                <div class="card-footer text-center">
+                    <audio src="@Item.DownloadPodfile.Url" controls></audio>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Episode Item { get; set; }
+}

@@ -78,9 +78,21 @@ dotnet add package Orneholm.SverigesRadio.Api
 When used in a place where .NET can handle the lifecycle of HttpClient (like ASP.NET), let .NET inject the api client to cache the http client.
 
 ```csharp
-services.AddHttpClient<ISverigesRadioApiClient, SverigesRadioApiClient>(httpClient =>
+services.AddHttpClient(nameof(SverigesRadioApiClient), httpClient =>
 {
     httpClient.BaseAddress = SverigesRadioApiDefaults.ProductionApiBaseUrl;
+});
+
+services.AddTransient<ISverigesRadioApiClient>(s =>
+{
+    var httpClient = s.GetRequiredService<IHttpClientFactory>().CreateClient(nameof(SverigesRadioApiClient));
+
+    return new SverigesRadioApiClient(httpClient, new AudioSettings
+    {
+        AudioQuality = AudioQuality.High,
+        LiveAudioTemplateId = SverigesRadioApiIds.LiveAudioTemplates.MP3,
+        OnDemandAudioTemplateId = SverigesRadioApiIds.OnDemandAudioTemplates.Html5_Desktop
+    });
 });
 ```
 

@@ -1,0 +1,48 @@
+@page "/programs/{ProgramId}/episodes"
+
+@using Orneholm.SverigesRadio.Api
+@using Orneholm.SverigesRadio.Api.Models.Request
+@using Orneholm.SverigesRadio.Api.Models.Response
+@using Orneholm.SverigesRadio.Api.Models.Response.Episodes
+@using Program = Orneholm.SverigesRadio.Api.Models.Response.Programs.Program
+@inject ISverigesRadioApiClient SverigesRadioApiClient
+
+<h1>Avsnitt</h1>
+
+@if (program == null || episodes == null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <h2 class="mt-4">
+        @program.Name
+        <small class="text-muted">Visar @episodesPagination.CurrentPageSize av @episodesPagination.TotalHits avsnitt</small>
+    </h2>
+
+    @foreach (var episode in episodes)
+    {
+        <EpisodeCard Item="@episode" />
+    }
+}
+
+@code {
+
+    [Parameter]
+    public string ProgramId { get; set; }
+
+    private Program program;
+    private ListResponsePagination episodesPagination;
+    private List<Episode> episodes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var programId = int.Parse(ProgramId);
+        var programResult = await SverigesRadioApiClient.GetProgramAsync(programId);
+        program = programResult.Program;
+
+        var episodesResult = await SverigesRadioApiClient.ListEpisodesAsync(programId: programId, pagination: ListPagination.TakeFirst(100));
+        episodes = episodesResult.Episodes;
+        episodesPagination = episodesResult.Pagination;
+    }
+}

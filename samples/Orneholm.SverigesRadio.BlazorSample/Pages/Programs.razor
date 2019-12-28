@@ -1,0 +1,34 @@
+@page "/programs"
+
+@using Orneholm.SverigesRadio.Api
+@using Program = Orneholm.SverigesRadio.Api.Models.Response.Programs.Program
+@inject ISverigesRadioApiClient SverigesRadioApiClient
+
+<h1>Program</h1>
+
+@if (programs == null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <h2 class="mt-4">Nyhetsprogram</h2>
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4">
+        @foreach (var program in programs)
+        {
+            <div class="col mb-4">
+                <ProgramCard Item="@program" />
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Program> programs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var programsResult = await SverigesRadioApiClient.ListProgramNewsAsync();
+        programs = programsResult.Programs;
+    }
+}

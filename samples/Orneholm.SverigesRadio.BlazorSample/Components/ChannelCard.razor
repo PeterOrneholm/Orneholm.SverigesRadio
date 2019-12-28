@@ -1,0 +1,19 @@
+@using Orneholm.SverigesRadio.Api.Models.Response.Channels
+
+<div class="card h-100">
+    <a href="@Item.SiteUrl">
+        <img src="@Item.ImageUrl" alt="@Item.Name" class="card-img-top" />
+    </a>
+    <div class="card-body">
+        <h5 class="card-title">@Item.Name</h5>
+        <p class="card-text">@Item.Tagline</p>
+    </div>
+    <div class="card-footer text-center">
+        <a href="/channels/@Item.Id/programs" class="card-link">Visa program</a>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Channel Item { get; set; }
+}
