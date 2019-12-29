@@ -1,0 +1,73 @@
+@page "/episodes/search"
+
+@using Microsoft.AspNetCore.WebUtilities
+@using Orneholm.SverigesRadio.Api
+@using Orneholm.SverigesRadio.Api.Models.Request
+@using Orneholm.SverigesRadio.Api.Models.Response
+@using Orneholm.SverigesRadio.Api.Models.Response.Episodes
+@inject ISverigesRadioApiClient SverigesRadioApiClient
+@inject NavigationManager navManager
+
+<h1>Avsnitt</h1>
+
+<form @onsubmit="Search">
+    <input type="search" class="form-control" @bind="SearchQuery" autofocus placeholder="Sök..." />
+</form>
+
+@if (string.IsNullOrWhiteSpace(SearchQuery))
+{
+    
+} else if (episodes == null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <h2 class="mt-4">
+        Sök: @SearchQuery
+        <small class="text-muted">Visar @episodesPagination.CurrentPageSize av @episodesPagination.TotalHits avsnitt</small>
+    </h2>
+
+    @foreach (var episode in episodes)
+    {
+        <EpisodeCard Item="@episode" />
+    }
+}
+
+@code {
+
+    [Parameter]
+    public string SearchQuery { get; set; }
+
+    private ListResponsePagination episodesPagination;
+    private List<Episode> episodes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = navManager.ToAbsoluteUri(navManager.Uri);
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("query", out var param))
+        {
+            SearchQuery = param.First();
+        }
+
+        await Search();
+    }
+
+    protected async Task Search()
+    {
+        episodes = null;
+        episodesPagination = null;
+
+        if (string.IsNullOrEmpty(SearchQuery))
+        {
+            episodes = new List<Episode>();
+            episodesPagination = new ListResponsePagination();
+            return;
+        }
+
+        var episodesResult = await SverigesRadioApiClient.SearchEpisodesAsync(SearchQuery, pagination: ListPagination.TakeFirst(100));
+        episodes = episodesResult.Episodes;
+        episodesPagination = episodesResult.Pagination;
+    }
+}
