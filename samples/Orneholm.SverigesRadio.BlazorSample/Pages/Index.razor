@@ -1,0 +1,68 @@
+@page "/"
+
+@using Orneholm.SverigesRadio.Api
+@using Orneholm.SverigesRadio.Api.Models.Request
+@using Orneholm.SverigesRadio.Api.Models.Response.Channels
+@using Orneholm.SverigesRadio.Api.Models.Response.Episodes
+@inject ISverigesRadioApiClient SverigesRadioApiClient
+
+<h2>Senaste nyheterna från Ekot</h2>
+
+@if (episodes == null)
+{
+    <LoadingIndicator Text="Laddar nyheter..." />
+}
+else
+{
+    @foreach (var episode in episodes)
+    {
+        <EpisodeCard Item="@episode" Size="Small" />
+    }
+}
+
+<h1>Kanaler</h1>
+
+@if (channelGroups == null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    @foreach (var channelGroup in channelGroups)
+    {
+        <h2 class="mt-4">@channelGroup.Key</h2>
+        <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4">
+            @foreach (var channel in channelGroup.Value)
+            {
+                <div class="col mb-4">
+                    <ChannelCard Item="@channel" />
+                </div>
+            }
+        </div>
+    }
+}
+
+@code {
+    private Dictionary<string, List<Channel>> channelGroups;
+    private List<Episode> episodes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var channelsResult = await SverigesRadioApiClient.ListChannelsAsync(ListPagination.Disabled());
+        var channels = channelsResult.Channels
+            .Where(x => !string.IsNullOrEmpty(x.ImageUrl))
+            .OrderBy(x => x.Name)
+            .ToList();
+
+        channelGroups = new Dictionary<string, List<Channel>>
+        {
+            { SverigesRadioApiIds.ChannelTypes.Rikskanal, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.Rikskanal).ToList() },
+            { SverigesRadioApiIds.ChannelTypes.LokalKanal, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.LokalKanal).ToList() },
+            { SverigesRadioApiIds.ChannelTypes.MinoritetOchSprak, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.MinoritetOchSprak).ToList() },
+            { SverigesRadioApiIds.ChannelTypes.FlerKanaler, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.FlerKanaler).ToList() },
+        };
+
+        var episodesResult = await SverigesRadioApiClient.ListEpisodesAsync(programId: SverigesRadioApiIds.Programs.Ekot);
+        episodes = episodesResult.Episodes.Where(x => x.GetEpisodePodfile() != null).Take(3).ToList();
+    }
+}

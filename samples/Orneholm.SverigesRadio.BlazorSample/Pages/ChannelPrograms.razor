@@ -1,0 +1,51 @@
+@page "/channels/{ChannelId}/programs"
+
+@using Orneholm.SverigesRadio.Api
+@using Orneholm.SverigesRadio.Api.Models.Request
+@using Orneholm.SverigesRadio.Api.Models.Response
+@using Orneholm.SverigesRadio.Api.Models.Response.Channels
+@using Program = Orneholm.SverigesRadio.Api.Models.Response.Programs.Program
+@inject ISverigesRadioApiClient SverigesRadioApiClient
+
+<h1>Program</h1>
+
+@if (channel == null || programs == null)
+{
+    <LoadingIndicator />
+}
+else
+{
+    <h2 class="mt-4">
+        @channel.Name
+        <small class="text-muted">Visar @programsPagination.CurrentPageSize av @programsPagination.TotalHits program</small>
+    </h2>
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4">
+        @foreach (var program in programs)
+        {
+            <div class="col mb-4">
+                <ProgramCard Item="@program" />
+            </div>
+        }
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public string ChannelId { get; set; }
+
+    private Channel channel;
+    private ListResponsePagination programsPagination;
+    private List<Program> programs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var channelId = int.Parse(ChannelId);
+        var channelResult = await SverigesRadioApiClient.GetChannelAsync(channelId);
+        channel = channelResult.Channel;
+
+        var programsResult = await SverigesRadioApiClient.ListProgramsAsync(channelId: channelId, pagination: ListPagination.TakeFirst(100));
+        programs = programsResult.Programs;
+        programsPagination = programsResult.Pagination;
+    }
+}

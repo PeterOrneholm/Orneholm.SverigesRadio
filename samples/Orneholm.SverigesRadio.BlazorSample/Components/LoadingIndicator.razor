@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-@Justify align-items-center">
+    <div class="spinner-border text-@Color"></div>
+    @if (!string.IsNullOrEmpty(Text))
+    {
+        <div class="ml-2">@Text</div>
+    }
+</div>
+
+@code {
+
+    [Parameter]
+    public string Text { get; set; } = "Laddar...";
+
+    [Parameter]
+    public string Justify { get; set; } = "left";
+
+    [Parameter]
+    public string Color { get; set; } = "info";
+
+}

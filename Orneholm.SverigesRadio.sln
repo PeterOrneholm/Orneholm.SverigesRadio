@@ -43,7 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orneholm.SverigesRadio.Api"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orneholm.SverigesRadio.Api.Test", "test\Orneholm.SverigesRadio.Api.Test\Orneholm.SverigesRadio.Api.Test.csproj", "{4BE3948A-5FA1-481D-B21A-406E93A584E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orneholm.SverigesRadio.ConsoleSample", "samples\Orneholm.SverigesRadio.ConsoleSample\Orneholm.SverigesRadio.ConsoleSample.csproj", "{833E95D5-A48E-42E4-B227-0C475D7A9832}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orneholm.SverigesRadio.ConsoleSample", "samples\Orneholm.SverigesRadio.ConsoleSample\Orneholm.SverigesRadio.ConsoleSample.csproj", "{833E95D5-A48E-42E4-B227-0C475D7A9832}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orneholm.SverigesRadio.BlazorSample", "samples\Orneholm.SverigesRadio.BlazorSample\Orneholm.SverigesRadio.BlazorSample.csproj", "{A4A63EF8-DA9C-45BF-A860-31746ADE3586}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{833E95D5-A48E-42E4-B227-0C475D7A9832}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{833E95D5-A48E-42E4-B227-0C475D7A9832}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{833E95D5-A48E-42E4-B227-0C475D7A9832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4A63EF8-DA9C-45BF-A860-31746ADE3586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4A63EF8-DA9C-45BF-A860-31746ADE3586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4A63EF8-DA9C-45BF-A860-31746ADE3586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4A63EF8-DA9C-45BF-A860-31746ADE3586}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{5893F6A0-A0C3-4CE6-837D-B774968386E9} = {9A0CF459-87CC-448D-B49D-EFC3D6482AA6}
 		{4BE3948A-5FA1-481D-B21A-406E93A584E1} = {12A0FDF2-523E-42C7-81FE-4FDCA5E66A69}
 		{833E95D5-A48E-42E4-B227-0C475D7A9832} = {8E4C5EA1-1B2E-4B78-9F44-6BC85E42A752}
+		{A4A63EF8-DA9C-45BF-A860-31746ADE3586} = {8E4C5EA1-1B2E-4B78-9F44-6BC85E42A752}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2076F58C-968B-489D-94CA-B3729F5DE10D}
