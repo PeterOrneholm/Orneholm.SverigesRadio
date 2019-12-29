@@ -1,10 +1,24 @@
 @page "/"
-@page "/channels"
 
 @using Orneholm.SverigesRadio.Api
 @using Orneholm.SverigesRadio.Api.Models.Request
 @using Orneholm.SverigesRadio.Api.Models.Response.Channels
+@using Orneholm.SverigesRadio.Api.Models.Response.Episodes
 @inject ISverigesRadioApiClient SverigesRadioApiClient
+
+<h2>Senaste nyheterna från Ekot</h2>
+
+@if (episodes == null)
+{
+    <LoadingIndicator Text="Laddar nyheter..." />
+}
+else
+{
+    @foreach (var episode in episodes)
+    {
+        <EpisodeCard Item="@episode" Size="Small" />
+    }
+}
 
 <h1>Kanaler</h1>
 
@@ -30,6 +44,7 @@ else
 
 @code {
     private Dictionary<string, List<Channel>> channelGroups;
+    private List<Episode> episodes;
 
     protected override async Task OnInitializedAsync()
     {
@@ -46,5 +61,8 @@ else
             { SverigesRadioApiIds.ChannelTypes.MinoritetOchSprak, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.MinoritetOchSprak).ToList() },
             { SverigesRadioApiIds.ChannelTypes.FlerKanaler, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.FlerKanaler).ToList() },
         };
+
+        var episodesResult = await SverigesRadioApiClient.ListEpisodesAsync(programId: SverigesRadioApiIds.Programs.Ekot);
+        episodes = episodesResult.Episodes.Where(x => x.GetEpisodePodfile() != null).Take(3).ToList();
     }
 }

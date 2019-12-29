@@ -1,22 +1,26 @@
 @using Orneholm.SverigesRadio.Api.Models.Response.Episodes
+@using Orneholm.SverigesRadio.BlazorSample.Services
+@inject SharedAudioPlayer SharedAudioPlayer
 
 <div class="card mb-3">
     <div class="row no-gutters">
-        <div class="col-md-3">
-            <a href="@Item.Url">
+        <div class="col-md-@(Size == "Small" ? "2" : "3")">
+            <a href="@Item.Url" target="_blank">
                 <img src="@Item.ImageUrl" alt="@Item.Title" class="card-img" />
             </a>
         </div>
-        <div class="col-md-9 d-flex flex-column">
+        <div class="col-md-@(Size == "Small" ? "10" : "9") d-flex flex-column">
             <div class="card-body">
                 <h5 class="card-title">@Item.Title</h5>
                 <h6 class="card-subtitle mb-2 text-muted">@Item.PublishDateUtc</h6>
                 <p class="card-text">@Item.Description</p>
             </div>
-            @if (!string.IsNullOrEmpty(Item.DownloadPodfile?.Url))
+            @if (!string.IsNullOrEmpty(Item.GetEpisodePodfile()?.Url))
             {
                 <div class="card-footer text-center">
-                    <audio src="@Item.DownloadPodfile.Url" controls></audio>
+                    <button class="btn btn-primary btn-block" @onclick="@(async e => await PlayAudio(Item.GetEpisodePodfile().Url, Item.Title))">
+                        <i class="far fa-play-circle"></i> Spela
+                    </button>
                 </div>
             }
         </div>
@@ -26,4 +30,12 @@
 @code {
     [Parameter]
     public Episode Item { get; set; }
+
+    [Parameter]
+    public string Size { get; set; }
+    
+    private async Task PlayAudio(string audioUrl, string audioName)
+    {
+        await SharedAudioPlayer.PlayAudio(audioUrl, audioName);
+    }
 }

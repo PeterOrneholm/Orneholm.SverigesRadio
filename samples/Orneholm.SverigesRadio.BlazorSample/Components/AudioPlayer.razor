@@ -1,0 +1,20 @@
+<div class="card mb-4 sticky-top">
+    <div class="card-body">
+
+        @if (!string.IsNullOrEmpty(AudioName))
+        {
+            <h2 class="card-title"><i class="far fa-play-circle"></i> @AudioName</h2>
+        }
+        <audio src="@AudioUrl" controls autoplay class="w-100">
+        </audio>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string AudioUrl { get; set; }
+
+    [Parameter]
+    public string AudioName { get; set; }
+}
+

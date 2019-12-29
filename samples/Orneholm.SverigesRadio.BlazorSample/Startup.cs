@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Orneholm.SverigesRadio.Api;
 using Orneholm.SverigesRadio.Api.Models.Request.Common;
+using Orneholm.SverigesRadio.BlazorSample.Services;
 
 namespace Orneholm.SverigesRadio.BlazorSample
 {
@@ -22,6 +23,8 @@ namespace Orneholm.SverigesRadio.BlazorSample
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddScoped<SharedAudioPlayer>();
 
             services.AddHttpClient(nameof(SverigesRadioApiClient), httpClient =>
             {
