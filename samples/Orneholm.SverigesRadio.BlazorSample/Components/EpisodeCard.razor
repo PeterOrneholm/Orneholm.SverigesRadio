@@ -4,12 +4,12 @@
 
 <div class="card mb-3">
     <div class="row no-gutters">
-        <div class="col-md-@(Size == "Small" ? "2" : "3")">
-            <a href="@Item.Url" target="_blank">
-                <img src="@Item.ImageUrl" alt="@Item.Title" class="card-img" />
+        <div class="col-md-@(Size == "Small" ? "4" : "5") col-lg-@(Size == "Small" ? "3" : "4")">
+            <a href="@Item.Url" target="_blank" style="display: block; height: 100%; min-height: 250px; width:100%; background: url('@Item.ImageUrl') center center; background-size: cover;">
+                &nbsp;
             </a>
         </div>
-        <div class="col-md-@(Size == "Small" ? "10" : "9") d-flex flex-column">
+        <div class="col-md-@(Size == "Small" ? "8" : "7") col-lg-@(Size == "Small" ? "9" : "8") d-flex flex-column">
             <div class="card-body">
                 <h5 class="card-title">@Item.Title</h5>
                 <h6 class="card-subtitle mb-2 text-muted">@Item.PublishDateUtc</h6>

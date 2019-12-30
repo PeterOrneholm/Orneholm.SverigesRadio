@@ -6,6 +6,19 @@
 @using Orneholm.SverigesRadio.Api.Models.Response.Episodes
 @inject ISverigesRadioApiClient SverigesRadioApiClient
 
+<h2>Sök avsnitt</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form action="/episodes/search">
+            <input class="form-control" type="search" placeholder="Sök avsnitt" name="query" />
+            <div class="text-right">
+                <button class="btn btn-primary" type="submit">Sök</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <h2>Senaste nyheterna från Ekot</h2>
 
 @if (episodes == null)
@@ -31,7 +44,7 @@ else
     @foreach (var channelGroup in channelGroups)
     {
         <h2 class="mt-4">@channelGroup.Key</h2>
-        <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4">
+        <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-4">
             @foreach (var channel in channelGroup.Value)
             {
                 <div class="col mb-4">
