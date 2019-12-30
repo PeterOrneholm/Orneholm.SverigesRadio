@@ -21,6 +21,8 @@ namespace Orneholm.SverigesRadio.BlazorSample
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
 

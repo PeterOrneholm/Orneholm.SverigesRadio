@@ -2,10 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/60546205-7d7a-459c-8734-c3fde58f8aa1/resourcegroups/po-radiodemo-prod/providers/microsoft.insights/components/po-radiodemo-prod</ApplicationInsightsResourceId>
+    <UserSecretsId>40efe3b4-97f3-436c-9841-9622696c8d35</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.1" />
     <PackageReference Include="Orneholm.SverigesRadio.Api" Version="1.0.0-beta-1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
