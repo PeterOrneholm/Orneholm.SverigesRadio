@@ -228,7 +228,11 @@ Some identifiers in the API are quite constant and there are classes that lists 
 For more use cases, samples and inspiration; feel free to browse our samples and test.
 
 - [Orneholm.SverigesRadio.ConsoleSample](samples/Orneholm.SverigesRadio.ConsoleSample)
-- [Orneholm.SverigesRadio.Api.Test](test/Orneholm.SverigesRadio.Api.Test)
+- [Orneholm.SverigesRadio.BlazorSample](samples/Orneholm.SverigesRadio.BlazorSample)
+- [Orneholm.SverigesRadio.Api.Test](test/Orneholm.SverigesRadio.Api.Test
+
+The Blazor sample is available as a live demo here:
+https://radiodemo.orneholm.com/
 
 ## Contribute
 

@@ -6,7 +6,7 @@
 @using Orneholm.SverigesRadio.Api.Models.Response.Episodes
 @inject ISverigesRadioApiClient SverigesRadioApiClient
 
-<h2>Sök avsnitt</h2>
+<h1>Sök avsnitt</h1>
 
 <div class="card mb-4">
     <div class="card-body">
@@ -19,14 +19,19 @@
     </div>
 </div>
 
-<h2>Senaste nyheterna från Ekot</h2>
-
 @if (episodes == null)
 {
+    <h1>Senaste nyheterna från Ekot</h1>
+
     <LoadingIndicator Text="Laddar nyheter..." />
 }
 else
 {
+    @if (episodes.Any())
+    {
+        <h2>Senaste nyheterna från Ekot</h2>
+    }
+
     @foreach (var episode in episodes)
     {
         <EpisodeCard Item="@episode" Size="Small" />
@@ -68,7 +73,7 @@ else
             .ToList();
 
         channelGroups = new Dictionary<string, List<Channel>>
-        {
+{
             { SverigesRadioApiIds.ChannelTypes.Rikskanal, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.Rikskanal).ToList() },
             { SverigesRadioApiIds.ChannelTypes.LokalKanal, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.LokalKanal).ToList() },
             { SverigesRadioApiIds.ChannelTypes.MinoritetOchSprak, channels.Where(x => x.ChannelType == SverigesRadioApiIds.ChannelTypes.MinoritetOchSprak).ToList() },
