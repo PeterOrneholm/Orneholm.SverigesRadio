@@ -33,7 +33,7 @@
 
     [Parameter]
     public string Size { get; set; }
-    
+
     private async Task PlayAudio(string audioUrl, string audioName)
     {
         await SharedAudioPlayer.PlayAudio(audioUrl, audioName);
