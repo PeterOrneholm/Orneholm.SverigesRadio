@@ -120,10 +120,19 @@ stages:
         useGlobalJson: true
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet publish'
+      displayName: 'dotnet publish console'
       inputs:
         command: publish
         publishWebProjects: false
+        zipAfterPublish: true
+        projects: '$(pathToPublishProjects)'
+        arguments: '--configuration $(dotnetBuildConfiguration) --output $(build.artifactstagingdirectory)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet publish web'
+      inputs:
+        command: publish
+        publishWebProjects: true
         zipAfterPublish: true
         projects: '$(pathToPublishProjects)'
         arguments: '--configuration $(dotnetBuildConfiguration) --output $(build.artifactstagingdirectory)'
