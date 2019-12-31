@@ -229,7 +229,7 @@ For more use cases, samples and inspiration; feel free to browse our samples and
 
 - [Orneholm.SverigesRadio.ConsoleSample](samples/Orneholm.SverigesRadio.ConsoleSample)
 - [Orneholm.SverigesRadio.BlazorSample](samples/Orneholm.SverigesRadio.BlazorSample)
-- [Orneholm.SverigesRadio.Api.Test](test/Orneholm.SverigesRadio.Api.Test
+- [Orneholm.SverigesRadio.Api.Test](test/Orneholm.SverigesRadio.Api.Test)
 
 The Blazor sample is available as a live demo here:
 https://radiodemo.orneholm.com/
