@@ -4,7 +4,6 @@
 [![Build Status](https://dev.azure.com/orneholm/Orneholm.SverigesRadio/_apis/build/status/Orneholm.SverigesRadio?branchName=master)](https://dev.azure.com/orneholm/Orneholm.SverigesRadio/_build/latest?definitionId=3&branchName=master)
 [![NuGet](https://img.shields.io/nuget/v/Orneholm.SverigesRadio.Api.svg)](https://www.nuget.org/packages/Orneholm.SverigesRadio.Api/)
 ![Nuget](https://img.shields.io/nuget/dt/Orneholm.SverigesRadio.Api)
-[![Live demo](https://img.shields.io/static/v1?label=Demo&message=Try%20out%20the%20live%20demo&color=#17547a)](https://radiodemo.orneholm.com/)
 [![Twitter Follow](https://img.shields.io/badge/Twitter-@PeterOrneholm-blue.svg?logo=twitter)](https://twitter.com/PeterOrneholm)
 
 Orneholm.SverigesRadio is an unofficial wrapper of Sveriges Radio Open API (v2) for .NET. Built in C# targeting .NET Standard 2.0. Based on the public [documentation](https://sverigesradio.se/api/documentation/v2/).
@@ -232,9 +231,6 @@ For more use cases, samples and inspiration; feel free to browse our samples and
 - [Orneholm.SverigesRadio.ConsoleSample](samples/Orneholm.SverigesRadio.ConsoleSample)
 - [Orneholm.SverigesRadio.BlazorSample](samples/Orneholm.SverigesRadio.BlazorSample)
 - [Orneholm.SverigesRadio.Api.Test](test/Orneholm.SverigesRadio.Api.Test)
-
-The Blazor sample is available as a live demo here:
-https://radiodemo.orneholm.com/
 
 ## Contribute
 
