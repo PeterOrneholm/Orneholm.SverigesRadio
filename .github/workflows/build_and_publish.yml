@@ -16,7 +16,7 @@ env:
   dotnetVerbosity: 'Detailed'
   dotnetConfiguration: 'Release'
   libraryProjectPath: './src/Orneholm.SverigesRadio.Api/Orneholm.SverigesRadio.Api.csproj'
-  testProjectPath: './test/Orneholm.SverigesRadio.Test/Orneholm.SverigesRadio.Test.csproj'
+  testProjectPath: './test/Orneholm.SverigesRadio.Api.Test/Orneholm.SverigesRadio.Api.Test.csproj'
   consoleSampleProjectPath: './samples/Orneholm.SverigesRadio.ConsoleSample/Orneholm.SverigesRadio.ConsoleSample.csproj'
   webSampleProjectPath: './samples/Orneholm.SverigesRadio.BlazorSample/Orneholm.SverigesRadio.BlazorSample.csproj'
   nugetArtifactPath: './artifacts/release/Orneholm.SverigesRadio.*.*.*.nupkg'
