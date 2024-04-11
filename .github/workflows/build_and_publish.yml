@@ -1,0 +1,104 @@
+name: Build and Publish to NuGet
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+  release:
+    types:
+      - published
+
+env:
+  dotnetVerbosity: 'Detailed'
+  dotnetConfiguration: 'Release'
+  libraryProjectPath: './src/Orneholm.SverigesRadio/Orneholm.SverigesRadio.csproj'
+  testProjectPath: './test/Orneholm.SverigesRadio.Test/Orneholm.SverigesRadio.Test.csproj'
+  consoleSampleProjectPath: './samples/Orneholm.SverigesRadio.ConsoleSample/Orneholm.SverigesRadio.ConsoleSample.csproj'
+  webSampleProjectPath: './samples/Orneholm.SverigesRadio.BlazorSample/Orneholm.SverigesRadio.BlazorSample.csproj'
+  nugetArtifactPath: './artifacts/release/Orneholm.SverigesRadio.*.*.*.nupkg'
+  
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            artifactName: 'nuget-windows'
+          - os: macOS-latest
+            artifactName: 'nuget-macos'
+          - os: ubuntu-latest
+            artifactName: 'nuget-linux'
+      max-parallel: 3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4
+
+    - name: Restore dependencies
+      run: dotnet restore --verbosity ${{ env.dotnetVerbosity }}
+
+    - name: Build
+      run: dotnet build ${{ env.libraryProjectPath }} --configuration ${{ env.dotnetConfiguration }} --verbosity ${{ env.dotnetVerbosity }}
+
+    - name: Test
+      run: dotnet test ${{ env.testProjectPath }} --configuration ${{ env.dotnetConfiguration }} --verbosity ${{ env.dotnetVerbosity }} --collect "Code coverage"
+
+    - name: Pack CI
+      run: dotnet pack ${{ env.libraryProjectPath }} --output ./artifacts/ci --configuration ${{ env.dotnetConfiguration }} --verbosity ${{ env.dotnetVerbosity }} /p:VersionSuffix=ci-${{ github.run_number }}
+
+    - name: Pack Release
+      run: dotnet pack ${{ env.libraryProjectPath }} --output ./artifacts/release --configuration ${{ env.dotnetConfiguration }} --verbosity ${{ env.dotnetVerbosity }}
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.artifactName }}
+        path: ./artifacts/
+
+  build-samples:
+    needs: [build-and-test]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            artifactName: 'samples-windows'
+          - os: macOS-latest
+            artifactName: 'samples-macos'
+          - os: ubuntu-latest
+            artifactName: 'samples-linux'
+      max-parallel: 3
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4
+
+    - name: Build Console Sample
+      run: dotnet build ${{ env.consoleSampleProjectPath }} --configuration ${{ env.dotnetConfiguration }}
+
+    - name: Build Web Sample
+      run: dotnet build ${{ env.webSampleProjectPath }} --configuration ${{ env.dotnetConfiguration }}
+  deploy-nuget:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    needs: [ build-and-test, build-samples ]
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: nuget-linux
+          path: ./artifacts/
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+
+      - name: Publish NuGet package
+        run: dotnet nuget push ${{ env.nugetArtifactPath }} --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
