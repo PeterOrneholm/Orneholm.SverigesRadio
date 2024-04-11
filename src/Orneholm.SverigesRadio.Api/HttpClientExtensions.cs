@@ -39,6 +39,11 @@ namespace Orneholm.SverigesRadio.Api
             var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
             var parsedContent = await JsonSerializer.DeserializeAsync<TResult>(contentStream, JsonSerializerOptions).ConfigureAwait(false);
 
+            if (parsedContent == null)
+            {
+                throw new Exception("Failed to parse content");
+            }
+
             return parsedContent;
         }
 

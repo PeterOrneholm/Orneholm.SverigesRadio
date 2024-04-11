@@ -15,7 +15,7 @@ namespace Orneholm.SverigesRadio.Api.Serialization
             Debug.Assert(typeToConvert == typeof(DateTime));
 
             var value = reader.GetString();
-            if (value.StartsWith("/Date("))
+            if (value != null && value.StartsWith("/Date("))
             {
                 var dateValue = value.Substring(6, value.Length - 8);
                 var parts = dateValue.Split('+');

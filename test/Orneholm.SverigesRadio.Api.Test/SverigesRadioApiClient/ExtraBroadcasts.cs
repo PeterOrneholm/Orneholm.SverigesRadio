@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+
 using Xunit;
 
 namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
@@ -12,7 +13,7 @@ namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
             var result = await ApiClient.ListExtraBroadcastsAsync(pagination: FirstOneItemPagination);
 
             // Assert
-            Assert.Equal(1, result.Broadcasts.Count);
+            Assert.Single(result.Broadcasts);
         }
     }
 }
