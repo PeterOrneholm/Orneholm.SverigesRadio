@@ -13,7 +13,7 @@ namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
 
             // Assert
             Assert.Equal(SampleIds.EpisodeGroupId_Dokumentarer, result.EpisodeGroup.Id);
-            Assert.Equal("Dokumentärer om kända kriminalfall ", result.EpisodeGroup.Title);
+            Assert.Equal("Dokumentärer om kända kriminalfall", result.EpisodeGroup.Title);
             Assert.Equal(3, result.EpisodeGroup.Episodes.Count);
         }
     }

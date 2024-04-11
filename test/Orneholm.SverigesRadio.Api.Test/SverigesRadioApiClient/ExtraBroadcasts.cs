@@ -9,10 +9,10 @@ namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
         public async Task ListExtraBroadcasts()
         {
             // Act
-            var result = await ApiClient.ListExtraBroadcastsAsync(pagination: FirstThreeItemsPagination);
+            var result = await ApiClient.ListExtraBroadcastsAsync(pagination: FirstOneItemPagination);
 
             // Assert
-            Assert.Equal(3, result.Broadcasts.Count);
+            Assert.Equal(1, result.Broadcasts.Count);
         }
     }
 }

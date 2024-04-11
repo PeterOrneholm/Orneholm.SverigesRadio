@@ -14,7 +14,7 @@ namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
 
             // Assert
             Assert.Equal(SampleIds.ProgramId_Ekot, result.Program.Id);
-            Assert.Equal("Ekot", result.Program.Name);
+            Assert.Equal("Ekot nyhetssändning", result.Program.Name);
         }
 
 

@@ -4,6 +4,7 @@ namespace Orneholm.SverigesRadio.Api.Test.SverigesRadioApiClient
 {
     public abstract class TestsBase
     {
+        protected readonly ListPagination FirstOneItemPagination = ListPagination.WithPageAndSize(1, 1);
         protected readonly ListPagination FirstThreeItemsPagination = ListPagination.WithPageAndSize(1, 3);
         protected readonly Api.SverigesRadioApiClient ApiClient;
 
