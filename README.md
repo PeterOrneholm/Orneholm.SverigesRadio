@@ -1,7 +1,7 @@
 # Orneholm.SverigesRadio
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://dev.azure.com/orneholm/Orneholm.SverigesRadio/_apis/build/status/Orneholm.SverigesRadio?branchName=master)](https://dev.azure.com/orneholm/Orneholm.SverigesRadio/_build/latest?definitionId=3&branchName=master)
+[![Build Status](https://github.com/PeterOrneholm/Orneholm.SverigesRadio/actions/workflows/build_and_publish.yml/badge.svg)](https://github.com/PeterOrneholm/Orneholm.SverigesRadio/actions/workflows/build_and_publish.yml)
 [![NuGet](https://img.shields.io/nuget/v/Orneholm.SverigesRadio.Api.svg)](https://www.nuget.org/packages/Orneholm.SverigesRadio.Api/)
 ![Nuget](https://img.shields.io/nuget/dt/Orneholm.SverigesRadio.Api)
 [![Twitter Follow](https://img.shields.io/badge/Twitter-@PeterOrneholm-blue.svg?logo=twitter)](https://twitter.com/PeterOrneholm)
